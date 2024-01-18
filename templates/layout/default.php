@@ -50,7 +50,7 @@
 	<?= $this->fetch('css') ?>
 	<?= $this->fetch('script') ?>
 </head>
-<body class='<?= true ? 'dark' : '' ?>'>
+<body class='<?= false ? 'dark' : '' ?>'>
 	<nav class="sidebar close">
 		<header>
 			<i class='bx bx-chevron-right toggle'></i>

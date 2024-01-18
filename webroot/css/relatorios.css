@@ -1,0 +1,170 @@
+.content-relatorios {
+	width: 60%;
+}
+
+.row-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #c5c5c5; /* cor de fundo do cabeçalho */
+	color: rgb(0, 0, 0); /* cor do texto no cabeçalho */
+	padding-top: 5px;
+	padding-bottom: 5px;
+	box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.747);
+	margin-top: 10px;
+}
+
+.card-title-logo {
+	width: 50px; /* ajuste conforme necessário */
+	height: auto;
+}
+
+.card-title-destaques {
+	font-size: 4.5rem;
+	text-align: center;
+}
+
+.card-title-mes {
+	font-size: 2rem;
+	text-align: center;
+	margin-top: -15px;
+}
+
+.card-title-ano {
+	font-size: 4.5rem;
+	color: #f3eeee;
+	background-color: #797979;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	height: 90px;
+}
+
+.card-title-ano p {
+	margin-left: -10px;
+	z-index: 1;
+}
+
+.card-title-ano-triangulo {
+	position: absolute;
+	top: 0;
+	left: -22px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 45px 22.5px 45px 0; /* Ajuste conforme necessário */
+	border-color: transparent #797979 transparent transparent; /* Cor da borda triangular */
+}
+
+.card {
+	width: 200px;
+	border: 1px solid #ddd;
+	padding: 16px;
+	margin: 10px;
+	text-align: center;
+}
+
+.row-pontos {
+	margin-top: 10px;
+	margin-bottom: -10px;
+}
+
+.col-pontos {
+	color: #e4e4e4;
+	background-color: #303030;
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+.row-gold {
+	background-color: #ffd700; /* cor ouro */
+	font-weight: bold;
+}
+
+.row-silver {
+	background-color: #c0c0c0; /* cor prata */
+	font-weight: bold;
+}
+
+.row-bronze {
+	background-color: #cd7f32; /* cor bronze */
+	font-weight: bold;
+}
+
+.row-destaques {
+	height: 80px;
+	box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.747);
+	margin-top: 10px;
+}
+
+.col-class {
+	background-color: #b1b1b0; /* cor ouro */
+	opacity: 50%;
+	font-size: 3rem;
+	padding: 8px;
+	text-align: center;
+	color: #000000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.col-nome {
+	padding: 1px;
+	font-size: 2rem;
+	text-align: center;
+	color: #202020;
+}
+
+.col-nome {
+	padding: 1px;
+	font-size: 2rem;
+	text-align: center;
+	color: #202020;
+}
+
+.col-nome-pct {
+	font-size: 1.5rem;
+}
+
+.col-score {
+	font-size: 3.5rem;
+	color: #f3eeee;
+	background-color: #797979;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.col-score p {
+	margin-left: -10px;
+}
+
+.triangulo {
+	position: absolute;
+	top: 0;
+	left: -20px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 40px 20px 40px 0; /* Ajuste conforme necessário */
+	border-color: transparent #797979 transparent transparent; /* Cor da borda triangular */
+}
+
+.barra-porcentagem {
+	display: flex;
+	width: 95%;
+}
+
+.quadradinho {
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+	margin: 0; /* Espaço entre os quadradinhos */
+	background-color: #ccc; /* Cor padrão dos quadradinhos */
+}
