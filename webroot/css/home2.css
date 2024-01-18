@@ -1,0 +1,562 @@
+.divtextocabecalho {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.classebody {
+    background: rgb(193,253,201);
+    background: linear-gradient(180deg, rgba(193,253,201,1) 9%, rgba(65,185,93,1) 34%, rgba(87,245,161,1) 100%);
+}
+.h1class {
+    color: rgb(255, 255, 255);
+}
+.div-horizontal {
+    display: flex;
+    position: relative;
+    justify-content: space-between; /* Alinha o conteúdo à esquerda e à direita */
+    align-items: center; /* Centraliza verticalmente o conteúdo */
+    width: 100%;
+    height: 100%;
+    /* background-color: #f0f0f0; Cor de fundo da div */
+}
+
+.area-conhecimento {
+    flex: 1; /* Ocupa todo o espaço restante na largura */
+    padding: 40px;
+    text-align: justify;
+    height: 500px;
+    flex: 1; /* Ocupa todo o espaço restante na largura */
+    padding: 40px;
+    text-align: justify;
+    /* height: 500px; */
+}
+
+.area-conhecimento2 {
+    /* flex: 1; Ocupa todo o espaço restante na largura */
+    padding: 40px;
+    /* text-align: justify; */
+    /* height: 500px; */
+    /* flex: 1; Ocupa todo o espaço restante na largura */
+    /* padding: 40px; */
+    /* text-align: justify; */
+    /* height: 500px; */
+}
+
+.gif {
+    width: 60%;    /* Define a largura desejada */
+    height: 100%;
+    display: flex;
+    /* padding: 20px; */
+}
+.gif2 {
+    width: 30%;    /* Define a largura desejada */
+    height: 100%;
+    display: flex;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+}
+.gif2 img {
+    max-width: 200px;
+    /* transform: rotate(-10deg); */
+    /* Adicione a animação para girar a imagem */
+    animation: rotate 3s linear infinite;
+    /* animation-delay: 4s; */
+    /* transition-timing-function: cubic-bezier(0.000000000001, 0.42, 0.58, 1.0); */
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(-10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+.gif3 {
+    /* max-width: 200px; */
+    flex-direction: row-reverse;
+    width: 30%;    /* Define a largura desejada */
+    height: 100%;
+    /* display: flex; */
+    /* bottom: 0; */
+    /* left: 0; */
+    padding: 20px;
+    z-index: 4;
+    /* padding: 20px; */
+}
+
+.gif3 img {
+    max-width: 200px;
+
+    /* Adicione a animação para girar a imagem */
+    animation: rotategif 3s linear infinite;
+  }
+  @keyframes rotategif {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+.ball {
+    position: absolute; /*Posiciona a bola em relação à div pai*/
+    bottom: 0px; /* Ajusta a posição da bola para o limite inferior */
+    left: 30%;  /*Inicialmente, posiciona a bola no canto esquerdo */
+
+    width: 20px; /* Define a largura da bola */
+    height: 20px; /* Define a altura da bola */
+    background-color: red; /* Define a cor da bola */
+    border-radius: 50%; /* Transforma a bola em um círculo */
+
+    /* Adiciona animação para mover a bola ao longo do limite inferior */
+    animation: kickball 8s linear infinite;
+  }
+
+  @keyframes kickball {
+        0% {
+          left: 30%; /* Inicialmente, a bola começa no canto esquerdo */
+        }
+        50% {
+          left: 70%;/*calc(100% - 20px);  No meio da animação, a bola chega ao canto direito da div pai */
+        }
+        100% {
+          left: 30%; /* No final da animação, a bola retorna ao ponto de origem */
+        }
+      }
+.titulo {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+}
+.titulotipo3 {
+    font-size: 24px;
+    color: #ffffff;
+    /* display: flex; */
+    /* align-items: center; */
+}
+
+.texto-conteudo {
+    font-size: 18px;
+}
+.div-linha {
+    border-bottom: 1px solid #000;
+    width: 50%;
+    margin: 0 auto;
+    align-items: left;
+  }
+
+  .linha-esquerda {
+    border-bottom: 5px solid #000;
+    width: 50%;
+    margin-right: auto;
+    margin-left: 0;
+    height: auto;
+  }
+
+  .linha-direita {
+    border-bottom: 5px solid #000;
+    width: 50%;
+    margin-right: 0;
+    margin-left: auto;
+    height: auto;
+  }
+
+  .linha-final {
+    border-bottom: 5px solid #000;
+    width: 100%;
+    margin-right: 0;
+    margin-left: auto;
+    height: auto;
+
+  }
+  .linha-final2 {
+    border-bottom: 5px solid #000;
+    width: 100%;
+    margin-right: 0;
+    margin-left: auto;
+    height: auto;
+    position: relative;
+  }
+
+  .linha-final3 {
+    /* border-bottom: 5px solid #000; */
+    width: 100%;
+    margin-right: 0;
+    margin-left: auto;
+    height: auto;
+    position: relative;
+  }
+
+  footer {
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+
+  .containerCabecalho {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 30px;
+    padding: 0 40px;
+  }
+  .augustClass {
+    font-size: 42px;
+    line-height: 1em;
+    font-weight: 800;
+    color: #FC5478;
+  }
+  .divlastText1 {
+    gap: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .divlastText2 span {
+    color: #FFFF;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px 0;
+}
+
+  .buttoncab {
+    font-size: 2.4rem;
+    font-weight: 600;
+    background: #0000001a;
+    padding: 4px 16px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px 1px #00000063;
+    cursor: pointer;
+}
+.buttoncab a{
+
+    color: #363637;
+    text-decoration: none;
+}
+.buttoncab:hover {
+    transform: scale(1.02);
+}
+.containerCabecalho b {
+    font-size: 2.4rem;
+    color: #000000;
+}
+
+.containerCabecalho h1 {
+    font-size: 4rem;
+    color: #000000;
+}
+
+  .footer-left {
+    text-align: left;
+  }
+
+  .footer-right {
+    text-align: right;
+  }
+
+  .cnpj,
+  .company-name,
+  .contact-info {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .company-name {
+    font-weight: bold;
+  }
+
+  .contact-info {
+    font-style: italic;
+  }
+
+  /* .container {
+    position: relative;
+  } */
+  .containerFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .top-nav-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .conteinerbuttonapostas {
+    display: flex;
+  }
+  .containerbuttonvisit {
+    width: 50%;
+    display: grid;
+  }
+  .containerbuttoncasa {
+    width: 50%;
+    display: grid;
+  }
+
+  .button {
+    /* margin-left: 10px; */
+    /* padding: 8px 12px; */
+    /* background-color: #ffffff6c; */
+    /* color: #ffffff; */
+    /* text-decoration: none; */
+    /* border-radius: 4px; */
+
+    /* display: inline-block; */
+    /* padding: 10px 20px; */
+    /* font-size: 16px; */
+    text-align: center;
+    text-decoration: none;
+    background-color: #337ab7;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: 1px solid rgba(255, 0, 0, 0);
+    margin-left: 10px;
+
+  }
+  .button:hover {
+    background-color: #23527c;
+  }
+  .buttonvisitante {
+    /* margin-left: 10px; */
+    /* padding: 8px 12px; */
+    /* background-color: #ffffff6c; */
+    /* color: #ffffff; */
+    /* text-decoration: none; */
+    /* border-radius: 4px; */
+
+    /* display: inline-block; */
+    /* padding: 10px 20px; */
+    /* font-size: 16px; */
+    text-align: center;
+    text-decoration: none;
+    background-color: #23ff53;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: 1px solid rgba(255, 0, 0, 0);
+    margin-left: 10px;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .buttoncasa:hover {
+    background-color: #0f680c;
+  }
+  .buttoncasa {
+    /* margin-left: 10px; */
+    /* padding: 8px 12px; */
+    /* background-color: #ffffff6c; */
+    /* color: #ffffff; */
+    /* text-decoration: none; */
+    /* border-radius: 4px; */
+
+    /* display: inline-block; */
+    /* padding: 10px 20px; */
+    /* font-size: 16px; */
+    text-align: center;
+    text-decoration: none;
+    background-color: #ff2c07;
+    color: #fff;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    border: 1px solid rgba(255, 0, 0, 0);
+    margin-left: 10px;
+
+    display: block;
+    margin-bottom: 5px;
+  }
+  .buttonvisitante:hover {
+    background-color: #5f0e00;
+  }
+  .right-button {
+
+    margin-left: auto;
+  }
+  .text-right {
+    text-align: center;
+}
+
+.username {
+    margin-right: 10px; /* Ajuste a margem direita conforme necessário */
+}
+@media (max-width: 767px) {
+    .div-horizontal {
+        flex-direction: column;
+    }
+    .gif {
+        text-align: center;
+    }
+    .gif2 {
+        padding: 0px;
+    }
+    .gif3 {
+        padding: 0px;
+    }
+    /* .image-slider {
+        align-items: center;
+    } */
+}
+.image-slider {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Ajuste a altura conforme necessário */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-slider img {
+    position: absolute;
+    /* top: 0; */
+    /* left: 0; */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.image-slider img.active {
+    opacity: 1;
+}
+.full-width {
+    width:300px;
+    height:500px;
+}
+.top-nav-title a {
+    font-size: 2.4rem;
+    color: #ffffff;
+}
+.divlastText {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.divlastText2 {
+    /* height: 70%; */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.titulo {
+    font-size: 38pv;
+    display: flex;
+    align-items: center;
+
+}
+.texto-conteudo {
+    font-size: 18px;
+    font-weight: 400;
+    text-align: start;
+}
+.div-pai > * {
+    margin-top: auto; /* Define a margem superior automática para empurrar os elementos para a parte inferior */
+}
+.div-horizontaltipo3 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* height: 300px; Ajuste a altura conforme necessário */
+    background: rgb(89,210,183);
+
+background: linear-gradient(180deg, rgba(89,210,183,1) 9%, rgba(205,185,88,1) 34%, rgba(205,185,88,1) 100%);
+
+    /* Adicione estilos adicionais para a div pai, se necessário */
+  }
+
+  .giftipo3 img {
+    opacity: 0.7; /* Defina a opacidade desejada */
+    max-width: 100%; /* Certifique-se de que a imagem não exceda o tamanho da div */
+  }
+
+  .area-conhecimentotipo3 {
+    position: absolute;
+    text-align: justify;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-align: center;
+    color: white; /* Defina a cor do texto conforme necessário */
+    width: 80%; /* Ajuste a largura conforme necessário */
+    padding: 20px; /* Adicione preenchimento conforme necessário */
+    background-color: rgba(0, 0, 0, 0.5); /* Defina a cor de fundo com transparência desejada */
+  }
+
+  .area-conhecimentotipo3 h2,
+  .area-conhecimentotipo3 p {
+    margin: 0; /* Remova as margens padrão para garantir que o texto fique centralizado */
+  }
+
+  .flutuante {
+    /* float: left; */
+    margin: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    animation: flutuar 2s ease-in-out infinite;
+  }
+
+  @keyframes flutuar {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+
+  .card {
+    /* position: absolute; */
+    bottom: 0;
+    transform-origin: bottom center;
+    border-radius: 8px; /* Defina o raio de borda para arredondar as cartas */
+    background-color: #fff0;
+    transition: transform 0.3s ease;
+  }
+
+  .card img {
+    display: inline;
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Herda o raio de borda da div de cartão */
+  }
+  .card-1 {
+    transform: translateX(10%) rotate(-10deg);
+    z-index: 3;
+  }
+
+  .card-2 {
+    transform: translateX(-25%) translateY(-10%) ;
+    z-index: 2;
+  }
+
+  .card-3 {
+    transform: translateX(-50%) rotate(10deg);
+    z-index: 1;
+  }

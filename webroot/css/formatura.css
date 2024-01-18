@@ -1,0 +1,11 @@
+.conteinercabecalho
+{
+    background-image: url('/img/tapetevermelho.png');
+    background-position: center;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    height: 400px;
+    padding: 0 40px;
+
+}

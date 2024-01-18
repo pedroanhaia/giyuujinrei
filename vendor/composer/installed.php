@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'cakephp/app',
-        'pretty_version' => '4.5.0',
-        'version' => '4.5.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '8a06c9d799299a81eb1949f2aac77a75ad85e5ad',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -20,11 +20,29 @@
             'dev_requirement' => true,
         ),
         'cakephp/app' => array(
-            'pretty_version' => '4.5.0',
-            'version' => '4.5.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '8a06c9d799299a81eb1949f2aac77a75ad85e5ad',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'cakephp/authentication' => array(
+            'pretty_version' => '2.10.2',
+            'version' => '2.10.2.0',
+            'reference' => '64964e5a503a7d2a5560dfabc1b5d4439f61cdae',
+            'type' => 'cakephp-plugin',
+            'install_path' => __DIR__ . '/../cakephp/authentication',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'cakephp/authorization' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => 'f4269fecbd77ebf56736300cc4bf486711388114',
+            'type' => 'cakephp-plugin',
+            'install_path' => __DIR__ . '/../cakephp/authorization',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -262,6 +280,15 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
+        'datatables/datatables' => array(
+            'pretty_version' => '1.10.21',
+            'version' => '1.10.21.0',
+            'reference' => '83e59694a105225ff889ddfa0d723a3ab24fda78',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../datatables/datatables',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'dealerdirect/phpcodesniffer-composer-installer' => array(
             'pretty_version' => 'v1.0.0',
             'version' => '1.0.0.0',
@@ -478,8 +505,8 @@
         'psr/container-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '^1.0',
-                1 => '^1.0 || ^2.0',
+                0 => '^1.0 || ^2.0',
+                1 => '^1.0',
             ),
         ),
         'psr/http-client' => array(

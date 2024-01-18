@@ -1,0 +1,222 @@
+/*  */
+.form-label, .control-label {
+	font-size: 1.3rem;
+	font-weight: 400;
+	margin-bottom: 0.6rem;
+}
+
+.form-control {
+	font-size: 1.2rem;
+}
+
+.container {
+	max-width: 90% !important;
+}
+
+.col-paginator {
+	display: flex;
+	justify-content: flex-end; /* Alinha os itens à direita */
+	list-style: none; /* Remove os marcadores de lista */
+	padding: 0; /* Remove o espaçamento interno padrão da lista */
+	margin-left: auto;
+}
+
+.col-paginator li {
+	padding: 0 5px; /* Adiciona espaçamento entre os itens */
+	background-color: #ffffff;
+	border: 1px solid black;
+}
+
+.col-paginator li:hover {
+	background-color: #dddddd;
+}
+
+.col-paginator li {
+	padding: 0 5px; /* Adiciona espaçamento entre os itens */
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para todos os itens */
+}
+  
+.col-paginator li:first-child {
+	border-top-left-radius: 5px; /* Borda arredondada no canto superior esquerdo do primeiro item */
+	border-bottom-left-radius: 5px; /* Borda arredondada no canto inferior esquerdo do primeiro item */
+}
+  
+.col-paginator li:last-child {
+	border-top-right-radius: 5px; /* Borda arredondada no canto superior direito do último item */
+	border-bottom-right-radius: 5px; /* Borda arredondada no canto inferior direito do último item */
+}
+
+.dataTables_wrapper {
+    max-width: 99%;
+    overflow: visible;
+}
+
+.aposta-box {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.ganha {
+    background-color: #32ac5a;
+}
+
+.perdida {
+    background-color: #e64b4b;
+}
+
+.totalizador {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.totalizador strong {
+    font-size: 20px;
+}
+
+.charts-legend {
+	font-weight: 600;
+}
+
+.col-btn {
+	z-index: 99;
+}
+
+.chartRelatorios {
+	width:99%; 
+	height:350px; 
+	margin-bottom: -50px;
+}
+
+.chartRelatorios.chartMelhores {
+	margin-bottom: -0;
+}
+
+.col-chart {
+	overflow: hidden;
+}
+
+.error-message {
+	color: red;
+}
+
+/* Colors */
+	.bg-indigo {
+		background-color: #6610f2 !important;
+	}
+
+	.text-indigo {
+		color: #6610f2 !important;
+	}
+
+	.btn-indigo  {
+		color: white !important;
+		background-color: #6610f2 !important;
+	}
+	.btn-indigo:hover  {
+		color: white;
+		background-color: #792df5 !important;
+		box-shadow: 0 0 0 0.02rem #7e36f1 !important;
+	}
+	.btn-indigo:focus  {
+		box-shadow: 0 0 0 0.17rem #570ecc !important;
+	}
+	.btn-indigo:disabled,
+	.btn-indigo.is-disabled  {
+		opacity: .5 !important;
+	}
+
+	.bg-orange1 {
+		background-color: #ffb52c !important;
+	}
+
+	.bg-orange {
+		background-color: #ff9b2a !important;
+	}
+
+	.bg-orangedacordofundododtnorange {
+		background-color: #ff882e !important;
+	}
+
+	.text-orange {
+		color: #ff9b2a !important;
+	}
+
+	.btn-orange  {
+		color: white !important;
+		background-color: #ff882e !important;
+	}
+	.btn-orange:hover  {
+		color: white;
+		background-color: rgb(235, 111, 10) !important;
+		box-shadow: 0 0 0 0.02rem rgb(221, 112, 28) !important;
+	}
+	.btn-orange:focus  {
+		box-shadow: 0 0 0 0.17rem #f86f06 !important;
+	}
+	.btn-orange:disabled,
+	.btn-orange.is-disabled  {
+		opacity: .5 !important;
+	}
+
+	.bg-queequaseinfo {
+		background-color: #22cdf0 !important;
+		color: white !important;
+	}
+	.btn-queequaseinfo {
+		background-color: #22cdf0 !important;
+		color: white !important;
+	}
+	.btn-queequaseinfo:hover {
+		background-color: #1a9fba !important;
+	}
+	.btn-queequaseinfo:focus {
+		background-color: #16859c !important;
+		-webkit-box-shadow: 0 0 0 0.2rem rgba(35, 198, 232, 0.5);
+		box-shadow: 0 0 0 0.2rem rgba(35, 198, 232, 0.5);
+	}
+	.label-queequaseinfo {
+		background-color: #22cdf0 !important;
+		color: white !important;
+	}
+	.label-dark {
+		background-color: gray !important;
+		color: white !important;
+	}
+	.label-orange {
+		background-color: #ff9b2a !important;
+		color: white !important;
+	}
+	.btn-infosemnada {
+		background-color: #03a9f3 !important;
+		color: white !important;
+	}
+	.btn-infosemnada:hover {
+		cursor: default !important;
+	}
+
+	.bg-pink {
+		background-color: #f022b2 !important;
+		color: white !important;
+	}
+	.btn-pink {
+		background-color: #f022b2 !important;
+		color: white !important;
+	}
+	.btn-pink:hover {
+		background-color: #ca1b96 !important;
+	}
+	.btn-pink:focus {
+		background-color: #db33a9 !important;
+		-webkit-box-shadow: 0 0 0 0.2rem #962373;
+		box-shadow: 0 0 0 0.2rem #962373;
+	}
+	.label-pink {
+		background-color: #f022b2 !important;
+		color: white !important;
+	}

@@ -30,7 +30,7 @@ return array(
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Server\\' => array($vendorDir . '/psr/http-server-handler/src', $vendorDir . '/psr/http-server-middleware/src'),
-    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src', $vendorDir . '/psr/http-factory/src'),
+    'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-factory/src', $vendorDir . '/psr/http-message/src'),
     'Psr\\Http\\Client\\' => array($vendorDir . '/psr/http-client/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
     'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
@@ -66,6 +66,8 @@ return array(
     'CakePHP\\' => array($vendorDir . '/cakephp/cakephp-codesniffer/CakePHP'),
     'Brick\\VarExporter\\' => array($vendorDir . '/brick/varexporter/src'),
     'Bake\\' => array($vendorDir . '/cakephp/bake/src'),
+    'Authorization\\' => array($vendorDir . '/cakephp/authorization/src'),
+    'Authentication\\' => array($vendorDir . '/cakephp/authentication/src'),
     'App\\Test\\' => array($baseDir . '/tests'),
     'App\\' => array($baseDir . '/src'),
 );

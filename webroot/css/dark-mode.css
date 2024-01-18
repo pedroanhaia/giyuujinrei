@@ -1,0 +1,75 @@
+.container, .content {
+	background-color: #3a3b3c;
+}
+
+.form-label, .control-label, .form-control {
+	color: rgb(194, 194, 194) !important;
+}
+
+textarea.form-control, input[type='email'], input[type='number'], input[type='password'], input[type='search'], input[type='tel'], input[type='text'], input[type='url'], input[type='color'], input[type='date'], input[type='month'], input[type='week'], input[type='datetime'], input[type='datetime-local'], input:not([type]), textarea, select {
+	background-color: #252525;
+}
+
+table.dataTable td, td {
+	color: rgb(219, 219, 219);
+}
+
+table.dataTable th, th {
+	color: rgb(101, 224, 240);
+}
+
+table.dataTable tr:hover td{
+	color: rgb(151, 151, 151);
+	background-color: #252525;
+}
+
+select, div.dataTables_wrapper div.dataTables_length select {
+    color: #fff; /* Cor do texto */
+    background-color: #333 !important; /* Cor de fundo */
+    border: 1px solid #555; /* Cor da borda */
+}
+
+/* Estilo para quando o seletor está aberto */
+select:focus, div.dataTables_wrapper div.dataTables_length select {
+    outline: none; /* Remover a borda de foco padrão */
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Sombra quando focado */
+}
+
+/* Estilo para opções dentro do seletor */
+select option, div.dataTables_wrapper div.dataTables_length select, textarea {
+    background-color: #444; /* Cor de fundo das opções */
+    color: #fff; /* Cor do texto das opções */
+}
+
+/* Estilo para opções selecionadas */
+select option:checked, div.dataTables_wrapper div.dataTables_length select {
+    background-color: #555; /* Cor de fundo da opção selecionada */
+    color: #fff; /* Cor do texto da opção selecionada */
+}
+
+.form-control:focus {
+	background-color: #292929;
+    color: #f0f0f0; /* Cor do texto do placeholder */
+}
+
+/* Estilo para o placeholder no modo escuro */
+.form-control::placeholder, textarea::placeholder {
+    color: #cccccc; /* Cor do texto do placeholder */
+}
+
+/* Estilo para o placeholder no modo escuro quando o campo está focado */
+.form-control:focus::placeholder, textarea:focus::placeholder {
+    color: #ccc; /* Cor do texto do placeholder quando focado */
+}
+
+.dataTables_info, div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.dataTables_length label {
+    color: #c4c4c4;
+}
+
+.form-control:disabled {
+    background-color: #7c7c7c; /* Cor de fundo das opções */
+}
+
+.charts-legend {
+    color: #ffffff;
+}
