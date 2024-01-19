@@ -17,7 +17,7 @@ class AppController extends Controller {
 		$this->viewBuilder()->setOption('serialize', array_keys($this->viewBuilder()->getVars()));
 
 		parent::beforeRender($event);
-		$this->set('title', 'Twelfth Bot');
+		$this->set('title', 'Giyuujinrei');
 		//if ($this->Authentication->getResult()->isValid()) {
 		//    // Obtém os dados do usuário autenticado
 		//    $userData = $this->Authentication->getIdentity()->getOriginalData();

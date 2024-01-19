@@ -117,7 +117,9 @@ class UsersController extends AppController
 		// regardless of POST or GET, redirect if user is logged in
 		if ($result && $result->isValid()) {
 			// redirect to /cards after login success
-			$redirect = $this->request->getQuery('redirect', [
+			$this->Flash->set(__('/img/Logo5-3D.gif'),['element'=>'success_with_gif']);
+
+            $redirect = $this->request->getQuery('redirect', [
 				'controller' => 'Users',
 				'action' => 'index',
 			]);
