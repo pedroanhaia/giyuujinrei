@@ -3,103 +3,80 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Assessment Controller
- *
- * @property \App\Model\Table\AssessmentTable $Assessment
- * @method \App\Model\Entity\Assessment[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class AssessmentController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $assessment = $this->paginate($this->Assessment);
+class AssessmentController extends AppController {
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Teachers');
+		$this->loadModel('Students');
+	}
 
-        $this->set(compact('assessment'));
-    }
+	public function index() {
+		$assessment = $this->paginate($this->Assessment);
+		$this->set(compact('assessment'));
+	}
+ 
+	public function view($id = null) {
+		$assessment = $this->Assessment->get($id, [
+			'contain' => [],
+		]);
 
-    /**
-     * View method
-     *
-     * @param string|null $id Assessment id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $assessment = $this->Assessment->get($id, [
-            'contain' => [],
-        ]);
+		$this->set('title', 'Lista de avaliações');
+		$this->set(compact('assessment'));
+	}
 
-        $this->set(compact('assessment'));
-    }
+	public function add() {
+		$assessment = $this->Assessment->newEmptyEntity();
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $assessment = $this->Assessment->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $assessment = $this->Assessment->patchEntity($assessment, $this->request->getData());
-            if ($this->Assessment->save($assessment)) {
-                $this->Flash->success(__('The assessment has been saved.'));
+		if ($this->request->is('post')) {
+			$assessment = $this->Assessment->patchEntity($assessment, $this->request->getData());
+			
+			if ($this->Assessment->save($assessment)) {
+				$this->Flash->success(__('A avaliação foi salva com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
+		}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The assessment could not be saved. Please, try again.'));
-        }
-        $this->set(compact('assessment'));
-    }
+		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Assessment id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $assessment = $this->Assessment->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $assessment = $this->Assessment->patchEntity($assessment, $this->request->getData());
-            if ($this->Assessment->save($assessment)) {
-                $this->Flash->success(__('The assessment has been saved.'));
+		$this->set(compact('assessment'));
+		$this->set('estudantes', $estudantes);
+		$this->set('professores', $professores);
+		$this->set('title', 'Cadastrar avaliação');
+	}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The assessment could not be saved. Please, try again.'));
-        }
-        $this->set(compact('assessment'));
-    }
+	public function edit($id = null) {
+		$assessment = $this->Assessment->get($id, ['contain' => []]);
+		
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$assessment = $this->Assessment->patchEntity($assessment, $this->request->getData());
+			if ($this->Assessment->save($assessment)) {
+				$this->Flash->success(__('The assessment has been saved.'));
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Assessment id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $assessment = $this->Assessment->get($id);
-        if ($this->Assessment->delete($assessment)) {
-            $this->Flash->success(__('The assessment has been deleted.'));
-        } else {
-            $this->Flash->error(__('The assessment could not be deleted. Please, try again.'));
-        }
+				return $this->redirect(['action' => 'index']);
+			}
+			$this->Flash->error(__('The assessment could not be saved. Please, try again.'));
+		}
 
-        return $this->redirect(['action' => 'index']);
-    }
+		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set(compact('assessment'));
+		$this->set('estudantes', $estudantes);
+		$this->set('professores', $professores);
+		$this->set('title', 'Alterar avaliação');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$assessment = $this->Assessment->get($id);
+		if ($this->Assessment->delete($assessment)) {
+			$this->Flash->success(__('The assessment has been deleted.'));
+		} else {
+			$this->Flash->error(__('The assessment could not be deleted. Please, try again.'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

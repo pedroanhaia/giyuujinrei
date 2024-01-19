@@ -33,15 +33,15 @@
 	<?= $this->Html->script("reqajaxforserver") ?>
 
 	<!-- Datatable -->
-	<!-- <?= $this->Html->css("/plugins/datatables/datatables.min") ?> -->
-	<!-- <?= $this->Html->script("/plugins/datatables/datatables.min") ?> -->
+	<?= $this->Html->css("/plugins/datatables/datatables.min") ?>
+	<?= $this->Html->script("/plugins/datatables/datatables.min") ?>
 
 	<!-- Masks -->
-	<!-- <?= $this->Html->script('/plugins/jQuery-Mask-Plugin-master/src/jquery.mask.js') ?> -->
+	<?= $this->Html->script('/plugins/jQuery-Mask-Plugin-master/src/jquery.mask.js') ?>
 
 	<!-- Bootbox - confirms -->
-	<!-- <?= $this->Html->script('/plugins/bootbox/bootbox.min.js') ?> -->
-	<!-- <?= $this->Html->script('/plugins/bootbox/bootbox.locales.min.js') ?> -->
+	<?= $this->Html->script('/plugins/bootbox/bootbox.min.js') ?>
+	<?= $this->Html->script('/plugins/bootbox/bootbox.locales.min.js') ?>
 
 	<!--- E-Charts -->
 	<!-- <?= $this->Html->script("/plugins/echarts/echarts") ?> -->
@@ -50,7 +50,7 @@
 	<?= $this->fetch('css') ?>
 	<?= $this->fetch('script') ?>
 </head>
-<body class='<?= false ? 'dark' : '' ?>'>
+<body class='<?= $darkMode ? 'dark' : '' ?>'>
 	<nav class="sidebar close">
 		<header>
 			<i class='bx bx-chevron-right toggle'></i>
@@ -123,7 +123,7 @@
 </body>
 </html>
 <script>
-	// Dark mode
+	// Dark mode 
 		const body = document.querySelector('body'),
 			sidebar = body.querySelector('nav'),
 			toggle = body.querySelector(".toggle"),
@@ -192,7 +192,7 @@
 		$(document).ready(function() {
 			darkMode();
 		});
-	// Datatable
+	// Datatable 
 		var datatableOptions = {
 			"pageLength": 10,
 			"language": {

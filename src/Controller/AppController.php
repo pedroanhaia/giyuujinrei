@@ -27,29 +27,7 @@ class AppController extends Controller {
 		//    $this->set('role', $userData['role']);
 		//}
 	}
-	/**
-	 * Initialization hook method.
-	 *
-	 * Use this method to add common initialization code like loading components.
-	 *
-	 * e.g. `$this->loadComponent('FormProtection');`
-	 *
-	 * @return void
-	 */
-	//public function initialize(): void
-	//{
-	//    parent::initialize();
-	//	parent::beforeRender($event);
-
-		//if ($this->Authentication->getResult()->isValid()) {
-		//    // Obtém os dados do usuário autenticado
-		//    $userData = $this->Authentication->getIdentity()->getOriginalData();
-		////
-		//    // Passa o nome do usuário para a view
-		//    $this->set('userName', $userData['nickname']); // Substitua 'name' pelo campo correto que armazena o nome do usuário no seu banco de dados
-		//    $this->set('role', $userData['role']);
-		//}
-	//}
+	
 
 	public function initialize(): void {
 		$this->loadComponent('Authentication.Authentication');
