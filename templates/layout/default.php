@@ -83,9 +83,8 @@
 						<?= $this->Html->link('<i class="fa-solid fa-person-skiing icon"></i> ' . __('Esportes'), '/sports', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Alunos'), '/students', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
 					</li>
-
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
 					</li>

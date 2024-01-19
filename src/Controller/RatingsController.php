@@ -3,103 +3,79 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Ratings Controller
- *
- * @property \App\Model\Table\RatingsTable $Ratings
- * @method \App\Model\Entity\Rating[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class RatingsController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $ratings = $this->paginate($this->Ratings);
+class RatingsController extends AppController {
 
-        $this->set(compact('ratings'));
-    }
+	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Ratings.id' => 'DESC'],
+			'contain' => [
+				'Sports' => ['fields' => ['name']],
+			],
+		];
 
-    /**
-     * View method
-     *
-     * @param string|null $id Rating id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $rating = $this->Ratings->get($id, [
-            'contain' => [],
-        ]);
+		$ratings = $this->paginate($this->Ratings);
 
-        $this->set(compact('rating'));
-    }
+		$this->set(compact('ratings'));
+		$this->set('title', 'Lista de áreas');
+	}
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $rating = $this->Ratings->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $rating = $this->Ratings->patchEntity($rating, $this->request->getData());
-            if ($this->Ratings->save($rating)) {
-                $this->Flash->success(__('The rating has been saved.'));
+	public function view($id = null) {
+		$rating = $this->Ratings->get($id, [
+			'contain' => [],
+		]);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The rating could not be saved. Please, try again.'));
-        }
-        $this->set(compact('rating'));
-    }
+		$this->set(compact('rating'));
+		$this->set('title', 'Visualizar área');
+	}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Rating id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $rating = $this->Ratings->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $rating = $this->Ratings->patchEntity($rating, $this->request->getData());
-            if ($this->Ratings->save($rating)) {
-                $this->Flash->success(__('The rating has been saved.'));
+	public function add() {
+		$rating = $this->Ratings->newEmptyEntity();
+		if ($this->request->is('post')) {
+			$rating = $this->Ratings->patchEntity($rating, $this->request->getData());
+			
+			if ($this->Ratings->save($rating)) {
+				$this->Flash->success(__('A área foi salva com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+			
+			$this->Flash->error(__('Não foi possível salvar a área, tente novamente.'));
+		}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The rating could not be saved. Please, try again.'));
-        }
-        $this->set(compact('rating'));
-    }
+		$this->set(compact('rating'));
+		$this->set('title', 'Cadastrar área');
+	}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Rating id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $rating = $this->Ratings->get($id);
-        if ($this->Ratings->delete($rating)) {
-            $this->Flash->success(__('The rating has been deleted.'));
-        } else {
-            $this->Flash->error(__('The rating could not be deleted. Please, try again.'));
-        }
+	public function edit($id = null) {
+		$rating = $this->Ratings->get($id, [
+			'contain' => [],
+		]);
 
-        return $this->redirect(['action' => 'index']);
-    }
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$rating = $this->Ratings->patchEntity($rating, $this->request->getData());
+		
+			if ($this->Ratings->save($rating)) {
+				$this->Flash->success(__('A área foi salva com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+
+			$this->Flash->error(__('Não foi possível salvar a área, tente novamente.'));
+		}
+
+		$this->set(compact('rating'));
+		$this->set('title', 'Alterar área');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$rating = $this->Ratings->get($id);
+
+		if ($this->Ratings->delete($rating)) {
+			$this->Flash->success(__('A área foi excluída com sucesso.'));
+		} else {
+			$this->Flash->error(__('Não foi possível excluir a área, tente novamente.'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

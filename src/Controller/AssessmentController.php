@@ -11,16 +11,30 @@ class AssessmentController extends AppController {
 	}
 
 	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Assessment.id' => 'DESC'],
+			'contain' => [
+				'Students' => ['fields' => ['name']],
+				'Teachers' => ['fields' => ['name']],
+			],
+		];
+
 		$assessment = $this->paginate($this->Assessment);
+
+		$this->set('title', 'Lista de avaliações');
 		$this->set(compact('assessment'));
 	}
  
 	public function view($id = null) {
-		$assessment = $this->Assessment->get($id, [
-			'contain' => [],
-		]);
+		$assessment = $this->Assessment->findById($id)
+			->contain([
+				'Students' => ['fields' => ['name']],
+				'Teachers' => ['fields' => ['name']],
+			])
+		->first();
 
-		$this->set('title', 'Lista de avaliações');
+		$this->set('title', 'z de avaliações');
 		$this->set(compact('assessment'));
 	}
 
@@ -39,10 +53,12 @@ class AssessmentController extends AppController {
 
 		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$schedules = $this->Schedules->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set(compact('assessment'));
 		$this->set('estudantes', $estudantes);
 		$this->set('professores', $professores);
+		$this->set('schedules', $schedules);
 		$this->set('title', 'Cadastrar avaliação');
 	}
 
@@ -72,9 +88,9 @@ class AssessmentController extends AppController {
 		$this->request->allowMethod(['post', 'delete']);
 		$assessment = $this->Assessment->get($id);
 		if ($this->Assessment->delete($assessment)) {
-			$this->Flash->success(__('The assessment has been deleted.'));
+			$this->Flash->success(__('A avaliação foi excluída com sucesso.'));
 		} else {
-			$this->Flash->error(__('The assessment could not be deleted. Please, try again.'));
+			$this->Flash->error(__('Não foi possível excluir a avaliação, tente novamente.'));
 		}
 
 		return $this->redirect(['action' => 'index']);

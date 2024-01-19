@@ -3,103 +3,78 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Sports Controller
- *
- * @property \App\Model\Table\SportsTable $Sports
- * @method \App\Model\Entity\Sport[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class SportsController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $sports = $this->paginate($this->Sports);
+class SportsController extends AppController {
+	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Schedules.id' => 'DESC'],
+			'contain' => [
+				'Cores' => ['fields' => ['name']],
+			],
+		];
 
-        $this->set(compact('sports'));
-    }
+		$sports = $this->paginate($this->Sports);
 
-    /**
-     * View method
-     *
-     * @param string|null $id Sport id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $sport = $this->Sports->get($id, [
-            'contain' => [],
-        ]);
+		$this->set(compact('sports'));
+		$this->set('title', 'Lista de esportes');
+	}
 
-        $this->set(compact('sport'));
-    }
+	public function view($id = null) {
+		$sport = $this->Sports->get($id, [
+			'contain' => [],
+		]);
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $sport = $this->Sports->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $sport = $this->Sports->patchEntity($sport, $this->request->getData());
-            if ($this->Sports->save($sport)) {
-                $this->Flash->success(__('The sport has been saved.'));
+		$this->set(compact('sport'));
+		$this->set('title', 'Visualizar esporte');
+	}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The sport could not be saved. Please, try again.'));
-        }
-        $this->set(compact('sport'));
-    }
+	public function add() {
+		$sport = $this->Sports->newEmptyEntity();
+		if ($this->request->is('post')) {
+			$sport = $this->Sports->patchEntity($sport, $this->request->getData());
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Sport id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $sport = $this->Sports->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $sport = $this->Sports->patchEntity($sport, $this->request->getData());
-            if ($this->Sports->save($sport)) {
-                $this->Flash->success(__('The sport has been saved.'));
+			if ($this->Sports->save($sport)) {
+				$this->Flash->success(__('O esporte foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The sport could not be saved. Please, try again.'));
-        }
-        $this->set(compact('sport'));
-    }
+			$this->Flash->error(__('Não foi possível salvar o esporte, tente novamente.'));
+		}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Sport id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $sport = $this->Sports->get($id);
-        if ($this->Sports->delete($sport)) {
-            $this->Flash->success(__('The sport has been deleted.'));
-        } else {
-            $this->Flash->error(__('The sport could not be deleted. Please, try again.'));
-        }
+		$this->set(compact('sport'));
+		$this->set('title', 'Cadastrar esporte');
+	}
 
-        return $this->redirect(['action' => 'index']);
-    }
+	public function edit($id = null) {
+		$sport = $this->Sports->get($id, [
+			'contain' => [],
+		]);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$sport = $this->Sports->patchEntity($sport, $this->request->getData());
+			
+			if ($this->Sports->save($sport)) {
+				$this->Flash->success(__('O esporte foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+
+			$this->Flash->error(__('Não foi possível salvar o esporte, tente novamente.'));
+		}
+
+		$this->set(compact('sport'));
+		$this->set('title', 'Alterar esporte');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$sport = $this->Sports->get($id);
+
+		if ($this->Sports->delete($sport)) {
+			$this->Flash->success(__('O esporte foi excuído com sucesso.'));
+		} else {
+			$this->Flash->error(__('Não foi possível excluir o esporte, tente novamente.'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

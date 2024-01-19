@@ -8,69 +8,36 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Schedules Model
- *
- * @method \App\Model\Entity\Schedule newEmptyEntity()
- * @method \App\Model\Entity\Schedule newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Schedule[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Schedule get($primaryKey, $options = [])
- * @method \App\Model\Entity\Schedule findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Schedule patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Schedule[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Schedule|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Schedule saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Schedule[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Schedule[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Schedule[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Schedule[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- */
-class SchedulesTable extends Table
-{
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void
-    {
-        parent::initialize($config);
+class SchedulesTable extends Table {
+	public function initialize(array $config): void {
+		parent::initialize($config);
 
-        $this->setTable('schedules');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+		$this->setTable('schedules');
+		$this->setDisplayField('name');
+		$this->setPrimaryKey('id');
+		$this->addBehavior('Timestamp');
 
-        $this->addBehavior('Timestamp');
-    }
+		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
+	}
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->dateTime('date')
-            ->allowEmptyDateTime('date');
+	public function validationDefault(Validator $validator): Validator {
+		$validator
+			->dateTime('date')
+			->allowEmptyDateTime('date');
 
-        $validator
-            ->integer('idcore')
-            ->allowEmptyString('idcore');
+		$validator
+			->integer('idcore')
+			->allowEmptyString('idcore');
 
-        $validator
-            ->integer('role')
-            ->allowEmptyString('role');
+		$validator
+			->integer('role')
+			->allowEmptyString('role');
 
-        $validator
-            ->scalar('name')
-            ->maxLength('name', 255)
-            ->allowEmptyString('name');
+		$validator
+			->scalar('name')
+			->maxLength('name', 255)
+			->allowEmptyString('name');
 
-        return $validator;
-    }
+		return $validator;
+	}
 }

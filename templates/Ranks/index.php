@@ -1,58 +1,59 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Rank> $ranks
- */
-?>
-<div class="ranks index content">
-    <?= $this->Html->link(__('New Rank'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Ranks') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('color') ?></th>
-                    <th><?= $this->Paginator->sort('description') ?></th>
-                    <th><?= $this->Paginator->sort('idsport') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th><?= $this->Paginator->sort('role') ?></th>
-                    <th><?= $this->Paginator->sort('urlimage') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($ranks as $rank): ?>
-                <tr>
-                    <td><?= $this->Number->format($rank->id) ?></td>
-                    <td><?= h($rank->name) ?></td>
-                    <td><?= h($rank->color) ?></td>
-                    <td><?= h($rank->description) ?></td>
-                    <td><?= $rank->idsport === null ? '' : $this->Number->format($rank->idsport) ?></td>
-                    <td><?= h($rank->created) ?></td>
-                    <td><?= h($rank->modified) ?></td>
-                    <td><?= $rank->role === null ? '' : $this->Number->format($rank->role) ?></td>
-                    <td><?= h($rank->urlimage) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $rank->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $rank->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $rank->id], ['confirm' => __('Are you sure you want to delete # {0}?', $rank->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+
+<div class="content">
+	<div class="table-responsive">
+		<table class="table table-hover table-row-clickable" id="table">
+			<thead class="text-primary">
+				<tr>
+					<th> # </th>
+					<th> Nome </th>
+					<th> Cor </th>
+					<th> Descrição </th>
+					<th> Esporte </th>
+					<th class="actions"> Ações </th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($ranks as $reg): ?>
+					<tr>
+						<td> <?= $reg->id ?> </td>
+						<td> <?= $reg->name ?> </td>
+						<td> <?= $reg->color ?> </td>
+						<td> <?= $reg->description ?> </td>
+						<td> <?= $reg->sport->name ?> </td>
+						<td class="actions">
+							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+	<div class ='row'>
+		<div class="col-12 col-paginator">
+		 <?= $this->Paginator->first('<< ' . __('Primeira')) ?>
+			<?= $this->Paginator->prev('< ' . __('Anterior')) ?>
+			<?= $this->Paginator->numbers() ?>
+			<?= $this->Paginator->next(__('Próxima') . ' >') ?>
+			<?= $this->Paginator->last(__('Úlima') . ' >>') ?>
+			<p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} resultado(s) de {{count}} totais')) ?></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Html->link(__('Nova graduação'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) ?>
+		</div>
+	</div>
 </div>
+<script>
+	$(document).ready(function() {
+		var table = $('#table').DataTable({
+			dom: 'rt', // Adicione os elementos que você deseja (l - length, r - processing, t - table, i - information, p - pagination),
+			"language": window.datatableOptionsLanguage,
+			"paging" : false,
+			"order": [0, 'DESC'],
+			"bPaginate": false,
+		});
+	});
+</script>

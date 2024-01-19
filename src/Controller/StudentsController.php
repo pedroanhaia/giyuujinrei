@@ -3,103 +3,69 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Students Controller
- *
- * @property \App\Model\Table\StudentsTable $Students
- * @method \App\Model\Entity\Student[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class StudentsController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $students = $this->paginate($this->Students);
+class StudentsController extends AppController {
+	public function index() {
+		$students = $this->paginate($this->Students);
+		
+		$this->set(compact('students'));
+		$this->set('title', 'Lista de estudantes');
+	}
 
-        $this->set(compact('students'));
-    }
+	public function view($id = null) {
+		$student = $this->Students->get($id, [
+			'contain' => [],
+		]);
 
-    /**
-     * View method
-     *
-     * @param string|null $id Student id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $student = $this->Students->get($id, [
-            'contain' => [],
-        ]);
+		$this->set(compact('student'));
+		$this->set('title', 'Visualizar estudante');
+	}
 
-        $this->set(compact('student'));
-    }
+	public function add() {
+		$student = $this->Students->newEmptyEntity();
+		if ($this->request->is('post')) {
+			$student = $this->Students->patchEntity($student, $this->request->getData());
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $student = $this->Students->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $student = $this->Students->patchEntity($student, $this->request->getData());
-            if ($this->Students->save($student)) {
-                $this->Flash->success(__('The student has been saved.'));
+			if ($this->Students->save($student)) {
+				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The student could not be saved. Please, try again.'));
-        }
-        $this->set(compact('student'));
-    }
+			$this->Flash->error(__('Não foi possível salvr o estudante, tente novamente.'));
+		}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Student id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $student = $this->Students->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $student = $this->Students->patchEntity($student, $this->request->getData());
-            if ($this->Students->save($student)) {
-                $this->Flash->success(__('The student has been saved.'));
+		$this->set(compact('student'));
+		$this->set('title', 'Cadastrar estudante');
+	}
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The student could not be saved. Please, try again.'));
-        }
-        $this->set(compact('student'));
-    }
+	public function edit($id = null) {
+		$student = $this->Students->get($id, [
+			'contain' => [],
+		]);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$student = $this->Students->patchEntity($student, $this->request->getData());
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Student id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $student = $this->Students->get($id);
-        if ($this->Students->delete($student)) {
-            $this->Flash->success(__('The student has been deleted.'));
-        } else {
-            $this->Flash->error(__('The student could not be deleted. Please, try again.'));
-        }
+			if ($this->Students->save($student)) {
+				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
 
-        return $this->redirect(['action' => 'index']);
-    }
+			$this->Flash->error(__('Não foi possível salvr o estudante, tente novamente.'));
+		}
+
+		$this->set(compact('student'));
+		$this->set('title', 'Alterar estudante');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$student = $this->Students->get($id);
+
+		if ($this->Students->delete($student)) {
+			$this->Flash->success(__('O estudante foi excluído com sucesso.'));
+		} else {
+			$this->Flash->error(__('Não foi possível excluir o estudante, tente novamente.'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

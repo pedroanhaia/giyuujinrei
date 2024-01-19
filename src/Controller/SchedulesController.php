@@ -3,103 +3,88 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Schedules Controller
- *
- * @property \App\Model\Table\SchedulesTable $Schedules
- * @method \App\Model\Entity\Schedule[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class SchedulesController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $schedules = $this->paginate($this->Schedules);
+class SchedulesController extends AppController {
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Cores');
+	}
 
-        $this->set(compact('schedules'));
-    }
+	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Schedules.id' => 'DESC'],
+			'contain' => [
+				'Cores' => ['fields' => ['name']],
+			],
+		];
 
-    /**
-     * View method
-     *
-     * @param string|null $id Schedule id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $schedule = $this->Schedules->get($id, [
-            'contain' => [],
-        ]);
+		$schedules = $this->paginate($this->Schedules);
 
-        $this->set(compact('schedule'));
-    }
+		$this->set(compact('schedules'));
+		$this->set('title', 'Lista de agendamentos');
+	}
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $schedule = $this->Schedules->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
-            if ($this->Schedules->save($schedule)) {
-                $this->Flash->success(__('The schedule has been saved.'));
+	public function view($id = null) {
+		$schedule = $this->Schedules->get($id, [
+			'contain' => [],
+		]);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
-        }
-        $this->set(compact('schedule'));
-    }
+		$this->set(compact('schedule'));
+		$this->set('title', 'Visualizar agendamento');
+	}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Schedule id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $schedule = $this->Schedules->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
-            if ($this->Schedules->save($schedule)) {
-                $this->Flash->success(__('The schedule has been saved.'));
+	public function add() {
+		$schedule = $this->Schedules->newEmptyEntity();
+		if ($this->request->is('post')) {
+			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The schedule could not be saved. Please, try again.'));
-        }
-        $this->set(compact('schedule'));
-    }
+			if ($this->Schedules->save($schedule)) {
+				$this->Flash->success(__('O agendamento foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Schedule id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $schedule = $this->Schedules->get($id);
-        if ($this->Schedules->delete($schedule)) {
-            $this->Flash->success(__('The schedule has been deleted.'));
-        } else {
-            $this->Flash->error(__('The schedule could not be deleted. Please, try again.'));
-        }
+			$this->Flash->error(__('Não foi possível salvar o agendamento, tente novamente'));
+		}
 
-        return $this->redirect(['action' => 'index']);
-    }
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('cores', $cores);
+		$this->set(compact('schedule'));
+		$this->set('title', 'Cadastrar agendamento');
+	}
+
+	public function edit($id = null) {
+		$schedule = $this->Schedules->get($id, [
+			'contain' => [],
+		]);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
+			
+			if ($this->Schedules->save($schedule)) {
+				$this->Flash->success(__('O agendamento foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+
+			$this->Flash->error(__('Não foi possível salvar o agendamento, tente novamente'));
+		}
+
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('cores', $cores);
+		$this->set(compact('schedule'));
+		$this->set('title', 'Alterar agendamento');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$schedule = $this->Schedules->get($id);
+
+		if ($this->Schedules->delete($schedule)) {
+			$this->Flash->success(__('O agendamento foi excluído com sucesso.'));
+		} else {
+			$this->Flash->error(__('Não foi possível excluir o agendamento, tente novamente'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

@@ -3,103 +3,90 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-/**
- * Indexes Controller
- *
- * @property \App\Model\Table\IndexesTable $Indexes
- * @method \App\Model\Entity\Index[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
- */
-class IndexesController extends AppController
-{
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $indexes = $this->paginate($this->Indexes);
+class IndexesController extends AppController {
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Ratings');
+	}
 
-        $this->set(compact('indexes'));
-    }
+	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Indexes.id' => 'DESC'],
+			'contain' => [
+				'Ratings' => ['fields' => ['name']],
+			],
+		];
 
-    /**
-     * View method
-     *
-     * @param string|null $id Index id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $index = $this->Indexes->get($id, [
-            'contain' => [],
-        ]);
+		$indexes = $this->paginate($this->Indexes);
 
-        $this->set(compact('index'));
-    }
+		$this->set(compact('indexes'));
+		$this->set('title', 'Lista de índices');
+	}
 
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $index = $this->Indexes->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $index = $this->Indexes->patchEntity($index, $this->request->getData());
-            if ($this->Indexes->save($index)) {
-                $this->Flash->success(__('The index has been saved.'));
+	public function view($id = null) {
+		$index = $this->Indexes->get($id, [
+			'contain' => [],
+		]);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The index could not be saved. Please, try again.'));
-        }
-        $this->set(compact('index'));
-    }
+		$this->set(compact('index'));
+		$this->set('title', 'Visualizar índice');
+	}
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Index id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $index = $this->Indexes->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $index = $this->Indexes->patchEntity($index, $this->request->getData());
-            if ($this->Indexes->save($index)) {
-                $this->Flash->success(__('The index has been saved.'));
+	public function add() {
+		$index = $this->Indexes->newEmptyEntity();
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The index could not be saved. Please, try again.'));
-        }
-        $this->set(compact('index'));
-    }
+		if ($this->request->is('post')) {
+			$index = $this->Indexes->patchEntity($index, $this->request->getData());
+			
+			if ($this->Indexes->save($index)) {
+				$this->Flash->success(__('O índice foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Index id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $index = $this->Indexes->get($id);
-        if ($this->Indexes->delete($index)) {
-            $this->Flash->success(__('The index has been deleted.'));
-        } else {
-            $this->Flash->error(__('The index could not be deleted. Please, try again.'));
-        }
+			$this->Flash->error(__('Não foi possível salvar o índice, tente novamente.'));
+		}
 
-        return $this->redirect(['action' => 'index']);
-    }
+		$ratings = $this->Ratings->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set(compact('index'));
+		$this->set('ratings', $ratings);
+		$this->set('title', 'Cadastrar índice');
+	}
+
+	public function edit($id = null) {
+		$index = $this->Indexes->get($id, [
+			'contain' => [],
+		]);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$index = $this->Indexes->patchEntity($index, $this->request->getData());
+
+			if ($this->Indexes->save($index)) {
+				$this->Flash->success(__('O índice foi salvo com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			}
+
+			$this->Flash->error(__('Não foi possível salvar o índice, tente novamente.'));
+		}
+		
+		$ratings = $this->Ratings->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set(compact('index'));
+		$this->set('ratings', $ratings);
+		$this->set('title', 'Alterar índice');
+	}
+
+	public function delete($id = null) {
+		$this->request->allowMethod(['post', 'delete']);
+		$index = $this->Indexes->get($id);
+
+		if ($this->Indexes->delete($index)) {
+			$this->Flash->success(__('O índice foi excluído com sucesso.'));
+		} else {
+			$this->Flash->error(__('Não foi possível excluir o índice, tente novamente.'));
+		}
+
+		return $this->redirect(['action' => 'index']);
+	}
 }

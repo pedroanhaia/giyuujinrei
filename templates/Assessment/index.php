@@ -1,7 +1,7 @@
 
 <div class="content">
 	<div class="table-responsive">
-		<table class="table table-hover table-row-clickable" id="tableBets">
+		<table class="table table-hover table-row-clickable" id="table">
 			<thead class="text-primary">
 				<tr>
 					<th> # </th>
@@ -26,9 +26,9 @@
 						<td> <?= date_format($assessment->created, 'd/m/Y') ?> </td>
 						<td> <?= $assessment->role === null ? '' : $this->Number->format($assessment->role) ?> </td>
 						<td class="actions">
-							<?= $this->Html->link(__('View'), ['action' => 'view', $assessment->id]) ?>
-							<?= $this->Html->link(__('Edit'), ['action' => 'edit', $assessment->id]) ?>
-							<?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $assessment->id], ['confirm' => __('Are you sure you want to delete # {0}?', $assessment->id)]) ?>
+							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?></td>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -53,16 +53,12 @@
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#tableBets').DataTable({
+		var table = $('#table').DataTable({
 			dom: 'rt', // Adicione os elementos que você deseja (l - length, r - processing, t - table, i - information, p - pagination),
 			"language": window.datatableOptionsLanguage,
 			"paging" : false,
 			"order": [0, 'DESC'],
 			"bPaginate": false,
-		});
-
-		$('#customSearch').on('keyup', function() {
-			table.search(this.value).draw();
 		});
 	});
 </script>

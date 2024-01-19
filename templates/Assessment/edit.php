@@ -4,10 +4,8 @@
 			<?= $this->Form->create($assessment, ['class' => 'form-material  mt-2']) ?>
 				<div class="row">
 					<div class="col-lg-3 col-md-12">
-						<div class="form-group">
-							<label class="control-label text-muted"> Índice </label>
-							<?= $this->Form->control('idindex', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o índice']) ?>
-						</div>
+						<label class="control-label text-muted"> Índice </label>
+						<?= $this->Form->control('idindex', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o índice']) ?>
 					</div>
 					<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Professor </label>
@@ -16,30 +14,22 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-2 col-md-12">
-						<div class="form-group">
-							<label class="control-label text-muted"> Estudante </label>
-							<?= $this->Form->control('idstudent', ['class' => 'form-control ', 'label' => false, 'required' => true, 'options' => $estudantes, 'title' => 'Selecione o estudante']) ?>
-						</div>
+						<label class="control-label text-muted"> Estudante </label>
+						<?= $this->Form->control('idstudent', ['class' => 'form-control ', 'label' => false, 'required' => true, 'options' => $estudantes, 'title' => 'Selecione o estudante']) ?>
 					</div>
 					<div class="col-lg-2 col-md-12">
-						<div class="form-group">
-							<label class="control-label text-muted"> Valor </label>
-							<?= $this->Form->control('value', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o valor']) ?>
-						</div>
+						<label class="control-label text-muted"> Valor </label>
+						<?= $this->Form->control('value', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o valor']) ?>
 					</div>
 					<div class="col-lg-4 col-md-12">
-						<div class="form-group">
-							<label class="control-label text-muted"> Calendário </label>
-							<?= $this->Form->control('idschedule', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idschedule']) ?>
-						</div>
+						<label class="control-label text-muted"> Calendário </label>
+						<?= $this->Form->control('idschedule', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idschedule']) ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-4 col-md-12">
-						<div class="form-group">
-							<label class="control-label text-muted"> Role </label>
-							<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
-						</div>
+						<label class="control-label text-muted"> Role </label>
+						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
 					</div>
 				</div>
 				<div class="row">
