@@ -1,35 +1,36 @@
 認証機能
 ##############
 
-Authenticatorは、リクエストを認証操作に変換する処理を行います。
+Authenticatorsは、リクエストデータを認証に変換する処理を行います。
 それらは、 :doc:`/identifiers` を利用して、既知の :doc:`/identity-object` を見つけます。
 
-`Session`
+セクション
 ===========
 
-この認証機能は、セッションにユーザー情報や資格情報が含まれているかどうかをチェックします。
-以下に挙げた ``Form`` のようなステートフルな認証機能を使う場合、
-ユーザーが一度ログインしたら、それ以降でセッションからデータを取得されるように、
+この認証機能は、セッションにユーザーデータや資格情報が含まれているかどうかをチェックします。
+以下に挙げた ``Form`` のようなステートフルな認証機能を使う場合は、
+一度ログインしたユーザのデータがそれ以降のリクエストでセッションから取得されるように、
 最初に ``Session`` の認証機能をロードするようにしてください。
 設定オプション:
 
--  **sessionKey**: ユーザーのセッションキー, デフォルトは ``Auth``
--  **identify**:  bool ``true`` の値を指定してこのキーを設定すると、
+-  **sessionKey**: ユーザーデータのセッションキー, デフォルトは ``Auth``
+-  **identify**:  bool ``true``` の値を指定してこのキーを設定すると、
    セッションの認証情報を識別子と照合できるようになります。
    ``true`` の場合、設定された :doc:`/identifiers` はリクエストのたびにセッションに
    保存されたデータを使ってユーザを識別するために使われます。デフォルト値は ``false``.
 -  **fields**: ``username`` フィールドをユーザストレージ内の一意の識別しに写像することができます。
-   デフォルトは ``username`` です。
-   このオプションは ``identify`` オプションが true に設定されている場合に使用されます.
+   デフォルトは ``username``です。
+   このオプションは``identify`` オプションが true に設定されている場合に使用されます.
 
-`Form`
+フォーム
 =========
 
 リクエストボディのデータを調べます。通常、フォームの送信が POST / PUT 経由で行われる場合が多いです。
 
 設定オプション:
 
--  **loginUrl**: ログインURL、文字列またはURLの配列。デフォルトは``null`` で、すべてのページがチェックされます。
+-  **loginUrl**:ログインURL、文字列またはURLの配列。デフォルトは``null`` で、
+   すべてのページがチェックされます。
 -  **fields**: ``username`` と ``password`` を指定したPOSTフィールドに描画する配列です。
 -  **urlChecker**: URLチェッカーのクラスまたはオブジェクト。デフォルトは ``DefaultUrlChecker``。
 -  **useRegex**: URLのマッチングに正規表現を使うかどうか。 デフォルトは ``false``.
@@ -46,7 +47,7 @@ Authenticatorは、リクエストを認証操作に変換する処理を行い�
 トークン
 ========
 
-トークン認証機能は、ヘッダーやリクエストパラメータの中にある
+トークン認証機能は、ヘッダやリクエストパラメータの中にある
 リクエストと一緒に来るトークンに基づいてリクエストを認証することができます。
 
 設定オプション:
@@ -74,14 +75,14 @@ Authenticatorは、リクエストを認証操作に変換する処理を行い�
 JWT
 ===
 
-JWT 認証機能は、ヘッダーまたはクエリパラメータから `JWT token <https://jwt.io/>`__ を取得し、
+JWT 認証機能は、ヘッダまたはクエリパラメータから `JWT token <https://jwt.io/>`__ を取得し、
 ペイロードを直接返すか、識別子に渡して別のデータソースなどと照合して検証します。
 
--  **header**: トークンを確認するためのヘッダー行です。デフォルトは ``Authorization`` です。
+-  **header**: トークンを確認するためのヘッダ行です。デフォルトは ``Authorization`` です。
 -  **queryParam**: トークンをチェックするクエリパラメータ。デフォルトは ``token`` です。
 -  **tokenPrefix**: prefixトークン. デフォルトは ``bearer`` です。
--  **algorithm**: Firebase JWT のハッシュアルゴリズム。デフォルトは ``'HS256'`` です。
--  **returnPayload**: 識別子を経由せずに、トークンのペイロードを直接返すか返さないか。デフォルトは ``true`` です。
+-  **algorithms**: Firebase JWT用のハッシュアルゴリズムの配列。デフォルトは配列 ``['HS256']`` です。
+-  **returnPayload**:識別子を経由せずに、トークンのペイロードを直接返すか返さないか。デフォルトは ``true`` です。
 -  **secretKey**: デフォルトは ``null`` ですが、秘密鍵を ``Security::salt()`` 提供しているCakePHPアプリケーションのコンテキストではない場合は **必須** です。
 
 デフォルトでは、 ``JwtAuthenticator`` は対称鍵アルゴリズム ``HS256`` を使用し、暗号化鍵として、
@@ -109,7 +110,7 @@ JWT 認証機能は、ヘッダーまたはクエリパラメータから `JWT t
         $service->loadIdentifier('Authentication.JwtSubject');
         $service->loadAuthenticator('Authentication.Jwt', [
             'secretKey' => file_get_contents(CONFIG . '/jwt.pem'),
-            'algorithm' => 'RS256',
+            'algorithms' => ['RS256'],
             'returnPayload' => false
         ]);
     }
@@ -170,8 +171,8 @@ JWKSのエンドポイントを経由して公開鍵ファイルを配布する�
         $this->viewBuilder()->setOption('serialize', 'keys');
     }
 
-JWKSの詳細情報は https://datatracker.ietf.org/doc/html/rfc7517
-または https://auth0.com/docs/tokens/json-web-tokens/json-web-key-sets を参照してください。
+JWKSの詳細情報は https://tools.ietf.org/html/rfc7517
+または https://auth0.com/docs/tokens/concepts/jwks を参照してください。
 
 Http基本
 =========
@@ -194,10 +195,10 @@ https://en.wikipedia.org/wiki/Digest_access_authentication を確認してくだ
 -  **nonce**: デフォルトは ``uniqid(''),`` です。
 -  **opaque**: デフォルトは ``null`` です。
 
-クッキー認証機能 別名 "Remember Me"
+クッキー認証機能 別名 "リメンバーミー"
 ======================================
 
-クッキー認証機能を使用すると、ログインフォームに "remember me" 機能を実装することができます。
+クッキー認証機能を使用すると、ログインフォームに "remember me "機能を実装することができます。
 
 ログインフォームに、この認証機能で設定されているフィールド名と一致するフィールドがあることを確認してください。
 

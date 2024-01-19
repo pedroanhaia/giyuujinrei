@@ -90,15 +90,15 @@ class PasswordIdentifier extends AbstractIdentifier
     /**
      * @inheritDoc
      */
-    public function identify(array $credentials)
+    public function identify(array $data)
     {
-        if (!isset($credentials[self::CREDENTIAL_USERNAME])) {
+        if (!isset($data[self::CREDENTIAL_USERNAME])) {
             return null;
         }
 
-        $identity = $this->_findIdentity($credentials[self::CREDENTIAL_USERNAME]);
-        if (array_key_exists(self::CREDENTIAL_PASSWORD, $credentials)) {
-            $password = $credentials[self::CREDENTIAL_PASSWORD];
+        $identity = $this->_findIdentity($data[self::CREDENTIAL_USERNAME]);
+        if (array_key_exists(self::CREDENTIAL_PASSWORD, $data)) {
+            $password = $data[self::CREDENTIAL_PASSWORD];
             if (!$this->_checkPassword($identity, $password)) {
                 return null;
             }
@@ -128,10 +128,7 @@ class PasswordIdentifier extends AbstractIdentifier
 
         $hasher = $this->getPasswordHasher();
         $hashedPassword = $identity[$passwordField];
-        if (
-            $hashedPassword === null ||
-            !$hasher->check((string)$password, $hashedPassword)
-        ) {
+        if (!$hasher->check((string)$password, $hashedPassword)) {
             return false;
         }
 

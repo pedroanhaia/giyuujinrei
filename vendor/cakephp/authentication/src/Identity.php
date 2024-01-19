@@ -20,7 +20,6 @@ use ArrayAccess;
 use BadMethodCallException;
 use Cake\Core\InstanceConfigTrait;
 use InvalidArgumentException;
-use ReturnTypeWillChange;
 
 /**
  * Identity object
@@ -94,7 +93,7 @@ class Identity implements IdentityInterface
      * Check if the field isset() using object access.
      *
      * @param string $field Field in the user data.
-     * @return bool
+     * @return mixed
      */
     public function __isset(string $field)
     {
@@ -124,7 +123,7 @@ class Identity implements IdentityInterface
     /**
      * Whether a offset exists
      *
-     * @link https://php.net/manual/en/arrayaccess.offsetexists.php
+     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset Offset
      * @return bool
      */
@@ -136,11 +135,10 @@ class Identity implements IdentityInterface
     /**
      * Offset to retrieve
      *
-     * @link https://php.net/manual/en/arrayaccess.offsetget.php
+     * @link http://php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset Offset
      * @return mixed
      */
-    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -149,13 +147,13 @@ class Identity implements IdentityInterface
     /**
      * Offset to set
      *
-     * @link https://php.net/manual/en/arrayaccess.offsetset.php
+     * @link http://php.net/manual/en/arrayaccess.offsetset.php
      * @param mixed $offset The offset to assign the value to.
      * @param mixed $value Value
      * @throws \BadMethodCallException
-     * @return void
+     * @return mixed
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet($offset, $value)
     {
         throw new BadMethodCallException('Identity does not allow wrapped data to be mutated.');
     }
@@ -163,7 +161,7 @@ class Identity implements IdentityInterface
     /**
      * Offset to unset
      *
-     * @link https://php.net/manual/en/arrayaccess.offsetunset.php
+     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      * @param mixed $offset Offset
      * @throws \BadMethodCallException
      * @return void

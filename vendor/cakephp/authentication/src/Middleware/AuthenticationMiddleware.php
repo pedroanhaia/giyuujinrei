@@ -48,8 +48,8 @@ class AuthenticationMiddleware implements MiddlewareInterface
      * - `identityAttribute` - The request attribute to store the identity in.
      * - `unauthenticatedRedirect` - The URL to redirect unauthenticated errors to. See
      *    AuthenticationComponent::allowUnauthenticated()
-     * - `queryParam` - The name of the query string parameter containing the previously blocked
-     *   URL in case of unauthenticated redirect, or null to disable appending the denied URL.
+     * - `queryParam` - Set to true to have unauthenticated redirects contain a `redirect` query string
+     *   parameter with the previously blocked URL.
      *
      * @var array
      */
@@ -69,7 +69,7 @@ class AuthenticationMiddleware implements MiddlewareInterface
      * @param array $config Array of configuration settings.
      * @throws \InvalidArgumentException When invalid subject has been passed.
      */
-    public function __construct($subject, $config = [])
+    public function __construct($subject, $config = null)
     {
         $this->setConfig($config);
 

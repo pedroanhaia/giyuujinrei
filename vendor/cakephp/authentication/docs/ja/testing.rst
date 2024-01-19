@@ -14,7 +14,7 @@
 
    protected function login($userId = 1)
    {
-       $users = TableRegistry::getTableLocator()->get('Users');
+       $users = TableRegistry::get('Users');
        $user = $users->get($userId);
        $this->session(['Auth' => $user]);
    }

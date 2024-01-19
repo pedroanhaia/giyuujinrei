@@ -58,9 +58,6 @@ class LdapIdentifier extends AbstractIdentifier
             self::CREDENTIAL_PASSWORD => 'password',
         ],
         'port' => 389,
-        'options' => [
-            'tls' => false,
-        ],
     ];
 
     /**
@@ -143,17 +140,15 @@ class LdapIdentifier extends AbstractIdentifier
     /**
      * @inheritDoc
      */
-    public function identify(array $credentials)
+    public function identify(array $data)
     {
         $this->_connectLdap();
         $fields = $this->getConfig('fields');
 
-        $isUsernameSet = isset($credentials[$fields[self::CREDENTIAL_USERNAME]]);
-        $isPasswordSet = isset($credentials[$fields[self::CREDENTIAL_PASSWORD]]);
-        if ($isUsernameSet && $isPasswordSet) {
+        if (isset($data[$fields[self::CREDENTIAL_USERNAME]]) && isset($data[$fields[self::CREDENTIAL_PASSWORD]])) {
             return $this->_bindUser(
-                $credentials[$fields[self::CREDENTIAL_USERNAME]],
-                $credentials[$fields[self::CREDENTIAL_PASSWORD]]
+                $data[$fields[self::CREDENTIAL_USERNAME]],
+                $data[$fields[self::CREDENTIAL_PASSWORD]]
             );
         }
 

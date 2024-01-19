@@ -54,21 +54,21 @@
         },
         {
             "name": "cakephp/authentication",
-            "version": "2.10.2",
-            "version_normalized": "2.10.2.0",
+            "version": "2.4.0",
+            "version_normalized": "2.4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/authentication.git",
-                "reference": "64964e5a503a7d2a5560dfabc1b5d4439f61cdae"
+                "reference": "048648d2e1daf73eed789404663aefee6747359e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/authentication/zipball/64964e5a503a7d2a5560dfabc1b5d4439f61cdae",
-                "reference": "64964e5a503a7d2a5560dfabc1b5d4439f61cdae",
+                "url": "https://api.github.com/repos/cakephp/authentication/zipball/048648d2e1daf73eed789404663aefee6747359e",
+                "reference": "048648d2e1daf73eed789404663aefee6747359e",
                 "shasum": ""
             },
             "require": {
-                "cakephp/http": "^4.4",
+                "cakephp/core": "^4.0",
                 "laminas/laminas-diactoros": "^2.2.2",
                 "psr/http-client": "^1.0",
                 "psr/http-message": "^1.0",
@@ -76,9 +76,9 @@
                 "psr/http-server-middleware": "^1.0"
             },
             "require-dev": {
-                "cakephp/cakephp": "^4.4",
+                "cakephp/cakephp": "^4.0",
                 "cakephp/cakephp-codesniffer": "^4.0",
-                "firebase/php-jwt": "^6.2",
+                "firebase/php-jwt": "^5.0",
                 "phpunit/phpunit": "^8.5 || ^9.3"
             },
             "suggest": {
@@ -88,7 +88,7 @@
                 "ext-ldap": "Make sure this php extension is installed and enabled on your system if you want to use the built-in LDAP adapter for \"LdapIdentifier\".",
                 "firebase/php-jwt": "If you want to use the JWT adapter add this dependency"
             },
-            "time": "2023-10-01T18:57:13+00:00",
+            "time": "2020-12-29T23:33:37+00:00",
             "type": "cakephp-plugin",
             "installation-source": "dist",
             "autoload": {

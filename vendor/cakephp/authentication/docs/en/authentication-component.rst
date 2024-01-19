@@ -48,7 +48,7 @@ result object::
     }
 
 The result sets objects status returned from ``getStatus()`` will match one of
-these constants in the Result object:
+these these constants in the Result object:
 
 * ``ResultInterface::SUCCESS``, when successful.
 * ``ResultInterface::FAILURE_IDENTITY_NOT_FOUND``, when identity could not be found.
@@ -94,12 +94,12 @@ Configure Automatic Identity Checks
 -----------------------------------
 
 By default ``AuthenticationComponent`` will automatically enforce an identity to
-be present during the ``Controller.startup`` event. You can have this check
-applied during the ``Controller.initialize`` event instead::
+be present during the ``Controller.initialize`` event. You can have this check
+applied during the ``Controller.startup`` event instead::
 
     // In your controller's initialize() method.
     $this->loadComponent('Authentication.Authentication', [
-        'identityCheckEvent' => 'Controller.initialize',
+        'identityCheckEvent' => 'Controller.startup',
     ]);
 
 You can also disable identity checks entirely with the ``requireIdentity``

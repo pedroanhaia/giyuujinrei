@@ -1,7 +1,7 @@
 Authenticators
 ##############
 
-Authenticators handle converting request data into an authentication
+Authenticators handle convert request data into an authentication
 operations. They leverage :doc:`/identifiers` to find a
 known :doc:`/identity-object`.
 
@@ -46,10 +46,6 @@ Configuration options:
    string. Useful when a login form is on a different subdomain. Default is
    ``false``. This option does not work well when preserving unauthenticated
    redirects in the query string.
-
-If you are building an API and want to accept credentials via JSON requests make
-sure you have the ``BodyParserMiddleware`` applied **before** the
-``AuthenticationMiddleware``.
 
 .. warning::
     If you use the array syntax for the URL, the URL will be
@@ -102,18 +98,13 @@ example.
 -  **queryParam**: The query param to check for the token. The default
    is ``token``.
 -  **tokenPrefix**: The token prefix. Default is ``bearer``.
--  **algorithm**: The hashing algorithm for Firebase JWT.
-   Default is ``'HS256'``.
+-  **algorithms**: An array of hashing algorithms for Firebase JWT.
+   Default is an array ``['HS256']``.
 -  **returnPayload**: To return or not return the token payload directly
    without going through the identifiers. Default is ``true``.
 -  **secretKey**: Default is ``null`` but you’re **required** to pass a
    secret key if you’re not in the context of a CakePHP application that
    provides it through ``Security::salt()``.
--  **jwks**: Default is ``null``. Associative array with a ``'keys'`` key.
-   If provided will be used instead of the secret key.
-
-You need to add the lib `firebase/php-jwt <https://github.com/firebase/php-jwt>`_
-v6.2 or above to your app to use the ``JwtAuthenticator``.
 
 By default the ``JwtAuthenticator`` uses ``HS256`` symmetric key algorithm and uses
 the value of ``Cake\Utility\Security::salt()`` as encryption key.
@@ -131,7 +122,7 @@ created by external applications, eg: mobile apps.
 
 The following example allows you to identify the user based on the ``sub`` (subject) of the
 token by using ``JwtSubject`` identifier, and configures the ``Authenticator`` to use public key
-for token verification.
+for token verification::
 
 Add the following to your ``Application`` class::
 
@@ -142,7 +133,7 @@ Add the following to your ``Application`` class::
         $service->loadIdentifier('Authentication.JwtSubject');
         $service->loadAuthenticator('Authentication.Jwt', [
             'secretKey' => file_get_contents(CONFIG . '/jwt.pem'),
-            'algorithm' => 'RS256',
+            'algorithms' => ['RS256'],
             'returnPayload' => false
         ]);
     }
@@ -173,42 +164,8 @@ In your ``UsersController``::
         $this->viewBuilder()->setOption('serialize', 'json');
     }
 
-Using a JWKS fetched from an external JWKS endpoint is supported as well::
-
-    // Application.php
-    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
-    {
-        $service = new AuthenticationService();
-        // ...
-        $service->loadIdentifier('Authentication.JwtSubject');
-
-        $jwksUrl = 'https://appleid.apple.com/auth/keys';
-
-        // Set of keys. The "keys" key is required. Additionally keys require a "alg" key.
-        // Add it manually to your JWK array if it doesn't already exist.
-        $jsonWebKeySet = Cache::remember('jwks-' . md5($jwksUrl), function () use ($jwksUrl) {
-            $http = new Client();
-            $response = $http->get($jwksUrl);
-            return $response->getJson();
-        });
-
-        $service->loadAuthenticator('Authentication.Jwt', [
-            'jwks' => $jsonWebKeySet,
-            'returnPayload' => false
-        ]);
-    }
-
-The JWKS resource will return the same set of keys most of the time.
-Applications should cache these resources, but they also need to be
-prepared to handle signing key rotations.
-
-.. warning::
-
-    Applications need to pick a cache lifetime that balances performance and security.
-    This is particularly important in situations where a private key is compromised.
-
-Beside from sharing the public key file to external application, you can
-distribute it via a JWKS endpoint by configuring your app as follows::
+Beside from sharing the public key file to external application, you can distribute it via a JWKS endpoint by
+configuring your app as follows::
 
     // config/routes.php
     $builder->setExtensions('json');
@@ -238,17 +195,13 @@ distribute it via a JWKS endpoint by configuring your app as follows::
         $this->viewBuilder()->setOption('serialize', 'keys');
     }
 
-Refer to https://datatracker.ietf.org/doc/html/rfc7517 or https://auth0.com/docs/tokens/json-web-tokens/json-web-key-sets for
+Refer to https://tools.ietf.org/html/rfc7517 or https://auth0.com/docs/tokens/concepts/jwks for
 more information about JWKS.
 
 HttpBasic
 =========
 
 See https://en.wikipedia.org/wiki/Basic_access_authentication
-
-.. note::
-
-    This authenticator will halt the request when authentication credentials are missing or invalid.
 
 Configuration options:
 
@@ -259,10 +212,6 @@ HttpDigest
 ==========
 
 See https://en.wikipedia.org/wiki/Digest_access_authentication
-
-.. note::
-
-    This authenticator will halt the request when authentication credentials are missing or invalid.
 
 Configuration options:
 
@@ -290,7 +239,7 @@ Configuration options:
 -  **cookie**: Array of cookie options:
 
    -  **name**: Cookie name, default is ``CookieAuth``
-   -  **expires**: Expiration, default is ``null``
+   -  **expire**: Expiration, default is ``null``
    -  **path**: Path, default is ``/``
    -  **domain**: Domain, default is an empty string.
    -  **secure**: Bool, default is ``false``
@@ -310,10 +259,6 @@ Configuration options:
    ``null`` and all pages will be checked.
 -  **passwordHasher**: Password hasher to use for token hashing. Default
    is ``DefaultPasswordHasher::class``.
--  **salt**: When ``false`` no salt is used. When a string is passed that value is used as a salt value.
-   When ``true`` the default Security.salt is used. Default is ``true``. When a salt is used, the cookie value
-   will contain `hash(username + password + hmac(username + password, salt))`. This helps harden tokens against possible
-   database leaks and enables cookie values to be invalidated by rotating the salt value.
 
 Usage
 -----
@@ -324,7 +269,7 @@ after their session expires for as long as the cookie is valid. If a user is
 explicity logged out via ``AuthenticationComponent::logout()`` the
 authentication cookie is **also destroyed**. An example configuration would be::
 
-    // In Application::getAuthenticationService()
+    // In Application::getAuthService()
 
     // Reuse fields in multiple authenticators.
     $fields = [
@@ -335,8 +280,11 @@ authentication cookie is **also destroyed**. An example configuration would be::
     // Put form authentication first so that users can re-login via
     // the login form if necessary.
     $service->loadAuthenticator('Authentication.Form', [
-        'fields' => $fields,
         'loginUrl' => '/users/login',
+        'fields' => [
+            IdentifierInterface::CREDENTIAL_USERNAME => 'email',
+            IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
+        ],
     ]);
     // Then use sessions if they are active.
     $service->loadAuthenticator('Authentication.Session');
@@ -356,34 +304,6 @@ After logging in, if the checkbox was checked you should see a ``CookieAuth``
 cookie in your browser dev tools. The cookie stores the username field and
 a hashed token that is used to reauthenticate later.
 
-Environment Variables
-=====================
-
-The ``EnvironmentAuthenticator`` can authenticate users based on mapped
-environment variables exposed by the webserver. This enables authentication via
-`Shibboleth <https://shibboleth.atlassian.net/wiki/spaces/CONCEPT/overview>`_
-and similar SAML 1.1 implementations. An example configuration is::
-
-    // Configure a token identifier that maps `USER_ID` to the
-    // username column
-    $service->loadIdentifier('Authentication.Token', [
-        'tokenField' => 'username',
-        'dataField' => 'USER_NAME',
-    ]);
-
-    $service->loadAuthenticator('Authentication.Environment', [
-        'loginUrl' => '/sso',
-        'fields' => [
-            // Choose which environment variables exposed by your
-            // authentication provider are used to authenticate
-            // in your application.
-            'USER_NAME',
-        ],
-    ]);
-
-.. versionadded:: 2.10.0
-    ``EnvironmentAuthenticator`` was added.
-
 Events
 ======
 
@@ -391,7 +311,7 @@ There is only one event that is fired by authentication:
 ``Authentication.afterIdentify``.
 
 If you don’t know what events are and how to use them `check the
-documentation <https://book.cakephp.org/4/en/core-libraries/events.html>`__.
+documentation <https://book.cakephp.org/3.0/en/core-libraries/events.html>`__.
 
 The ``Authentication.afterIdentify`` event is fired by the
 ``AuthenticationComponent`` after an identity was successfully
@@ -467,7 +387,7 @@ You can also get the identifier that identified the user as well::
 Using Stateless Authenticators with Stateful Authenticators
 ===========================================================
 
-When using ``HttpBasic``, ``HttpDigest`` with other authenticators,
+When using ``Token`` or ``HttpBasic``, ``HttpDigest`` with other authenticators,
 you should remember that these authenticators will halt the request when
 authentication credentials are missing or invalid. This is necessary as these
 authenticators must send specific challenge headers in the response::
@@ -531,30 +451,4 @@ the redirect target safely from the query string parameter::
             }
             return $this->redirect($target);
         }
-    }
-
-Having Multiple Authentication Flows
-====================================
-
-In an application that provides both an API and a web interface
-you may want different authentication configurations based on
-whether the request is an API request or not. For example, you may use JWT
-authentication for your API, but sessions for your web interface. To support
-this flow you can return different authentication services based on the URL
-path, or any other request attribute::
-
-    public function getAuthenticationService(
-        ServerRequestInterface $request
-    ): AuthenticationServiceInterface {
-        $service = new AuthenticationService();
-
-        // Configuration common to both the API and web goes here.
-
-        if ($request->getParam('prefix') == 'Api') {
-            // Include API specific authenticators
-        } else {
-            // Web UI specific authenticators.
-        }
-
-        return $service;
     }

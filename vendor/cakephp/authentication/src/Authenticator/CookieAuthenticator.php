@@ -22,8 +22,6 @@ use Authentication\PasswordHasher\PasswordHasherTrait;
 use Authentication\UrlChecker\UrlCheckerTrait;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieInterface;
-use Cake\Utility\Security;
-use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -53,7 +51,6 @@ class CookieAuthenticator extends AbstractAuthenticator implements PersistenceIn
             'name' => 'CookieAuth',
         ],
         'passwordHasher' => 'Authentication.Default',
-        'salt' => true,
     ];
 
     /**
@@ -147,7 +144,7 @@ class CookieAuthenticator extends AbstractAuthenticator implements PersistenceIn
     /**
      * Creates a plain part of a cookie token.
      *
-     * Returns concatenated username, password hash, and HMAC signature.
+     * Returns concatenated username and password hash.
      *
      * @param array|\ArrayAccess $identity Identity data.
      * @return string
@@ -157,23 +154,7 @@ class CookieAuthenticator extends AbstractAuthenticator implements PersistenceIn
         $usernameField = $this->getConfig('fields.username');
         $passwordField = $this->getConfig('fields.password');
 
-        $salt = $this->getConfig('salt', '');
-
-        $value = $identity[$usernameField] . $identity[$passwordField];
-
-        if ($salt === false) {
-            return $value;
-        }
-        if ($salt === true) {
-            $salt = Security::getSalt();
-        } elseif (!is_string($salt) || $salt === '') {
-            throw new InvalidArgumentException('Salt must be a non-empty string.');
-        }
-
-        $hmac = hash_hmac('sha1', $value, $salt);
-        // Instead of appending the plain salt, we create a hash. This limits the chance of the salt being leaked.
-
-        return $value . $hmac;
+        return $identity[$usernameField] . $identity[$passwordField];
     }
 
     /**

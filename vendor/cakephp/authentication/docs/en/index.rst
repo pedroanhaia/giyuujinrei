@@ -6,9 +6,7 @@ Project's ROOT directory (where the **composer.json** file is located)
 
 .. code-block:: bash
 
-    php composer.phar require cakephp/authentication
-
-Version 2 of the Authentication Plugin is compatible with CakePHP 4.
+    php composer.phar require "cakephp/authentication:^2.0"
 
 Load the plugin by adding the following statement in your project's ``src/Application.php``::
 
@@ -23,8 +21,9 @@ Load the plugin by adding the following statement in your project's ``src/Applic
 Getting Started
 ===============
 
-The authentication plugin integrates with your application as a `middleware <https://book.cakephp.org/4/en/controllers/middleware.html>`_. It can also
-be used as a component to make unauthenticated access simpler. First, let's
+The authentication plugin integrates with your application as a middleware
+`middleware <http://book.cakephp.org/4/en/controllers/middleware.html>`_. It can also
+be used as a component to make unauthenticated access simpler. First, lets
 apply the middleware. In **src/Application.php**, add the following to the class
 imports::
 
@@ -36,40 +35,24 @@ imports::
     use Cake\Http\MiddlewareQueue;
     use Cake\Routing\Router;
     use Psr\Http\Message\ServerRequestInterface;
+    
 
-
-Next, add ``AuthenticationServiceProviderInterface`` to the implemented interfaces
+Next, add the ``AuthenticationProviderInterface`` to the implemented interfaces
 on your application::
 
     class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 
 
-Then update your application's ``middleware()`` method to look like::
+Then add ``AuthenticationMiddleware`` to the middleware queue in your ``middleware()`` function::
 
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
-    {
-        $middlewareQueue->add(new ErrorHandlerMiddleware(Configure::read('Error')))
-            // Other middleware that CakePHP provides.
-            ->add(new AssetMiddleware())
-            ->add(new RoutingMiddleware($this))
-            ->add(new BodyParserMiddleware())
-
-            // Add the AuthenticationMiddleware. It should be
-            // after routing and body parser.
-            ->add(new AuthenticationMiddleware($this));
-
-        return $middlewareQueue;
-    }
-
-.. warning::
-    The order of middleware is important. Ensure that you have
-    ``AuthenticationMiddleware`` after the routing and body parser middleware.
-    If you're having trouble logging in with JSON requests or redirects are
-    incorrect double check your middleware order.
+    $middlewareQueue->add(new AuthenticationMiddleware($this));
+    
+.. note::
+    Make sure you add ``AuthenticationMiddleware`` before ``AuthorizationMiddleware`` if you have both.
 
 ``AuthenticationMiddleware`` will call a hook method on your application when
 it starts handling the request. This hook method allows your application to
-define the ``AuthenticationService`` it wants to use. Add the following method to your
+define the ``AuthenticationService`` it wants to use. Add the following method your
 **src/Application.php**::
 
     /**
@@ -125,7 +108,7 @@ to handle a login form at the ``loginUrl``. Finally we attach an :doc:`identifie
 
 If one of the configured authenticators was able to validate the credentials,
 the middleware will add the authentication service to the request object as an
-`attribute <https://www.php-fig.org/psr/psr-7/>`_.
+`attribute <http://www.php-fig.org/psr/psr-7/>`_.
 
 Next, in your ``AppController`` load the :doc:`/authentication-component`::
 
@@ -149,7 +132,7 @@ Building a Login Action
 =======================
 
 Once you have the middleware applied to your application you'll need a way for
-users to login. Please ensure your database has been created with the Users table structure used in :doc:`tutorial </tutorials-and-examples/cms/database>`. First generate a Users model and controller with bake:
+users to login. First generate a Users model and controller with bake:
 
 .. code-block:: shell
 
@@ -168,7 +151,7 @@ like::
             $target = $this->Authentication->getLoginRedirect() ?? '/home';
             return $this->redirect($target);
         }
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error('Invalid username or password');
         }
     }
@@ -244,10 +227,8 @@ Further Reading
 * :doc:`/identifiers`
 * :doc:`/password-hashers`
 * :doc:`/identity-object`
-* :doc:`/middleware`
 * :doc:`/authentication-component`
-* :doc:`/impersonation`
+* :doc:`/migration-from-the-authcomponent`
 * :doc:`/url-checkers`
 * :doc:`/testing`
 * :doc:`/view-helper`
-* :doc:`/migration-from-the-authcomponent`

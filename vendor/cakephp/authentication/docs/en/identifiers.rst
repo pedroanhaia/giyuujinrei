@@ -13,8 +13,7 @@ using the Password Identifier looks like::
        ],
        'resolver' => [
            'className' => 'Authentication.Orm',
-           'userModel' => 'Users',
-           'finder' => 'active', // default: 'all'
+           'finder' => 'active'
        ],
        'passwordHasher' => [
            'className' => 'Authentication.Fallback',
@@ -22,10 +21,10 @@ using the Password Identifier looks like::
                'Authentication.Default',
                [
                    'className' => 'Authentication.Legacy',
-                   'hashType' => 'md5',
+                   'hashType' => 'md5'
                ],
-           ],
-       ],
+           ]
+       ]
    ]);
 
 Password
@@ -59,16 +58,11 @@ Configuration options:
    Default is ``token``.
 -  **resolver**: The identity resolver. Default is
    ``Authentication.Orm`` which uses CakePHP ORM.
--  **hashAlgorithm**: The algorithm used to hash the incoming token
-   with before compairing it to the ``tokenField``. Recommended value is
-   ``sha256```. Default is ``null``.
 
 JWT Subject
 ===========
 
 Checks the passed JWT token against a datasource.
-
-Configuration options:
 
 -  **tokenField**: The field in the database to check against. Default
    is ``id``.
@@ -83,8 +77,6 @@ LDAP
 Checks the passed credentials against a LDAP server. This identifier
 requires the PHP LDAP extension.
 
-Configuration options:
-
 -  **fields**: The fields for the lookup. Default is
    ``['username' => 'username', 'password' => 'password']``.
 -  **host**: The FQDN of your LDAP server.
@@ -95,11 +87,9 @@ Configuration options:
    ``\Authentication\Identifier\Ldap\ExtensionAdapter``. You can pass a
    custom object/classname here if it implements the
    ``AdapterInterface``.
--  **options**: Array of additional LDAP options, including
-    ``tls``: Boolean. If ``true``, tries to start TLS on the connection.
-    Also LDAP config options such as
-    ``LDAP_OPT_PROTOCOL_VERSION`` or ``LDAP_OPT_NETWORK_TIMEOUT``. See
-   `php.net <https://php.net/manual/en/function.ldap-set-option.php>`__
+-  **options**: Additional LDAP options, like
+   ``LDAP_OPT_PROTOCOL_VERSION`` or ``LDAP_OPT_NETWORK_TIMEOUT``. See
+   `php.net <http://php.net/manual/en/function.ldap-set-option.php>`__
    for more valid options.
 
 Callback
@@ -129,7 +119,7 @@ messages::
             }
 
             return null;
-        },
+        }
     ]);
 
     // Using a result object to return error messages.
@@ -146,7 +136,7 @@ messages::
                 Result::FAILURE_OTHER,
                 ['message' => 'Removed user.']
             );
-        },
+        }
     ]);
 
 
@@ -168,10 +158,9 @@ Configuration options:
 -  **userModel**: The user model identities are located in. Default is
    ``Users``.
 -  **finder**: The finder to use with the model. Default is ``all``.
-   You can read more about model finders `here <https://book.cakephp.org/4/en/orm/retrieving-data-and-resultsets.html#custom-finder-methods>`__.
 
 In order to use ORM resolver you must require ``cakephp/orm`` in your
-``composer.json`` file (if you are not already using the full CakePHP framework).
+``composer.json`` file.
 
 Writing your own resolver
 -------------------------
@@ -188,8 +177,8 @@ Resolver can be configured using ``resolver`` config option::
             // can be a full class name: \Some\Other\Custom\Resolver::class
            'className' => 'MyResolver',
            // Pass additional options to the resolver constructor.
-           'option' => 'value',
-       ],
+           'option' => 'value'
+       ]
    ]);
 
 Or injected using a setter::

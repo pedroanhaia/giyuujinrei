@@ -110,7 +110,7 @@ class UsersController extends AppController
     }
 
     // in src/Controller/UsersController.php
-    public function login() {
+	public function login() {
 		$this->viewBuilder()->setLayout("login");
 		$this->request->allowMethod(['get', 'post']);
 		$result = $this->Authentication->getResult();
@@ -118,7 +118,7 @@ class UsersController extends AppController
 		if ($result && $result->isValid()) {
 			// redirect to /cards after login success
 			$redirect = $this->request->getQuery('redirect', [
-				'controller' => 'Schedules',
+				'controller' => 'Users',
 				'action' => 'index',
 			]);
 			return $this->redirect($redirect);

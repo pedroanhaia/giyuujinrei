@@ -20,9 +20,7 @@ use ArrayObject;
 use Authentication\Identifier\IdentifierInterface;
 use Cake\Utility\Security;
 use Exception;
-use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 use stdClass;
@@ -36,11 +34,10 @@ class JwtAuthenticator extends TokenAuthenticator
         'header' => 'Authorization',
         'queryParam' => 'token',
         'tokenPrefix' => 'bearer',
-        'algorithm' => 'HS256',
+        'algorithms' => ['HS256'],
         'returnPayload' => true,
         'secretKey' => null,
         'subjectKey' => IdentifierInterface::CREDENTIAL_JWT_SUBJECT,
-        'jwks' => null,
     ];
 
     /**
@@ -147,18 +144,10 @@ class JwtAuthenticator extends TokenAuthenticator
      */
     protected function decodeToken(string $token): ?object
     {
-        $jsonWebKeySet = $this->getConfig('jwks');
-        if ($jsonWebKeySet) {
-            $keySet = JWK::parseKeySet($jsonWebKeySet);
-
-            return JWT::decode(
-                $token,
-                $keySet
-            );
-        }
-
-        $key = new Key($this->getConfig('secretKey'), $this->getConfig('algorithm'));
-
-        return JWT::decode($token, $key);
+        return JWT::decode(
+            $token,
+            $this->getConfig('secretKey'),
+            $this->getConfig('algorithms')
+        );
     }
 }

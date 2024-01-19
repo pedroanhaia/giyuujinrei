@@ -13,7 +13,6 @@ Contents
     /middleware
     /authentication-component
     /testing
-    /impersonation
     /url-checkers
     /view-helper
     /migration-from-the-authcomponent
