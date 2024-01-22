@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 class TeachersController extends AppController {
-	
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Users');
+	}
+
 	public function index() {
 		$this->paginate = [
 			'limit' => 25,
@@ -40,6 +44,9 @@ class TeachersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o professor, tente novamente.'));
 		}
 
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('users', $users);
 		$this->set(compact('teacher'));
 		$this->set('title', 'Cadastrar professor');
 	}
@@ -59,6 +66,9 @@ class TeachersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o professor, tente novamente.'));
 		}
 
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('users', $users);
 		$this->set(compact('teacher'));
 		$this->set('title', 'Alterar professor');
 	}

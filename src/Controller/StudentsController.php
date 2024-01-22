@@ -9,6 +9,8 @@ class StudentsController extends AppController {
 		$this->loadModel('Responsible');
 		$this->loadModel('Cores');
 		$this->loadModel('Ranks');
+		$this->loadModel('Users');
+		$this->loadModel('Sports');
 	}
 
 	public function index() {
@@ -17,11 +19,14 @@ class StudentsController extends AppController {
 			'order' => ['Students.id' => 'DESC'],
 			'contain' => [
 				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Responsible' => ['fields' => ['name']],
+				'Ranks' => ['fields' => ['name']],
 			],
 		];
 
 		$students = $this->paginate($this->Students);
-		
+
 		$this->set(compact('students'));
 		$this->set('title', 'Lista de estudantes');
 	}
@@ -51,7 +56,11 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
+		$this->set('sports', $sports);
+		$this->set('users', $users);
 		$this->set('ranks', $ranks);
 		$this->set('cores', $cores);
 		$this->set('responsibles', $responsibles);
@@ -60,9 +69,8 @@ class StudentsController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$student = $this->Students->get($id, [
-			'contain' => [],
-		]);
+		$student = $this->Students->get($id);
+
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$student = $this->Students->patchEntity($student, $this->request->getData());
 
@@ -74,12 +82,22 @@ class StudentsController extends AppController {
 			$this->Flash->error(__('Não foi possível salvr o estudante, tente novamente.'));
 		}
 
+		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('sports', $sports);
+		$this->set('users', $users);
+		$this->set('ranks', $ranks);
+		$this->set('cores', $cores);
+		$this->set('responsibles', $responsibles);
 		$this->set(compact('student'));
 		$this->set('title', 'Alterar estudante');
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
 		$student = $this->Students->get($id);
 
 		if ($this->Students->delete($student)) {

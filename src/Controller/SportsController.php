@@ -4,6 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 class SportsController extends AppController {
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Ranks');
+	}
+
 	public function index() {
 		$this->paginate = [
 			'limit' => 25,
@@ -73,5 +78,12 @@ class SportsController extends AppController {
 		}
 
 		return $this->redirect(['action' => 'index']);
+	}
+
+	public function sportsranks($idsport) {
+		if($this->request->is('ajax')) {
+			$ranks = $this->Ranks->findByIdsport($idsport)->select(['id', 'name'])->toArray();
+			return $this->jsonResponse($ranks, 200);
+		}
 	}
 }

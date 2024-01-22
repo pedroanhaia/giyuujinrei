@@ -1,55 +1,57 @@
+<?php use Cake\Routing\Router; ?>
 <div class="col-md-12 content">
+	<h3> <?= $title ?> </h3>
 	<div class="card" >
 		<div class="card-body">
 			<?= $this->Form->create($student, ['class' => 'form-material  mt-2']) ?>
 				<div class="row">
-					<div class="col-lg-3 col-md-12">
+					<div class="col-lg-4 col-md-12 col-sm-12">
 						<label class="control-label text-muted"> Nome </label>
-						<?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o nome']) ?>
+						<?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o nome do estudante']) ?>
 					</div>
-					<div class="col-lg-3 col-md-12">
-						<label class="control-label text-muted"> Dojô </label>
-						<?= $this->Form->control('idcore', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idforeign']) ?>
-					</div>
-					<div class="col-lg-3 col-md-12">
+					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Responsável </label>
-						<?= $this->Form->control('idresponsible', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idforeign']) ?>
+						<?= $this->Form->control('idresponsible', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $responsibles, 'title' => 'Selecione o responsável']) ?>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-2 col-md-12">
+					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Fone </label>
-						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o fone']) ?>
 					</div>
-					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> age </label>
-						<?= $this->Form->control('age', ['class' => 'form-control', 'label' => false]) ?>
+					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Data de nascimento </label>
+						<?= $this->Form->date('birthday', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a data de nascimento']) ?>
 					</div>
-					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> Fone </label>
-						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false]) ?>
-					</div>
-					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> Turma </label>
-						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false]) ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-2 col-md-12">
+					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> E-mail </label>
-						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o e-mail']) ?>
 					</div>
-					<div class="col-lg-2 col-md-12">
+					<div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Usuário </label>
-						<?= $this->Form->control('iduser', ['class' => 'form-control', 'label' => false]) ?>
-					</div>
-					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> Graduação </label>
-						<?= $this->Form->control('idgrank', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('iduser', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'options' => $users, 'title' => 'Selecione o usuário']) ?>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4 col-md-12">
+					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Dojô </label>
+						<?= $this->Form->control('idcore', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $cores, 'title' => 'Selecione o dojô']) ?>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Esporte </label>
+						<?= $this->Form->control('idsport', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $sports, 'title' => 'Selecione o esporte']) ?>
+					</div>
+					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Graduação </label>
+						<?= $this->Form->control('idgrank', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione a graduação']) ?>
+					</div>
+					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Turma </label>
+						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a turma']) ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-6 col-xs-12">
 						<label class="control-label text-muted"> Role </label>
 						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
 					</div>
@@ -65,4 +67,35 @@
 </div>
 <script>
 	$("#phone").mask("(99) 99999-9999");
+
+	// Graduações do esporte 
+		$('#idsport').change(function(e) {
+			loadRanks();
+		})
+
+		$(document).ready(function() {
+			loadRanks();
+		})
+
+
+		function loadRanks() {
+			var idsport = $('#idsport').val();
+			$.ajax({
+				url: "<?= Router::url([ 'controller' => 'Sports', 'action' => 'sportsranks', ], true); ?>" + "/" + idsport,
+				dataType: 'json', 
+				success: function(data) {
+					$('#idgrank').empty();
+					$.each(data, function(index, option) {
+						$('#idgrank').append('<option value="' + option.id + '">' + option.name + '</option>');
+					});
+					$('#idgrank').selectpicker('refresh');
+					$('#idgrank').val("<?= $student->idgrank ?>");
+					$('#idgrank').selectpicker('refresh');
+				},
+				error: function(error) {
+					console.error('Erro ao obter opções:', error);
+				}
+			});
+		}
+	// 
 </script>

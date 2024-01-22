@@ -21,6 +21,7 @@ class StudentsTable extends Table {
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
 		$this->belongsTo('Responsible', ['foreignKey' => 'idresponsible']);
 		$this->belongsTo('Ranks', ['foreignKey' => 'idgrank']);
+		$this->belongsTo('Sports', ['foreignKey' => 'idsport']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {
@@ -40,6 +41,11 @@ class StudentsTable extends Table {
 			->notEmptyString('idcore');
 
 		$validator
+			->integer('idsport')
+			->requirePresence('idsport', 'create')
+			->notEmptyString('idsport');
+
+		$validator
 			->integer('idresponsible')
 			->requirePresence('idresponsible', 'create')
 			->notEmptyString('idresponsible');
@@ -48,10 +54,6 @@ class StudentsTable extends Table {
 			->scalar('phone')
 			->maxLength('phone', 50)
 			->allowEmptyString('phone');
-
-		$validator
-			->integer('birthday')
-			->allowEmptyString('birthday');
 
 		$validator
 			->scalar('class')
@@ -73,6 +75,7 @@ class StudentsTable extends Table {
 		$validator
 			->integer('idgrank')
 			->allowEmptyString('idgrank');
+			
 
 		return $validator;
 	}

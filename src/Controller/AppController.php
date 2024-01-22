@@ -17,11 +17,10 @@ class AppController extends Controller {
 		$this->viewBuilder()->setOption('serialize', array_keys($this->viewBuilder()->getVars()));
 
 		parent::beforeRender($event);
-		$this->set('title', 'Giyuujinrei');
 		//if ($this->Authentication->getResult()->isValid()) {
 		//    // Obtém os dados do usuário autenticado
 		//    $userData = $this->Authentication->getIdentity()->getOriginalData();
-////
+		////
 		//    // Passa o nome do usuário para a view
 		//    $this->set('userName', $userData['nickname']); // Substitua 'name' pelo campo correto que armazena o nome do usuário no seu banco de dados
 		//    $this->set('role', $userData['role']);
@@ -82,5 +81,6 @@ class AppController extends Controller {
 		->withType('json', ['application/json'])
 		->withStatus($responseStatusCode)
 		->withStringBody(json_encode($responseData));
+		
 	}
 }

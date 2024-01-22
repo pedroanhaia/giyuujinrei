@@ -8,6 +8,8 @@ class AssessmentController extends AppController {
 		parent::initialize();
 		$this->loadModel('Teachers');
 		$this->loadModel('Students');
+		$this->loadModel('Schedules');
+		$this->loadModel('Indexes');
 	}
 
 	public function index() {
@@ -17,6 +19,8 @@ class AssessmentController extends AppController {
 			'contain' => [
 				'Students' => ['fields' => ['name']],
 				'Teachers' => ['fields' => ['name']],
+				'Schedules' => ['fields' => ['name', 'date']],
+				'Indexes' => ['fields' => ['name']],
 			],
 		];
 
@@ -53,9 +57,17 @@ class AssessmentController extends AppController {
 
 		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$schedules = $this->Schedules->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$indexes = $this->Indexes->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$schedules = $this->Schedules->find('list', [
+				'keyField' => 'id',
+				'valueField' => function ($entity) {
+					return $entity->get('name') . ' - ' . date_format($entity->get('date'), 'd/m/Y - H:i:s');
+				}
+			])
+		->order(['DATE(date) ASC'])->toArray();
 
 		$this->set(compact('assessment'));
+		$this->set('indexes', $indexes);
 		$this->set('estudantes', $estudantes);
 		$this->set('professores', $professores);
 		$this->set('schedules', $schedules);

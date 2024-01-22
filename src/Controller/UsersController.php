@@ -13,6 +13,7 @@ class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\EventInterface $event) {
 		parent::beforeFilter($event);
 		$this->Authentication->addUnauthenticatedActions(['login']);
+		$this->loadModel('Cores');
 	}
 
 	public function index() {
@@ -40,6 +41,11 @@ class UsersController extends AppController {
 	public function add() {
 		$user = $this->Users->newEmptyEntity();
 		if ($this->request->is('post')) {
+			if($this->request->getData('password') != $this->request->getData('password1')) {
+				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
+				return $this->redirect(['action' => 'add']);
+			}
+
 			$user = $this->Users->patchEntity($user, $this->request->getData());
 
 			if ($this->Users->save($user)) {
@@ -50,6 +56,9 @@ class UsersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o usuário, tente novamente.'));
 		}
 
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('cores', $cores);
 		$this->set(compact('user'));
 		$this->set('title', 'Cadastrar usuário');
 	}
@@ -69,12 +78,14 @@ class UsersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o usuário, tente novamente.'));
 		}
 
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('cores', $cores);
 		$this->set(compact('user'));
 		$this->set('title', 'Salvar usuário');
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
 		$user = $this->Users->get($id);
 
 		if ($this->Users->delete($user)) {

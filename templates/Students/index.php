@@ -11,28 +11,37 @@
 				<tr>
 					<th> # </th>
 					<th> Nome </th>
+					<th> Esporte </th>
 					<th> Dojô </th>
+					<th> Turma </th>
+					<th> Graduação </th>
 					<th> Responsável </th>
 					<th> Fone </th>
 					<th> Idade </th>
-					<th> Turma </th>
 					<th> E-mail </th>
-					<th> Graduação </th>
 					<th class="actions"> Ações </th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($students as $reg): ?>
+				<?php foreach ($students as $reg):
+					$today = new DateTime();  ?>
 					<tr>
 						<td> <?= $reg->id ?> </td>
 						<td> <?= $reg->name ?> </td>
+						<td> <?= $reg->sport->name ?> </td>
 						<td> <?= $reg->core->name ?> </td>
+						<td> 
+							<?php
+								$birthday = new DateTime($reg->birthday);
+								$diff = $today->diff($birthday);
+								echo $diff->y . " anos";
+							?> 
+						</td>
+						<td> <?= $reg->rank->name ?> </td>
 						<td> <?= $reg->responsible->name ?> </td>
 						<td> <?= $reg->phone ?> </td>
-						<td> <?= $reg->age ?> </td>
 						<td> <?= $reg->class ?> </td>
 						<td> <?= $reg->email ?> </td>
-						<td> <?= $reg->rank->name ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>
 							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>

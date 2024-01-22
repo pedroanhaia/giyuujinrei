@@ -9,9 +9,6 @@ class RatingsController extends AppController {
 		$this->paginate = [
 			'limit' => 25,
 			'order' => ['Ratings.id' => 'DESC'],
-			'contain' => [
-				'Sports' => ['fields' => ['name']],
-			],
 		];
 
 		$ratings = $this->paginate($this->Ratings);

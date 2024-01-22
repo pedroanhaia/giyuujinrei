@@ -21,7 +21,7 @@
 					<tr>
 						<td> <?= $reg->id ?> </td>
 						<td> <?= $reg->name ?> </td>
-						<td data-order='<?= date_format($reg->data, 'Ymd') ?>'> <?= date_format($reg->data, 'd/m/Y') ?> </td>
+						<td data-order='<?= date_format($reg->date, 'YmdHis') ?>'> <?= date_format($reg->date, 'd/m/Y - H:i:s') ?> </td>
 						<td> <?= $reg->core->name ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>

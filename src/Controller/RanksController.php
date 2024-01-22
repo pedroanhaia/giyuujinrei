@@ -76,7 +76,6 @@ class RanksController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
 		$rank = $this->Ranks->get($id);
 		if ($this->Ranks->delete($rank)) {
 			$this->Flash->success(__('The rank has been deleted.'));

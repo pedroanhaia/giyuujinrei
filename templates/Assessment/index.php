@@ -11,12 +11,11 @@
 			<thead class="text-primary">
 				<tr>
 					<th> # </th>
-					<th> Index </th>
-					<th> Professor </th>
 					<th> Estudante </th>
+					<th> Índice </th>
+					<th> Professor </th>
 					<th> Valor </th>
-					<th> Calendário </th>
-					<th> Data </th>
+					<th> Agendamento </th>
 					<th class="actions"> Ações </th>
 				</tr>
 			</thead>
@@ -24,13 +23,11 @@
 				<?php foreach ($assessment as $reg): ?>
 					<tr>
 						<td> <?= $reg->id ?> </td>
-						<td> <?= $reg->idindex ?> </td>
-						<td> <?= $reg->idteacher ?> </td>
-						<td> <?= $reg->idstudent ?> </td>
+						<td> <?= $reg->student->name ?> </td>
+						<td> <?= $reg->index->name ?> </td>
+						<td> <?= $reg->teacher->name ?> </td>
 						<td> <?= $reg->value ?> </td>
-						<td> <?= $reg->idschedule === null ? '' : $this->Number->format($assessment->idschedule) ?> </td>
-						<td> <?= date_format($assessment->created, 'd/m/Y') ?> </td>
-						<td> <?= $assessment->role === null ? '' : $this->Number->format($assessment->role) ?> </td>
+						<td data-order='<?= date_format($reg->schedule->date, 'YmdHis' ) ?>'> <?= $reg->schedule->name . ' ' . date_format($reg->schedule->date, 'd/m/Y - H:i:s' ) ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
 							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>

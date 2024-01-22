@@ -19,6 +19,7 @@ class AssessmentTable extends Table {
 		$this->belongsTo('Students', ['foreignKey' => 'idstudent']);
 		$this->belongsTo('Teachers', ['foreignKey' => 'idteacher']);
 		$this->belongsTo('Schedules', ['foreignKey' => 'idschedule']);
+		$this->belongsTo('Indexes', ['foreignKey' => 'idindex']);
 
 		$this->addBehavior('Timestamp');
 	}

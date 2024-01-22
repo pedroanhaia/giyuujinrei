@@ -41,6 +41,7 @@ class Student extends Entity
         'idresponsible' => true,
         'phone' => true,
         'birthday' => true,
+        'idsport' => true,
         'class' => true,
         'email' => true,
         'created' => true,

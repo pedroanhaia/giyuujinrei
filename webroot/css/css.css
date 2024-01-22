@@ -109,6 +109,13 @@
 	margin-right: 10px;
 }
 
+.bootstrap-select .dropdown-toggle .filter-option, .bootstrap-select .dropdown-menu li a {
+	font-size: 14px !important;
+}
+
+.bootstrap-select>.dropdown-toggle {
+	height: 40px;
+}
 /* Colors */
 	.bg-indigo {
 		background-color: #6610f2 !important;

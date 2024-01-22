@@ -34,8 +34,8 @@
 	define('C_RolesOptions', [
         C_RoleTudo => 'Tudo',
 		C_RoleNada => 'Nada',
-		C_RoleNaoValida => 'Não valida',
-		C_RoleTelegram => 'Telegram',
+		// C_RoleNaoValida => 'Não valida',
+		// C_RoleTelegram => 'Telegram',
 	]);
 
     define('C_RolesServOptions', [

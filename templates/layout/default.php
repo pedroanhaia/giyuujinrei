@@ -19,6 +19,19 @@
 	<!-- CSS -->
 	<?= $this->Html->css("/dist/css/pages/tab-page") ?>
 
+	<!-- Jquery -->
+	<?= $this->Html->script("/plugins/jquery/jquery-3.2.1.min") ?>
+	<?= $this->Html->script("reqajaxforserver") ?>
+
+	<!-- Selectpicker -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.6/js/bootstrap-select.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.6/css/bootstrap-select.min.css" rel="stylesheet" />
+
+
 	<!-- Wave Effects -->
 	<?= $this->Html->script("/dist/js/waves") ?>
 	<!-- Menu sidebar -->
@@ -26,10 +39,6 @@
 
 	<!-- Máscara dinheiro  -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
-
-	<!-- Jquery -->
-	<?= $this->Html->script("/plugins/jquery/jquery-3.2.1.min") ?>
-	<?= $this->Html->script("reqajaxforserver") ?>
 
 	<!-- Datatable -->
 	<?= $this->Html->css("/plugins/datatables/datatables.min") ?>
