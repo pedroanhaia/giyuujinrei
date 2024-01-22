@@ -1,7 +1,7 @@
 <div class="col-md-12 content">
 	<div class="card" >
 		<div class="card-body">
-			<?= $this->Form->create($sport, ['class' => 'form-material  mt-2']) ?>
+			<?= $this->Form->create($student, ['class' => 'form-material  mt-2']) ?>
 				<div class="row">
 					<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Nome </label>
@@ -9,43 +9,39 @@
 					</div>
 					<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Dojô </label>
-						<?= $this->Form->control('idcore', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idforeign']) ?>
+						<?= $this->Form->control('idcore', ['class' => 'form-control ', 'label' => false, 'required' => true, 'options' => $cores, 'title' => 'Selecione o dojô']) ?>
 					</div>
 					<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Responsável </label>
-						<?= $this->Form->control('idresponsible', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idforeign']) ?>
+						<?= $this->Form->control('idresponsible', ['class' => 'form-control ', 'label' => false, 'required' => true, 'options' => $responsibles, 'title' => 'Selecione o responsável']) ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-2 col-md-12">
 						<label class="control-label text-muted"> Fone </label>
-						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o fone']) ?>
 					</div>
 					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> age </label>
-						<?= $this->Form->control('age', ['class' => 'form-control', 'label' => false]) ?>
-					</div>
-					<div class="col-lg-2 col-md-12">
-						<label class="control-label text-muted"> Fone </label>
-						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false]) ?>
+						<label class="control-label text-muted"> Data de nascimento </label>
+						<?= $this->Form->control('birthday', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a data de nascimento']) ?>
 					</div>
 					<div class="col-lg-2 col-md-12">
 						<label class="control-label text-muted"> Turma </label>
-						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a turma']) ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-2 col-md-12">
 						<label class="control-label text-muted"> E-mail </label>
-						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o e-mail']) ?>
 					</div>
 					<div class="col-lg-2 col-md-12">
 						<label class="control-label text-muted"> Usuário </label>
-						<?= $this->Form->control('iduser', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('iduser', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o usuário']) ?>
 					</div>
 					<div class="col-lg-2 col-md-12">
 						<label class="control-label text-muted"> Graduação </label>
-						<?= $this->Form->control('idgrank', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('idgrank', ['class' => 'form-control ', 'label' => false, 'required' => true, 'options' => $ranks, 'title' => 'Selecione a graduação']) ?>
 					</div>
 				</div>
 				<div class="row">
@@ -56,10 +52,13 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<?= $this->Form->button('Salvar esporte', ['class' => 'btn btn-success btn-lg']) ?>
+						<?= $this->Form->button('Salvar estudante', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>
 				</div>
 			<?= $this->Form->end(); ?>
 		</div>
 	</div>
 </div>
+<script>
+	$("#phone").mask("(99) 99999-9999");
+</script>

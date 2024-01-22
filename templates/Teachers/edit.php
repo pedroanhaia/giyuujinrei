@@ -1,38 +1,49 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Teacher $teacher
- */
-?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $teacher->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $teacher->id), 'class' => 'side-nav-item']
-            ) ?>
-            <?= $this->Html->link(__('List Teachers'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="teachers form content">
-            <?= $this->Form->create($teacher) ?>
-            <fieldset>
-                <legend><?= __('Edit Teacher') ?></legend>
-                <?php
-                    echo $this->Form->control('name');
-                    echo $this->Form->control('phone');
-                    echo $this->Form->control('rg');
-                    echo $this->Form->control('type');
-                    echo $this->Form->control('email');
-                    echo $this->Form->control('role');
-                    echo $this->Form->control('iduser');
-                ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    </div>
+<div class="col-md-12 content">
+	<div class="card" >
+		<div class="card-body">
+			<?= $this->Form->create($sport, ['class' => 'form-material  mt-2']) ?>
+				<div class="row">
+					<div class="col-lg-3 col-md-12">
+						<label class="control-label text-muted"> Nome </label>
+						<?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o nome']) ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-12">
+						<label class="control-label text-muted"> Fone </label>
+						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false]) ?>
+					</div>
+					<div class="col-lg-2 col-md-12">
+						<label class="control-label text-muted"> RG </label>
+						<?= $this->Form->control('rg', ['class' => 'form-control', 'label' => false]) ?>
+					</div>
+					<div class="col-lg-2 col-md-12">
+						<label class="control-label text-muted"> Tipo </label>
+						<?= $this->Form->control('type', ['class' => 'form-control', 'label' => false]) ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-2 col-md-12">
+						<label class="control-label text-muted"> E-mail </label>
+						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false]) ?>
+					</div>
+					<div class="col-lg-2 col-md-12">
+						<label class="control-label text-muted"> Usuário </label>
+						<?= $this->Form->control('iduser', ['class' => 'form-control', 'label' => false]) ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-4 col-md-12">
+						<label class="control-label text-muted"> Role </label>
+						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<?= $this->Form->button('Salvar professor', ['class' => 'btn btn-success btn-lg']) ?>
+					</div>
+				</div>
+			<?= $this->Form->end(); ?>
+		</div>
+	</div>
 </div>

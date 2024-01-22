@@ -17,7 +17,6 @@
 	<?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
 
 	<!-- CSS -->
-	<!-- <?= $this->Html->css("/dist/css/style.min") ?> -->
 	<?= $this->Html->css("/dist/css/pages/tab-page") ?>
 
 	<!-- Wave Effects -->
@@ -29,7 +28,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
 
 	<!-- Jquery -->
-	<!-- <?= $this->Html->script("/plugins/jquery/jquery-3.2.1.min") ?> -->
+	<?= $this->Html->script("/plugins/jquery/jquery-3.2.1.min") ?>
 	<?= $this->Html->script("reqajaxforserver") ?>
 
 	<!-- Datatable -->
@@ -44,7 +43,7 @@
 	<?= $this->Html->script('/plugins/bootbox/bootbox.locales.min.js') ?>
 
 	<!--- E-Charts -->
-	<!-- <?= $this->Html->script("/plugins/echarts/echarts") ?> -->
+	<?= $this->Html->script("/plugins/echarts/echarts") ?>
 
 	<?= $this->fetch('meta') ?>
 	<?= $this->fetch('css') ?>
@@ -61,14 +60,17 @@
                     <li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/relatorios', ['escape' => false, 'class' => '']);?>
 					</li>
-                    <li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
-					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-torii-gate icon"></i> ' . __('Dojos'), '/cores', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa fa-user-graduate icon"></i> ' . __('Graduações'), '/ranks', ['escape' => false, 'class' => '']);?>
@@ -77,16 +79,16 @@
 						<?= $this->Html->link('<i class="fa-solid fa-layer-group icon"></i>' . __('Áreas'), '/ratings', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-calendar-day icon"></i>' . __('Agendamentos'), '/schedules', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-person-skiing icon"></i> ' . __('Esportes'), '/sports', ['escape' => false, 'class' => '']);?>
-					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
-					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-clipboard-user icon"></i>' . __('Usuários'), '/users', ['escape' => false, 'class' => '']);?>

@@ -8,70 +8,35 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-/**
- * Sports Model
- *
- * @method \App\Model\Entity\Sport newEmptyEntity()
- * @method \App\Model\Entity\Sport newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Sport[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Sport get($primaryKey, $options = [])
- * @method \App\Model\Entity\Sport findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Sport patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Sport[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Sport|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Sport saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Sport[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Sport[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Sport[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Sport[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- *
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- */
-class SportsTable extends Table
-{
-    /**
-     * Initialize method
-     *
-     * @param array $config The configuration for the Table.
-     * @return void
-     */
-    public function initialize(array $config): void
-    {
-        parent::initialize($config);
+class SportsTable extends Table {
+	public function initialize(array $config): void {
+		parent::initialize($config);
 
-        $this->setTable('sports');
-        $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+		$this->setTable('sports');
+		$this->setDisplayField('name');
+		$this->setPrimaryKey('id');
+		$this->addBehavior('Timestamp');
+	}
 
-        $this->addBehavior('Timestamp');
-    }
+	public function validationDefault(Validator $validator): Validator {
+		$validator
+			->scalar('name')
+			->maxLength('name', 255)
+			->allowEmptyString('name');
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->scalar('name')
-            ->maxLength('name', 255)
-            ->allowEmptyString('name');
+		$validator
+			->scalar('idforeign')
+			->maxLength('idforeign', 255)
+			->allowEmptyString('idforeign');
 
-        $validator
-            ->scalar('idforeign')
-            ->maxLength('idforeign', 255)
-            ->allowEmptyString('idforeign');
+		$validator
+			->scalar('obs1')
+			->allowEmptyString('obs1');
 
-        $validator
-            ->scalar('obs1')
-            ->allowEmptyString('obs1');
+		$validator
+			->integer('role')
+			->allowEmptyString('role');
 
-        $validator
-            ->integer('role')
-            ->allowEmptyString('role');
-
-        return $validator;
-    }
+		return $validator;
+	}
 }

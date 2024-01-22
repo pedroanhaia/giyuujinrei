@@ -6,6 +6,11 @@ namespace App\Controller;
 class TeachersController extends AppController {
 	
 	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Teachers.id' => 'DESC'],
+		];
+
 		$teachers = $this->paginate($this->Teachers);
 
 		$this->set(compact('teachers'));

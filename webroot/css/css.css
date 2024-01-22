@@ -105,6 +105,10 @@
 	color: red;
 }
 
+.col-paginator > p {
+	margin-right: 10px;
+}
+
 /* Colors */
 	.bg-indigo {
 		background-color: #6610f2 !important;

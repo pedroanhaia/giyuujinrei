@@ -12,12 +12,20 @@ namespace App\Controller;
 class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\EventInterface $event) {
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['login','add']);
+		$this->Authentication->addUnauthenticatedActions(['login']);
 	}
 
 	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Teachers.id' => 'DESC'],
+			'contain' => ['Cores' => ['fields' => ['name']]],
+		];
+
 		$users = $this->paginate($this->Users);
+
 		$this->set(compact('users'));
+		$this->set('title', 'Lista de usuários');
 	}
 
 	public function view($id = null) {
@@ -26,20 +34,24 @@ class UsersController extends AppController {
 		]);
 
 		$this->set(compact('user'));
+		$this->set('title', 'Visualizar usuário');
 	}
 
 	public function add() {
 		$user = $this->Users->newEmptyEntity();
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			if ($this->Users->save($user)) {
-				$this->Flash->success(__('The user has been saved.'));
 
+			if ($this->Users->save($user)) {
+				$this->Flash->success(__('O usuário foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
-			$this->Flash->error(__('The user could not be saved. Please, try again.'));
+
+			$this->Flash->error(__('Não foi possível salvar o usuário, tente novamente.'));
 		}
+
 		$this->set(compact('user'));
+		$this->set('title', 'Cadastrar usuário');
 	}
 
 	public function edit($id = null) {
@@ -48,23 +60,27 @@ class UsersController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
+			
 			if ($this->Users->save($user)) {
-				$this->Flash->success(__('The user has been saved.'));
-
+				$this->Flash->success(__('O usuário foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
-			$this->Flash->error(__('The user could not be saved. Please, try again.'));
+
+			$this->Flash->error(__('Não foi possível salvar o usuário, tente novamente.'));
 		}
+
 		$this->set(compact('user'));
+		$this->set('title', 'Salvar usuário');
 	}
 
 	public function delete($id = null) {
 		$this->request->allowMethod(['post', 'delete']);
 		$user = $this->Users->get($id);
+
 		if ($this->Users->delete($user)) {
-			$this->Flash->success(__('The user has been deleted.'));
+			$this->Flash->success(__('O usuário foi excluído com sucesso.'));
 		} else {
-			$this->Flash->error(__('The user could not be deleted. Please, try again.'));
+			$this->Flash->error(__('Não foi possível excluir o usuário, tente novamente.'));
 		}
 
 		return $this->redirect(['action' => 'index']);
@@ -76,7 +92,6 @@ class UsersController extends AppController {
 		$result = $this->Authentication->getResult();
 		// regardless of POST or GET, redirect if user is logged in
 		if ($result && $result->isValid()) {
-			// redirect to /cards after login success
 			$this->Flash->set(__('/img/Logo5-3D.gif'),['element'=>'success_with_gif']);
 
 			$redirect = $this->request->getQuery('redirect', [
@@ -86,7 +101,6 @@ class UsersController extends AppController {
 			return $this->redirect($redirect);
 		}
 
-		// display error if user submitted and authentication failed
 		if ($this->request->is('post') && !$result->isValid()) {
 			$this->Flash->error(__('Usuário ou senha inválidos!'));
 		}

@@ -8,9 +8,6 @@ class SportsController extends AppController {
 		$this->paginate = [
 			'limit' => 25,
 			'order' => ['Schedules.id' => 'DESC'],
-			'contain' => [
-				'Cores' => ['fields' => ['name']],
-			],
 		];
 
 		$sports = $this->paginate($this->Sports);

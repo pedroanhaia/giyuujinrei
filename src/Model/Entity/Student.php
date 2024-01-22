@@ -40,7 +40,7 @@ class Student extends Entity
         'idcore' => true,
         'idresponsible' => true,
         'phone' => true,
-        'age' => true,
+        'birthday' => true,
         'class' => true,
         'email' => true,
         'created' => true,

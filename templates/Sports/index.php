@@ -1,4 +1,10 @@
 <div class="content">
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Html->link(__('Novo esporte'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) ?>
+			<h3> Esportes </h3>
+		</div>
+	</div>
 	<div class="table-responsive">
 		<table class="table table-hover table-row-clickable" id="table">
 			<thead class="text-primary">
@@ -27,17 +33,12 @@
 	</div>
 	<div class ='row'>
 		<div class="col-12 col-paginator">
-		 <?= $this->Paginator->first('<< ' . __('Primeira')) ?>
+			<p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} resultado(s) de {{count}} totais')) ?></p>
+			<?= $this->Paginator->first('<< ' . __('Primeira')) ?>
 			<?= $this->Paginator->prev('< ' . __('Anterior')) ?>
 			<?= $this->Paginator->numbers() ?>
 			<?= $this->Paginator->next(__('Próxima') . ' >') ?>
 			<?= $this->Paginator->last(__('Úlima') . ' >>') ?>
-			<p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} resultado(s) de {{count}} totais')) ?></p>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-12">
-			<?= $this->Html->link(__('Novo esporte'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) ?>
 		</div>
 	</div>
 </div>

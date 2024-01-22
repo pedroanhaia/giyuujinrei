@@ -1,6 +1,4 @@
-<?php 
-	echo $this->Html->css(['relatorios.css']);
-?>
+<?= $this->Html->css(['relatorios.css']); ?>
 
 <style>
 	.aproveitamento {

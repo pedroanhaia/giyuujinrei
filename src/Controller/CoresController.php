@@ -62,8 +62,8 @@ class CoresController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
 		$core = $this->Cores->get($id);
+
 		if ($this->Cores->delete($core)) {
 			$this->Flash->success(__('O dojô foi excluído com sucesso.'));
 		} else {

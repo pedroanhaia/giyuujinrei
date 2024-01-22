@@ -4,7 +4,22 @@ declare(strict_types=1);
 namespace App\Controller;
 
 class StudentsController extends AppController {
+	public function initialize(): void {
+		parent::initialize();
+		$this->loadModel('Responsible');
+		$this->loadModel('Cores');
+		$this->loadModel('Ranks');
+	}
+
 	public function index() {
+		$this->paginate = [
+			'limit' => 25,
+			'order' => ['Students.id' => 'DESC'],
+			'contain' => [
+				'Cores' => ['fields' => ['name']],
+			],
+		];
+
 		$students = $this->paginate($this->Students);
 		
 		$this->set(compact('students'));
@@ -33,6 +48,13 @@ class StudentsController extends AppController {
 			$this->Flash->error(__('Não foi possível salvr o estudante, tente novamente.'));
 		}
 
+		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+
+		$this->set('ranks', $ranks);
+		$this->set('cores', $cores);
+		$this->set('responsibles', $responsibles);
 		$this->set(compact('student'));
 		$this->set('title', 'Cadastrar estudante');
 	}

@@ -1,60 +1,61 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var iterable<\App\Model\Entity\Responsible> $responsible
- */
-?>
-<div class="responsible index content">
-    <?= $this->Html->link(__('New Responsible'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Responsible') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('name') ?></th>
-                    <th><?= $this->Paginator->sort('phone') ?></th>
-                    <th><?= $this->Paginator->sort('rg') ?></th>
-                    <th><?= $this->Paginator->sort('socialfunction') ?></th>
-                    <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('modified') ?></th>
-                    <th><?= $this->Paginator->sort('role') ?></th>
-                    <th><?= $this->Paginator->sort('iduser') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($responsible as $responsible): ?>
-                <tr>
-                    <td><?= $this->Number->format($responsible->id) ?></td>
-                    <td><?= h($responsible->name) ?></td>
-                    <td><?= h($responsible->phone) ?></td>
-                    <td><?= h($responsible->rg) ?></td>
-                    <td><?= h($responsible->socialfunction) ?></td>
-                    <td><?= h($responsible->email) ?></td>
-                    <td><?= h($responsible->created) ?></td>
-                    <td><?= h($responsible->modified) ?></td>
-                    <td><?= $responsible->role === null ? '' : $this->Number->format($responsible->role) ?></td>
-                    <td><?= $responsible->iduser === null ? '' : $this->Number->format($responsible->iduser) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $responsible->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $responsible->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $responsible->id], ['confirm' => __('Are you sure you want to delete # {0}?', $responsible->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
-    </div>
+<div class="content">
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Html->link(__('Novo responsável'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) ?>
+			<h3> Responsáveis </h3>
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover table-row-clickable" id="table">
+			<thead class="text-primary">
+				<tr>
+					<th> # </th>
+					<th> Nome </th>
+					<th> Fone </th>
+					<th> RG </th>
+					<th> Função Social </th>
+					<th> E-mail </th>
+					<th class="actions"> Ações </th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($responsibles as $reg): ?>
+					<tr>
+						<td> <?= $reg->id ?> </td>
+						<td> <?= $reg->name ?> </td>
+						<td> <?= $reg->phone ?> </td>
+						<td> <?= $reg->rg ?> </td>
+						<td> <?= $reg->socialfunction ?> </td>
+						<td> <?= $reg->email ?> </td>
+						<td class="actions">
+							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+	<div class ='row'>
+		<div class="col-12 col-paginator">
+			<p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} resultado(s) de {{count}} totais')) ?></p>
+			<?= $this->Paginator->first('<< ' . __('Primeira')) ?>
+			<?= $this->Paginator->prev('< ' . __('Anterior')) ?>
+			<?= $this->Paginator->numbers() ?>
+			<?= $this->Paginator->next(__('Próxima') . ' >') ?>
+			<?= $this->Paginator->last(__('Úlima') . ' >>') ?>
+		</div>
+	</div>
 </div>
+<script>
+	$(document).ready(function() {
+		var table = $('#table').DataTable({
+			dom: 'rt', // Adicione os elementos que você deseja (l - length, r - processing, t - table, i - information, p - pagination),
+			"language": window.datatableOptionsLanguage,
+			"paging" : false,
+			"order": [0, 'DESC'],
+			"bPaginate": false,
+		});
+	});
+</script>
