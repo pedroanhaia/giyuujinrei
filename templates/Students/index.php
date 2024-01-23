@@ -30,6 +30,7 @@
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->sport->name ?> </td>
 						<td> <?= $reg->core->name ?> </td>
+						<td> <?= $reg->class->name ?> </td>
 						<td> 
 							<?php
 								$birthday = new DateTime($reg->birthday);
@@ -40,7 +41,6 @@
 						<td> <?= $reg->rank->name ?> </td>
 						<td> <?= $reg->responsible->name ?> </td>
 						<td> <?= $reg->phone ?> </td>
-						<td> <?= $reg->class ?> </td>
 						<td> <?= $reg->email ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-sm', 'id' => $reg->id, 'escape' => false]); ?>

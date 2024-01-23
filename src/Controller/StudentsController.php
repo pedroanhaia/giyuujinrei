@@ -11,6 +11,7 @@ class StudentsController extends AppController {
 		$this->loadModel('Ranks');
 		$this->loadModel('Users');
 		$this->loadModel('Sports');
+		$this->loadModel('Classes');
 	}
 
 	public function index() {
@@ -22,6 +23,7 @@ class StudentsController extends AppController {
 				'Sports' => ['fields' => ['name']],
 				'Responsible' => ['fields' => ['name']],
 				'Ranks' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
 			],
 		];
 
@@ -75,6 +77,14 @@ class StudentsController extends AppController {
 			$student = $this->Students->patchEntity($student, $this->request->getData());
 
 			if ($this->Students->save($student)) {
+                $core = $this->Cores->findById($student->idcore)->first();
+				$core->cont_students++;
+				$this->Cores->save($core);
+
+				$class = $this->Classes->findById($student->idclass)->first();
+				$class->count_students++;
+				$this->Cores->save($class);
+
 				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}

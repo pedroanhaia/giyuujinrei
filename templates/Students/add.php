@@ -41,13 +41,13 @@
 						<label class="control-label text-muted"> Esporte </label>
 						<?= $this->Form->control('idsport', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $sports, 'title' => 'Selecione o esporte']) ?>
 					</div>
+					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
+						<label class="control-label text-muted"> Turma </label>
+						<?= $this->Form->control('idclass', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione oa turma']) ?>
+					</div>
 					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Graduação </label>
 						<?= $this->Form->control('idgrank', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione a graduação']) ?>
-					</div>
-					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Turma </label>
-						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a turma']) ?>
 					</div>
 				</div>
 				<div class="row">
@@ -80,6 +80,27 @@
 						$('#idgrank').append('<option value="' + option.id + '">' + option.name + '</option>');
 					});
 					$('#idgrank').selectpicker('refresh');
+				},
+				error: function(error) {
+					console.error('Erro ao obter opções:', error);
+				}
+			});
+		})
+	// Turma  
+		$('#idcore, #idsport').change(function(e) {
+			var idcore = $('#idcore').val();
+			var idsport = $('#idsport').val();
+			$.ajax({
+				url: "<?= Router::url([ 'controller' => 'Classes', 'action' => 'classesopt', ], true); ?>",
+				method: 'POST',
+				data: {idcore: idcore, idsport: idsport},
+				dataType: 'json', 
+				success: function(data) {
+					$('#idclass').empty();
+					$.each(data, function(index, option) {
+						$('#idclass').append('<option value="' + option.id + '">' + option.name + '</option>');
+					});
+					$('#idclass').selectpicker('refresh');
 				},
 				error: function(error) {
 					console.error('Erro ao obter opções:', error);

@@ -82,6 +82,9 @@
 						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa fa-user-graduate icon"></i> ' . __('Graduações'), '/ranks', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">

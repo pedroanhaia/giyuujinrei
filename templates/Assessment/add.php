@@ -6,7 +6,7 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Estudante </label>
-						<?= $this->Form->control('idstudent', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $estudantes, 'title' => 'Selecione o estudante']) ?>
+						<?= $this->Form->control('idstudent', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $students, 'title' => 'Selecione o estudante']) ?>
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Índice </label>
@@ -20,7 +20,7 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Professor </label>
-						<?= $this->Form->control('idteacher', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $professores, 'title' => 'Selecione o professor']) ?>
+						<?= $this->Form->control('idteacher', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $teachers, 'title' => 'Selecione o professor']) ?>
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Agendamento </label>
@@ -42,4 +42,3 @@
 		</div>
 	</div>
 </div>
-

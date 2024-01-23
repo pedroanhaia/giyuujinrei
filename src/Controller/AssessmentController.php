@@ -52,11 +52,12 @@ class AssessmentController extends AppController {
 				$this->Flash->success(__('A avaliação foi salva com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
+
 			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
 		}
 
-		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$indexes = $this->Indexes->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$schedules = $this->Schedules->find('list', [
 				'keyField' => 'id',
@@ -66,11 +67,11 @@ class AssessmentController extends AppController {
 			])
 		->order(['DATE(date) ASC'])->toArray();
 
-		$this->set(compact('assessment'));
 		$this->set('indexes', $indexes);
-		$this->set('estudantes', $estudantes);
-		$this->set('professores', $professores);
+		$this->set('students', $students);
+		$this->set('teachers', $teachers);
 		$this->set('schedules', $schedules);
+		$this->set(compact('assessment'));
 		$this->set('title', 'Cadastrar avaliação');
 	}
 
@@ -79,20 +80,31 @@ class AssessmentController extends AppController {
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$assessment = $this->Assessment->patchEntity($assessment, $this->request->getData());
+			
 			if ($this->Assessment->save($assessment)) {
-				$this->Flash->success(__('The assessment has been saved.'));
-
+				$this->Flash->success(__('A avaliação foi salva com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
-			$this->Flash->error(__('The assessment could not be saved. Please, try again.'));
+			
+			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
 		}
 
-		$professores = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$estudantes = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$indexes = $this->Indexes->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$schedules = $this->Schedules->find('list', [
+				'keyField' => 'id',
+				'valueField' => function ($entity) {
+					return $entity->get('name') . ' - ' . date_format($entity->get('date'), 'd/m/Y - H:i:s');
+				}
+			])
+		->order(['DATE(date) ASC'])->toArray();
 
+		$this->set('indexes', $indexes);
+		$this->set('students', $students);
+		$this->set('teachers', $teachers);
+		$this->set('schedules', $schedules);
 		$this->set(compact('assessment'));
-		$this->set('estudantes', $estudantes);
-		$this->set('professores', $professores);
 		$this->set('title', 'Alterar avaliação');
 	}
 
