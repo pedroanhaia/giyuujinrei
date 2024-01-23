@@ -48,6 +48,10 @@ class StudentsController extends AppController {
 			$student = $this->Students->patchEntity($student, $this->request->getData());
 
 			if ($this->Students->save($student)) {
+				// Atualiza contagem na tabela Classes e COres
+				$this->Classes->updateCountStudents($student->idclass);
+				$this->Cores->updateCountStudents($student->idcore);
+
 				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
@@ -76,14 +80,15 @@ class StudentsController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$student = $this->Students->patchEntity($student, $this->request->getData());
 
-			if ($this->Students->save($student)) {
-                $core = $this->Cores->findById($student->idcore)->first();
-				$core->cont_students++;
-				$this->Cores->save($core);
+			$oldCore = $student->idcore;
+			$oldClass = $student->idclass;
 
-				$class = $this->Classes->findById($student->idclass)->first();
-				$class->count_students++;
-				$this->Cores->save($class);
+			if ($this->Students->save($student)) {
+				// Atualiza contagem na tabela Classes e Cores
+				$this->Classes->updateCountStudents($student->idclass);
+				$this->Cores->updateCountStudents($student->idcore);
+				if($oldClass != $student->idclass) $this->Classes->updateCountStudents($student->oldClass);
+				if($oldCore != $student->idcore) $this->Cores->updateCountStudents($student->oldCore);
 
 				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
@@ -111,6 +116,9 @@ class StudentsController extends AppController {
 		$student = $this->Students->get($id);
 
 		if ($this->Students->delete($student)) {
+			// Atualiza contagem na tabela Classes e Cores
+			$this->Classes->updateCountStudents($student->idclass);
+			$this->Cores->updateCountStudents($student->idcore);
 			$this->Flash->success(__('O estudante foi excluído com sucesso.'));
 		} else {
 			$this->Flash->error(__('Não foi possível excluir o estudante, tente novamente.'));

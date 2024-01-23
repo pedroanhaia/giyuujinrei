@@ -28,7 +28,7 @@
 						<td> <?= $reg->id ?> </td>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->city ?> </td>
-						<td> <?= $reg->cont_student ?> </td>
+						<td> <?= $reg->count_students ?> </td>
 						<td> <?= $reg->type ?> </td>
 						<td> <?= $reg->contact ?> </td>
 						<td> <?= $reg->positioncontact ?> </td>

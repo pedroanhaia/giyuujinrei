@@ -45,11 +45,11 @@ class ClassesController extends AppController {
 			$class = $this->Classes->patchEntity($class, $this->request->getData());
 			
 			if ($this->Classes->save($class)) {
-				$this->Flash->success(__('A avaliação foi salva com sucesso.'));
+				$this->Flash->success(__('A turma foi salva com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
 
-			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
+			$this->Flash->error(__('Não foi possível salvar a turma, tente novamente.'));
 		}
 
 		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
@@ -61,25 +61,24 @@ class ClassesController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$class = $this->Classes->get($id, ['contain' => []]);
+		$class = $this->Classes->get($id, ['contain' => ['Teachers']]);
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$class = $this->Classes->patchEntity($class, $this->request->getData());
 
 			if ($this->Classes->save($class)) {
-				$this->Flash->success(__('A avaliação foi salva com sucesso.'));
+				$this->Flash->success(__('A turma foi salva com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
 
-			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
+			$this->Flash->error(__('Não foi possível salvar a turma, tente novamente.'));
 		}
 
-        $teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
-		$this->set('teachers', $teachers);
-		$this->set('cores', $cores);
-		$this->set(compact('class'));
+		$this->set(compact('class', 'teachers', 'cores', 'sports'));
 		$this->set('title', 'Alterar turma');
 	}
 
@@ -102,7 +101,7 @@ class ClassesController extends AppController {
 			if(!empty($data['idsport'])) $where['idsport'] = $data['idsport'];
 			if(!empty($data['idcore'])) $where['idcore'] = $data['idcore'];
 
-			$classes = $this->Ranks->find()
+			$classes = $this->Classes->find()
 				->where($where)
 				->select(['id', 'name'])
 			->toArray();

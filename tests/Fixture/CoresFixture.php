@@ -22,7 +22,7 @@ class CoresFixture extends TestFixture
                 'id' => 1,
                 'name' => 'Lorem ipsum dolor sit amet',
                 'city' => 'Lorem ipsum dolor sit amet',
-                'cont_student' => 1,
+                'count_students' => 1,
                 'type' => 1,
                 'contact' => 'Lorem ipsum dolor sit amet',
                 'positioncontact' => 'Lorem ipsum dolor sit amet',

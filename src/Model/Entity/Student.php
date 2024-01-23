@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property int $idresponsible
  * @property string|null $phone
  * @property int|null $age
- * @property string|null $class
+ * @property string|null $idclass
  * @property string|null $email
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
@@ -42,7 +42,7 @@ class Student extends Entity
         'phone' => true,
         'birthday' => true,
         'idsport' => true,
-        'class' => true,
+        'idclass' => true,
         'email' => true,
         'created' => true,
         'modified' => true,

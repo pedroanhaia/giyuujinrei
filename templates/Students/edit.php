@@ -47,7 +47,7 @@
 					</div>
 					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Turma </label>
-						<?= $this->Form->control('class', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a turma']) ?>
+						<?= $this->Form->control('idclass', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione oa turma']) ?>
 					</div>
 				</div>
 				<div class="row">
@@ -67,7 +67,11 @@
 </div>
 <script>
 	$("#phone").mask("(99) 99999-9999");
-
+	// Loads 
+		$(document).ready(function() {
+			loadRanks();
+			loadClasses();
+		})
 	// Graduações do esporte 
 		$('#idsport').change(function(e) {
 			loadRanks();
@@ -76,7 +80,6 @@
 		$(document).ready(function() {
 			loadRanks();
 		})
-
 
 		function loadRanks() {
 			var idsport = $('#idsport').val();
@@ -91,6 +94,33 @@
 					$('#idgrank').selectpicker('refresh');
 					$('#idgrank').val("<?= $student->idgrank ?>");
 					$('#idgrank').selectpicker('refresh');
+				},
+				error: function(error) {
+					console.error('Erro ao obter opções:', error);
+				}
+			});
+		}
+	// Turma  
+		$('#idcore, #idsport').change(function(e) {
+			loadClasses();
+		})
+
+		function loadClasses() {
+			var idcore = $('#idcore').val();
+			var idsport = $('#idsport').val();
+			$.ajax({
+				url: "<?= Router::url([ 'controller' => 'Classes', 'action' => 'classesopt', ], true); ?>",
+				method: 'POST',
+				data: {idcore: idcore, idsport: idsport},
+				dataType: 'json', 
+				success: function(data) {
+					$('#idclass').empty();
+					$.each(data, function(index, option) {
+						$('#idclass').append('<option value="' + option.id + '">' + option.name + '</option>');
+					});
+					$('#idclass').selectpicker('refresh');
+					$('#idclass').val("<?= $student->idclass ?>");
+					$('#idclass').selectpicker('refresh');
 				},
 				error: function(error) {
 					console.error('Erro ao obter opções:', error);

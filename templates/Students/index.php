@@ -16,8 +16,8 @@
 					<th> Turma </th>
 					<th> Graduação </th>
 					<th> Responsável </th>
-					<th> Fone </th>
 					<th> Idade </th>
+					<th> Fone </th>
 					<th> E-mail </th>
 					<th class="actions"> Ações </th>
 				</tr>
@@ -31,6 +31,8 @@
 						<td> <?= $reg->sport->name ?> </td>
 						<td> <?= $reg->core->name ?> </td>
 						<td> <?= $reg->class->name ?> </td>
+						<td> <?= $reg->rank->name ?> </td>
+						<td> <?= $reg->responsible->name ?> </td>
 						<td> 
 							<?php
 								$birthday = new DateTime($reg->birthday);
@@ -38,8 +40,6 @@
 								echo $diff->y . " anos";
 							?> 
 						</td>
-						<td> <?= $reg->rank->name ?> </td>
-						<td> <?= $reg->responsible->name ?> </td>
 						<td> <?= $reg->phone ?> </td>
 						<td> <?= $reg->email ?> </td>
 						<td class="actions">

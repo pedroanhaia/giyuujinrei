@@ -19,7 +19,6 @@ class ClassesTable extends Table {
 		$this->hasMany('Students', ['foreignKey' => 'id']);
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
 		$this->belongsTo('Sports', ['foreignKey' => 'idsport']);
-		// $this->hasMany('Classesteachers', ['foreignKey' => 'class_id']);
 
 		$this->hasMany('Classesteachers');
         $this->belongsToMany('Teachers', [
@@ -69,5 +68,12 @@ class ClassesTable extends Table {
 				$this->Classesteachers->save($rel);
 			}
 		}
+	}
+
+	public function updateCountStudents($classId) {
+		$count = $this->Students->find()->where(['idclass' => $classId])->count();
+		$class = $this->get($classId);
+		$class->set('count_students', $count);
+		$this->save($class);
 	}
 }

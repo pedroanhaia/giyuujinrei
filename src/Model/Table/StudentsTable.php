@@ -18,10 +18,11 @@ class StudentsTable extends Table {
 
 		$this->addBehavior('Timestamp');
 
-		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
 		$this->belongsTo('Responsible', ['foreignKey' => 'idresponsible']);
 		$this->belongsTo('Ranks', ['foreignKey' => 'idgrank']);
 		$this->belongsTo('Sports', ['foreignKey' => 'idsport']);
+		$this->belongsTo('Classes', ['foreignKey' => 'idclass']);
+		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {
@@ -56,9 +57,9 @@ class StudentsTable extends Table {
 			->allowEmptyString('phone');
 
 		$validator
-			->scalar('class')
-			->maxLength('class', 10)
-			->allowEmptyString('class');
+			->scalar('idclass')
+			->maxLength('idclass', 10)
+			->allowEmptyString('idclass');
 
 		$validator
 			->email('email')
