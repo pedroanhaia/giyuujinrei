@@ -8,7 +8,6 @@
 		background-color: <?= $echartBetsConvertidas['AproveitamentoCor'] ?>;
 	}
 </style>
-<!-- <div class="content"> -->
 <div class="content content-relatorios">
 	<div class="row row-title">
 		<div class="col-2">

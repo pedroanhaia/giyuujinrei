@@ -22,13 +22,13 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Senha </label>
-						<?= $this->Form->control('password', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira a senha']) ?>
+						<?= $this->Form->password('password1', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira a senha']) ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
 						<label class="control-label text-muted"> Confirmar senha </label>
-						<?= $this->Form->password('password1', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Confirme a senha']) ?>
+						<?= $this->Form->password('password2', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Confirme a senha']) ?>
 					</div>
 				</div>
 				<div class="row">

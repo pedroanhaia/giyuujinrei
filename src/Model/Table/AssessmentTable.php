@@ -55,4 +55,40 @@ class AssessmentTable extends Table {
 
 		return $validator;
 	}
+
+	public function destaquesMes($mes, $ano) {
+		$primeiroDia = new \DateTime("$ano-$mes-01");
+		$ultimoDia = new \DateTime($primeiroDia->format('Y-m-t'));
+
+		$where = [
+			'DATE(Schedules.date) >=' => $primeiroDia->format('Y-m-d'),
+			'DATE(Schedules.date) <=' => $ultimoDia->format('Y-m-d'),
+		];
+		if(!empty($platformsIn)) $where['Games.idplatform IN'] = $platformsIn;
+
+		$assessment = $this->find('all')
+			->where($where)
+			->contain(['Students', 'Schedules'])
+			->select(['Students.id', 'Students.name', 'Assessment.id', 'Assessment.idstudent', 'Assessment.value', 'Assessment.idindex', 'Assessment.idschedule', 'Schedules.date'])
+		->toArray();
+
+		$array = [];
+
+		foreach ($assessment as $avaliacao) {
+			if(isset($array[$avaliacao->idstudent])) {
+				$array[$avaliacao->idstudent]['Total'] += $avaliacao->value;
+			} else {
+				$array[$avaliacao->idstudent]['Nome'] = $avaliacao->student->name;
+				$array[$avaliacao->idstudent]['Total'] = $avaliacao->value;
+				// $array[$avaliacao->idstudent]['Foto'] = $avaliacao->value; ------------- coloca aqui o caminho pra foto e adiciona no select o campo
+			}
+		}
+
+		// Ordena o array pela quantidade, do maior para o menor
+		usort($array, function($a, $b) {
+			return $b['Total'] <=> $a['Total'];
+		});
+
+		return $array;
+	}
 }

@@ -9,53 +9,50 @@
     // Configurações do fuso horário
     date_default_timezone_set('America/Sao_Paulo');
 
-    // Outras configurações
-    define('SITE_NAME', 'Twel Bot');
-    define('C_roleservhistbets', 1);
-    define('C_roleservwebhooktel', 2);
-    define('C_roleservreqeve', 3);
-    define('C_roleservreqligas', 4);
-    define('C_roleservreqsports', 5);
-    define('C_roleservreqaccinfo', 6);
-    define('C_roleservreqevents', 7);
-    define('C_roleservreqsaldacc', 8);
-    define('C_roleservreqplacebet', 9);
 
-	define('C_BetsResultadoAcerto', 1);
-	define('C_BetsResultadoErro', 2);
+	// Roles 
+		define('C_RoleTudo', 99);
+		define('C_RoleNada', 0);
 
-	define('C_RoleTudo', 99);
-	define('C_RoleNada', 0);
-	define('C_RoleNaoValida', 1);
-	define('C_RoleTelegram', 2);
+		define('C_RolesOptions', [
+			C_RoleTudo => 'Tudo',
+			C_RoleNada => 'Nada',
+		]);
 
-    define('C_stackdefaultsyst', 0.01);
+	// Meses e Anos
+		define('C_MesesOpt', [
+			1 => 'Janeiro',
+			2 => 'Fevereiro',
+			3 => 'Março',
+			4 => 'Abril',
+			5 => 'Maio',
+			6 => 'Junho',
+			7 => 'Julho',
+			8 => 'Agosto',
+			9 => 'Setembro',
+			10 => 'Outubro',
+			11 => 'Novembro',
+			12 => 'Dezembro',
+		]);
 
-	define('C_RolesOptions', [
-        C_RoleTudo => 'Tudo',
-		C_RoleNada => 'Nada',
-		// C_RoleNaoValida => 'Não valida',
-		// C_RoleTelegram => 'Telegram',
-	]);
+		function strMes($mes) {
+			if($mes == 1) return 'Janeiro';
+			if($mes == 2) return 'Fevereiro';
+			if($mes == 3) return 'Março';
+			if($mes == 4) return 'Abril';
+			if($mes == 5) return 'Maio';
+			if($mes == 6) return 'Junho';
+			if($mes == 7) return 'Julho';
+			if($mes == 8) return 'Agosto';
+			if($mes == 9) return 'Setembro';
+			if($mes == 10) return 'Outubro';
+			if($mes == 11) return 'Novembro';
+			if($mes == 12) return 'Dezembro';
+		}
 
-    define('C_RolesServOptions', [
-		C_roleservhistbets    => 'Hist. eventos',
-		C_roleservwebhooktel => 'Webhook Tel.',
-		C_roleservreqeve     => 'Req. evento',
-		C_roleservreqligas   => 'Req. ligas',
-		C_roleservreqsports  => 'Req. esportes',
-		C_roleservreqevents  => 'Req. eventos',
-		C_roleservreqaccinfo => 'Req. Acc. Inf.',
-        C_roleservreqsaldacc => 'Req. Saldo Acc.',
-        C_roleservreqplacebet=> 'Req. Place Bet',
-	]);
+		$anos = range(2024, date('Y'));
+		$options = [];
+		foreach ($anos as $ano) $anosOpt[$ano] = $ano;
 
-	define('C_BetsStatusptions', [
-		null => 'Todos',
-		'LOSS' => 'LOSS',
-		'WiN' => 'WIN',
-		'MARKET_NOT_FOUND' => 'MARKET_NOT_FOUND',
-		'MARKET_SUSPENDED' => 'MARKET_SUSPENDED',
-		'PUSH' => 'PUSH',
-        'ACCEPTED' => 'ACCEPTED',
-	]);
+		define('C_AnosOpt', $anosOpt);
+	// 

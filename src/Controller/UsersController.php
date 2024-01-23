@@ -68,7 +68,13 @@ class UsersController extends AppController {
 			'contain' => [],
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
+			if($this->request->getData('password2') != $this->request->getData('password1')) {
+				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
+				return $this->redirect(['action' => 'add']);
+			}
+
 			$user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->password = $this->request->getData('password1');
 			
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('O usuário foi salvo com sucesso.'));
