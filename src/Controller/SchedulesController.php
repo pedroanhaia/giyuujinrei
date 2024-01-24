@@ -10,24 +10,18 @@ class SchedulesController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Schedules.id' => 'DESC'],
-			'contain' => [
-				'Cores' => ['fields' => ['name']],
-			],
-		];
-
-		$schedules = $this->paginate($this->Schedules);
+		$schedules = $this->Schedules->find()
+			->contain(['Cores' => ['fields' => ['name']]])
+		->toArray();
 
 		$this->set(compact('schedules'));
 		$this->set('title', 'Lista de agendamentos');
 	}
 
 	public function view($id = null) {
-		$schedule = $this->Schedules->get($id, [
-			'contain' => [],
-		]);
+		$schedule = $this->Schedules->findById($id)
+			->contain(['Cores' => ['fields' => ['name']]])
+		->first();
 
 		$this->set(compact('schedule'));
 		$this->set('title', 'Visualizar agendamento');

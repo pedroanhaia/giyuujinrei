@@ -39,7 +39,7 @@
                     <td><?= h($student->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Id') ?></th>
+                    <th><?= __('#') ?></th>
                     <td><?= $this->Number->format($student->id) ?></td>
                 </tr>
                 <tr>

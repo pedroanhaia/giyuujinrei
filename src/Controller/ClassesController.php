@@ -14,7 +14,6 @@ class ClassesController extends AppController {
 	public function index() {
 		$classes = $this->Classes->find('all')
 			->contain([
-				// 'Classesteachers.Teachers' => ['fields' => ['name']],
 				'Cores' => ['fields' => ['name']],
 				'Sports' => ['fields' => ['name']],
 				'Teachers' => ['fields' => ['name']],
@@ -29,13 +28,14 @@ class ClassesController extends AppController {
 	public function view($id = null) {
 		$class = $this->Classes->findById($id)
 			->contain([
-				'Students' => ['fields' => ['name']],
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
 				'Teachers' => ['fields' => ['name']],
 			])
 		->first();
 
 		$this->set('title', 'Visualizar turma');
-		$this->set(compact('assessment'));
+		$this->set(compact('class'));
 	}
 
 	public function add() {

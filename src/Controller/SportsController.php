@@ -10,21 +10,14 @@ class SportsController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Schedules.id' => 'DESC'],
-		];
-
-		$sports = $this->paginate($this->Sports);
+		$sports = $this->Sports->find()->toArray();
 
 		$this->set(compact('sports'));
 		$this->set('title', 'Lista de esportes');
 	}
 
 	public function view($id = null) {
-		$sport = $this->Sports->get($id, [
-			'contain' => [],
-		]);
+		$sport = $this->Sports->findById($id)->first();
 
 		$this->set(compact('sport'));
 		$this->set('title', 'Visualizar esporte');

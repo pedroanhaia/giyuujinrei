@@ -6,21 +6,14 @@ namespace App\Controller;
 class RatingsController extends AppController {
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Ratings.id' => 'DESC'],
-		];
-
-		$ratings = $this->paginate($this->Ratings);
+		$ratings = $this->Ratings->find()->toArray();
 
 		$this->set(compact('ratings'));
 		$this->set('title', 'Lista de áreas');
 	}
 
 	public function view($id = null) {
-		$rating = $this->Ratings->get($id, [
-			'contain' => [],
-		]);
+		$rating = $this->Ratings->findById($id) ->first();
 
 		$this->set(compact('rating'));
 		$this->set('title', 'Visualizar área');

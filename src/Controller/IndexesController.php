@@ -10,24 +10,18 @@ class IndexesController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Indexes.id' => 'DESC'],
-			'contain' => [
-				'Ratings' => ['fields' => ['name']],
-			],
-		];
-
-		$indexes = $this->paginate($this->Indexes);
+		$indexes = $this->Indexes->find()
+			->contain(['Ratings' => ['fields' => ['name']]])
+		->toArray();
 
 		$this->set(compact('indexes'));
 		$this->set('title', 'Lista de índices');
 	}
 
 	public function view($id = null) {
-		$index = $this->Indexes->get($id, [
-			'contain' => [],
-		]);
+		$index = $this->Indexes->findById($id)
+			->contain(['Ratings' => ['fields' => ['name']]])
+		->first();
 
 		$this->set(compact('index'));
 		$this->set('title', 'Visualizar índice');

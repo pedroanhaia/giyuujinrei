@@ -1,64 +1,55 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Responsible $responsible
- */
-?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Responsible'), ['action' => 'edit', $responsible->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Responsible'), ['action' => 'delete', $responsible->id], ['confirm' => __('Are you sure you want to delete # {0}?', $responsible->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Responsible'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Responsible'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="responsible view content">
-            <h3><?= h($responsible->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($responsible->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Phone') ?></th>
-                    <td><?= h($responsible->phone) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Rg') ?></th>
-                    <td><?= h($responsible->rg) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Socialfunction') ?></th>
-                    <td><?= h($responsible->socialfunction) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($responsible->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($responsible->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= $responsible->role === null ? '' : $this->Number->format($responsible->role) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Iduser') ?></th>
-                    <td><?= $responsible->iduser === null ? '' : $this->Number->format($responsible->iduser) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($responsible->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($responsible->modified) ?></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<div class="col-md-12 content">
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Form->postLink(__('Excluir responsável'), ['action' => 'delete', $responsible->id], ['confirm' => __('Você confirma a exclusão deste item?', $responsible->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Alterar responsável'), ['action' => 'edit', $responsible->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Lista de responsáveis'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
+			<h3> <?= $title ?> </h3>
+		</div>
+	</div>
+	<div class="card">
+		<div class="column-responsive column-80">
+			<div class="responsible view content">
+				<h3><?= h($responsible->name) ?></h3>
+				<table>
+					<tr>
+						<th><?= __('#') ?></th>
+						<td><?= $this->Number->format($responsible->id) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Nome') ?></th>
+						<td><?= h($responsible->name) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Fone') ?></th>
+						<td><?= h($responsible->phone) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('RG') ?></th>
+						<td><?= h($responsible->rg) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Função Social') ?></th>
+						<td><?= h($responsible->socialfunction) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('E-mail') ?></th>
+						<td><?= h($responsible->email) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Iduser') ?></th>
+						<td><?= $responsible->iduser === null ? '' : $this->Number->format($responsible->iduser) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Criado em:') ?></th>
+						<td><?= date_format($responsible->created, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Modificado em:') ?></th>
+						<td><?= date_format($responsible->modified, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

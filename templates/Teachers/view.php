@@ -1,64 +1,55 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Teacher $teacher
- */
-?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Teacher'), ['action' => 'edit', $teacher->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Teacher'), ['action' => 'delete', $teacher->id], ['confirm' => __('Are you sure you want to delete # {0}?', $teacher->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Teachers'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Teacher'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="teachers view content">
-            <h3><?= h($teacher->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($teacher->name) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Phone') ?></th>
-                    <td><?= h($teacher->phone) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Rg') ?></th>
-                    <td><?= h($teacher->rg) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($teacher->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($teacher->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Type') ?></th>
-                    <td><?= $teacher->type === null ? '' : $this->Number->format($teacher->type) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= $teacher->role === null ? '' : $this->Number->format($teacher->role) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Iduser') ?></th>
-                    <td><?= $teacher->iduser === null ? '' : $this->Number->format($teacher->iduser) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($teacher->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($teacher->modified) ?></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<div class="col-md-12 content">
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Form->postLink(__('Excluir professor'), ['action' => 'delete', $teacher->id], ['confirm' => __('Você confirma a exclusão deste item?', $teacher->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Alterar professor'), ['action' => 'edit', $teacher->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Lista de professores'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
+			<h3> <?= $title ?> </h3>
+		</div>
+	</div>
+	<div class="card">
+		<div class="column-responsive column-80">
+			<div class="teachers view content">
+				<h3><?= h($teacher->name) ?></h3>
+				<table>
+					<tr>
+						<th><?= __('#') ?></th>
+						<td><?= $this->Number->format($teacher->id) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Nome') ?></th>
+						<td><?= h($teacher->name) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Fone') ?></th>
+						<td><?= h($teacher->phone) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('RG') ?></th>
+						<td><?= h($teacher->rg) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('E-mail') ?></th>
+						<td><?= h($teacher->email) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Tipo') ?></th>
+						<td><?= $teacher->type === null ? '' : $this->Number->format($teacher->type) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Usuário') ?></th>
+						<td><?= $teacher->iduser === null ? '' : $this->Number->format($teacher->iduser) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Criado em:') ?></th>
+						<td><?= date_format($teacher->created, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Modificado em:') ?></th>
+						<td><?= date_format($teacher->modified, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
