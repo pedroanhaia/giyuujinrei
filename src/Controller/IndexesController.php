@@ -49,8 +49,8 @@ class IndexesController extends AppController {
 
 		$ratings = $this->Ratings->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
-		$this->set(compact('index'));
 		$this->set('ratings', $ratings);
+		$this->set(compact('index'));
 		$this->set('title', 'Cadastrar índice');
 	}
 
@@ -88,5 +88,12 @@ class IndexesController extends AppController {
 		}
 
 		return $this->redirect(['action' => 'index']);
+	}
+
+	public function indexesbyrating($idrating) {
+		if($this->request->is('ajax')) {
+			$indexes = $this->Indexes->findByIdrating($idrating)->select(['id', 'name'])->toArray();
+			return $this->jsonResponse($indexes, 200);
+		}
 	}
 }

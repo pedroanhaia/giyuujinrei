@@ -17,10 +17,6 @@
 						<label class="control-label text-muted"> Obs. </label>
 						<?= $this->Form->control('obs1', ['class' => 'form-control', 'label' => false]) ?>
 					</div>
-					<div class="col-lg-4 col-md-12">
-						<label class="control-label text-muted"> Role </label>
-						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
-					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12">

@@ -88,14 +88,14 @@
 						<?= $this->Html->link('<i class="fa fa-user-graduate icon"></i> ' . __('Graduações'), '/ranks', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-layer-group icon"></i>' . __('Áreas'), '/ratings', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
-					</li>
+					<!-- <li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-layer-group icon"></i>' . __('Áreas'), '/ratings', ['escape' => false, 'class' => '']);?>
+					</li> -->
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-calendar-day icon"></i>' . __('Agendamentos'), '/schedules', ['escape' => false, 'class' => '']);?>
 					</li>
@@ -258,5 +258,12 @@
 				"sSortDescending": ": Ordem descendente"
 			},
 		};
-	//
+	// Sidebar 
+		$(document).ready(function () {
+			$('.toggle-submenu').click(function (e) {
+				e.preventDefault();
+				$('#sublista').toggle();
+			});
+		});
+	// 
 </script>

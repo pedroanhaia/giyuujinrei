@@ -5,12 +5,7 @@ namespace App\Controller;
 
 class CoresController extends AppController {
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Cores.id' => 'DESC'],
-		];
-
-		$cores = $this->paginate($this->Cores);
+		$cores = $this->Cores->find('all')->toArray();
 
 		$this->set('title', 'Lista de dojôs');
 		$this->set(compact('cores'));
@@ -58,7 +53,7 @@ class CoresController extends AppController {
 		}
 
 		$this->set(compact('core'));
-		$this->set('title', 'Cadastrar dojô');
+		$this->set('title', 'Alterar dojô');
 	}
 
 	public function delete($id = null) {

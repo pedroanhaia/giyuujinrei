@@ -38,12 +38,6 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-4 col-md-6 col-xs-12">
-						<label class="control-label text-muted"> Role </label>
-						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'options' => C_RolesOptions]) ?>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar graduação', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

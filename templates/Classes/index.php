@@ -10,7 +10,6 @@
 		<table class="table table-hover table-row-clickable" id="table">
 			<thead class="text-primary">
 				<tr>
-					<th> # </th>
 					<th> Nome </th>
 					<th> Qtd. Estudantes </th>
 					<th> Professores </th>
@@ -21,7 +20,6 @@
 			<tbody>
 				<?php foreach ($classes as $reg): ?>
 					<tr>
-						<td> <?= $reg->id ?> </td>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->count_students ?> </td>
 						<td>  <?php foreach($reg->teachers as $teacher) echo $teacher->name . ' <br> ' ?> </td>
@@ -39,12 +37,11 @@
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#table').DataTable({
-			dom: 'rtlp', // Adicione os elementos que você deseja (l - length, r - processing, t - table, i - information, p - pagination),
-			"language": window.datatableOptionsLanguage,
-			"paging" : false,
-			"order": [0, 'DESC'],
-			"bPaginate": false,
+		var table = $('#table');
+		table.DataTable({
+			"pageLength": 10,
+			"language": datatableOptionsLanguage,
+			"order" : [0, "asc"],
 		});
 	});
 </script>
