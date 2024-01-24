@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
+use Cake\Utility\Text;
+
 class StudentsController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
@@ -82,6 +87,29 @@ class StudentsController extends AppController {
 
 			$oldCore = $student->idcore;
 			$oldClass = $student->idclass;
+            $oldImage = $student->urlpicture;
+
+            if (!empty($this->request->getData()['urlpicture']) ) {
+                $file = $this->request->getUploadedFile('urlpicture');
+                if ($this->request->getUploadedFile('urlpicture')->getError() === UPLOAD_ERR_OK && $file != null)
+                {
+
+
+                    $uploadPath = WWW_ROOT . 'img' . DS . 'uploads' . DS;
+                    $filename = Text::uuid() . '-' . $file->getClientFilename();
+
+                    // Salvar a imagem no servidor
+                    $file->moveTo($uploadPath . $filename);
+
+                    // Atualizar o caminho da imagem no banco de dados
+                    $student->urlpicture = 'uploads/'  . $filename; // Coluna 'image2'
+                } else {
+                    $student->urlpicture = $oldImage; // Coluna 'image2'
+                }
+            }
+
+            if ($student->urlpicture == "" || $student->urlpicture == null) $student->urlpicture = $oldImage;
+            // if ($card->image2 == "" || $card->image2 == null) $card->image2 = $image2;
 
 			if ($this->Students->save($student)) {
 				// Atualiza contagem na tabela Classes e Cores

@@ -33,7 +33,7 @@ class StudentsTable extends Table {
 
 		$validator
 			->scalar('urlpicture')
-			->maxLength('urlpicture', 255)
+			// ->maxLength('urlpicture', 255)
 			->allowEmptyString('urlpicture');
 
 		$validator
@@ -76,7 +76,7 @@ class StudentsTable extends Table {
 		$validator
 			->integer('idgrank')
 			->allowEmptyString('idgrank');
-			
+
 
 		return $validator;
 	}

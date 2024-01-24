@@ -6,7 +6,7 @@
 <head>
 	<?= $this->Html->charset() ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title> <?= isset($title) ? $title : 'Giyuujinrei: Dojo online' ?> </title>
+	<title> Giyuujinrei: Dojo online </title>
 	<?= $this->Html->meta('icon', 'img/brandelli.png')?>
 
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
@@ -136,7 +136,7 @@
 </body>
 </html>
 <script>
-	// Dark mode 
+	// Dark mode
 		const body = document.querySelector('body'),
 			sidebar = body.querySelector('nav'),
 			toggle = body.querySelector(".toggle"),
@@ -205,7 +205,7 @@
 		$(document).ready(function() {
 			darkMode();
 		});
-	// Datatable 
+	// Datatable
 		var datatableOptions = {
 			"pageLength": 10,
 			"language": {

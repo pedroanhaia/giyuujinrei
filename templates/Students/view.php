@@ -22,6 +22,9 @@
                     <th><?= __('Name') ?></th>
                     <td><?= h($student->name) ?></td>
                 </tr>
+                <div class="row">
+                    <?= $this->Html->image($student->urlpicture,['style' => 'width: 25%; height: auto;'])?>
+                </div>
                 <tr>
                     <th><?= __('Urlpicture') ?></th>
                     <td><?= h($student->urlpicture) ?></td>
