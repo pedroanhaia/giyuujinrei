@@ -67,12 +67,12 @@
 </div>
 <script>
 	$("#phone").mask("(99) 99999-9999");
-	// Loads
+	// Loads 
 		$(document).ready(function() {
 			loadRanks();
 			loadClasses();
 		})
-	// Graduações do esporte
+	// Graduações do esporte 
 		$('#idsport').change(function(e) {
 			loadRanks();
 		})
@@ -100,7 +100,7 @@
 				}
 			});
 		}
-	// Turma
+	// Turma 
 		$('#idcore, #idsport').change(function(e) {
 			loadClasses();
 		})

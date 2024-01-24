@@ -10,7 +10,6 @@
 			<thead class="text-primary">
 				<tr>
 					<th> # </th>
-                    <th> Imagem </th>
 					<th> Nome </th>
 					<th> Esporte </th>
 					<th> Dojô </th>
@@ -28,16 +27,6 @@
 					$today = new DateTime();  ?>
 					<tr>
 						<td> <?= $reg->id ?> </td>
-                        <td>
-                            <?php
-                                if ($reg->urlpicture != "") $imagePath = str_replace('\\', '/', $reg->urlpicture);
-                                else $imagePath = str_replace('\\', '/', "/img/noimage.jpg");//image default quando não tiver imagem
-                                //echo $this->Html->image($card->image, array('alt' => $imagePath));
-                                echo $this->Html->image($imagePath, array('alt' => $reg->urlpicture, 'border' => '0', 'data-src' => 'holder.js/100%x100', 'width'=>'100px'));
-                            ?>
-
-
-                        </td>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->sport->name ?> </td>
 						<td> <?= $reg->core->name ?> </td>
@@ -67,6 +56,10 @@
 <script>
 	$(document).ready(function() {
 		var table = $('#table');
-		table.DataTable(window.datatableOptions);
+		table.DataTable({
+			"pageLength": 10,
+			"language": datatableOptionsLanguage,
+			"order" : [1, "asc"],
+		});
 	});
 </script>

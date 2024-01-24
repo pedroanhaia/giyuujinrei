@@ -34,7 +34,7 @@
 		table.DataTable({
 			"pageLength": 10,
 			"language": datatableOptionsLanguage,
-			"order" : [1, "asc"],
+			"order" : [0, "asc"],
 		});
 	});
 </script>

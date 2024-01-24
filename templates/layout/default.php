@@ -136,7 +136,7 @@
 </body>
 </html>
 <script>
-	// Dark mode
+	// Dark mode 
 		const body = document.querySelector('body'),
 			sidebar = body.querySelector('nav'),
 			toggle = body.querySelector(".toggle"),
@@ -205,7 +205,7 @@
 		$(document).ready(function() {
 			darkMode();
 		});
-	// Datatable
+	// Datatable 
 		var datatableOptions = {
 			"pageLength": 10,
 			"language": {
@@ -258,12 +258,5 @@
 				"sSortDescending": ": Ordem descendente"
 			},
 		};
-	// Sidebar 
-		$(document).ready(function () {
-			$('.toggle-submenu').click(function (e) {
-				e.preventDefault();
-				$('#sublista').toggle();
-			});
-		});
-	// 
+	//
 </script>
