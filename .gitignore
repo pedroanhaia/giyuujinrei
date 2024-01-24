@@ -4,6 +4,7 @@
 /config/.env
 /logs/*
 /tmp/*
+/webroot/img/uploads/*
 
 # OS generated files #
 ######################
