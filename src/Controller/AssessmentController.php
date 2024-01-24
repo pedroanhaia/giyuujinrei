@@ -10,6 +10,7 @@ class AssessmentController extends AppController {
 		$this->loadModel('Students');
 		$this->loadModel('Schedules');
 		$this->loadModel('Indexes');
+		$this->loadModel('Ratings');
 	}
 
 	public function index() {
@@ -58,7 +59,7 @@ class AssessmentController extends AppController {
 
 		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$indexes = $this->Indexes->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$ratings = $this->Ratings->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$schedules = $this->Schedules->find('list', [
 				'keyField' => 'id',
 				'valueField' => function ($entity) {
@@ -67,7 +68,7 @@ class AssessmentController extends AppController {
 			])
 		->order(['DATE(date) ASC'])->toArray();
 
-		$this->set('indexes', $indexes);
+		$this->set('ratings', $ratings);
 		$this->set('students', $students);
 		$this->set('teachers', $teachers);
 		$this->set('schedules', $schedules);

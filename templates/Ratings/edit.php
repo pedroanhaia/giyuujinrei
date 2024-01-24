@@ -24,12 +24,6 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-3 col-md-4 col-sm-12">
-						<label class="control-label text-muted"> Role </label>
-						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar dojô', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

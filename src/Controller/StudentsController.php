@@ -15,19 +15,15 @@ class StudentsController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Students.id' => 'DESC'],
-			'contain' => [
+		$students = $this->Students->find('all')
+			->contain([
 				'Cores' => ['fields' => ['name']],
 				'Sports' => ['fields' => ['name']],
 				'Responsible' => ['fields' => ['name']],
 				'Ranks' => ['fields' => ['name']],
 				'Classes' => ['fields' => ['name']],
-			],
-		];
-
-		$students = $this->paginate($this->Students);
+			])
+		->toArray();
 
 		$this->set(compact('students'));
 		$this->set('title', 'Lista de estudantes');

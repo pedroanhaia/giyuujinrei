@@ -9,7 +9,6 @@
 		<table class="table table-hover table-row-clickable" id="table">
 			<thead class="text-primary">
 				<tr>
-					<th> # </th>
 					<th> Nome </th>
 					<th> Fone </th>
 					<th> RG </th>
@@ -21,7 +20,6 @@
 			<tbody>
 				<?php foreach ($responsibles as $reg): ?>
 					<tr>
-						<td> <?= $reg->id ?> </td>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->phone ?> </td>
 						<td> <?= $reg->rg ?> </td>
@@ -37,25 +35,14 @@
 			</tbody>
 		</table>
 	</div>
-	<div class ='row'>
-		<div class="col-12 col-paginator">
-			<p><?= $this->Paginator->counter(__('Página {{page}} de {{pages}}, mostrando {{current}} resultado(s) de {{count}} totais')) ?></p>
-			<?= $this->Paginator->first('<< ' . __('Primeira')) ?>
-			<?= $this->Paginator->prev('< ' . __('Anterior')) ?>
-			<?= $this->Paginator->numbers() ?>
-			<?= $this->Paginator->next(__('Próxima') . ' >') ?>
-			<?= $this->Paginator->last(__('Úlima') . ' >>') ?>
-		</div>
-	</div>
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#table').DataTable({
-			dom: 'rt', // Adicione os elementos que você deseja (l - length, r - processing, t - table, i - information, p - pagination),
-			"language": window.datatableOptionsLanguage,
-			"paging" : false,
-			"order": [0, 'DESC'],
-			"bPaginate": false,
+		var table = $('#table');
+		table.DataTable({
+			"pageLength": 10,
+			"language": datatableOptionsLanguage,
+			"order" : [0, "asc"],
 		});
 	});
 </script>
