@@ -83,8 +83,26 @@ class StudentsController extends AppController {
 	public function add() {
 		$student = $this->Students->newEmptyEntity();
 		if ($this->request->is('post')) {
-			$student = $this->Students->patchEntity($student, $this->request->getData());
 
+			$student = $this->Students->patchEntity($student, $this->request->getData());
+            if (!empty($this->request->getData()['urlpicture']) ) {
+                $file = $this->request->getUploadedFile('urlpicture');
+                if ($this->request->getUploadedFile('urlpicture')->getError() === UPLOAD_ERR_OK && $file != null)
+                {
+
+
+                    $uploadPath = WWW_ROOT . 'img' . DS . 'uploads' . DS;
+                    $filename = Text::uuid() . '-' . $file->getClientFilename();
+
+                    // Salvar a imagem no servidor
+                    $file->moveTo($uploadPath . $filename);
+
+                    // Atualizar o caminho da imagem no banco de dados
+                    $student->urlpicture = 'uploads/'  . $filename; // Coluna 'image2'
+                } else {
+                    $student->urlpicture =  ''; // Coluna 'image2'
+                }
+            }
 			if ($this->Students->save($student)) {
 				// Atualiza contagem na tabela Classes e COres
 				$this->Classes->updateCountStudents($student->idclass);

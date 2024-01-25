@@ -40,7 +40,9 @@ use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Policy\OrmResolver;
-use Psr\Http\Message\ResponseInterface;
+use Cake\Http\Middleware\CorsMiddleware;
+use Cors\Routing\Middleware\CorsMiddleware as MiddlewareCorsMiddleware;
+
 /**
  * Application setup class.
  *
@@ -95,7 +97,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Token check will be skipped when callback returns `true`.
         $csrf->skipCheckCallback(function ($request) {
             // Skip token check for API URLs.
-            if ($request->is('post') === $request->is('json')) {
+            if ($request->is(['post', 'json'])) {
                 return true;
             }
         });
@@ -122,6 +124,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
+
+            //->add(new MiddlewareCorsMiddleware([
+            //    'origin' => ['*'], // Configurar as origens permitidas conforme necessário
+            //    'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Métodos permitidos
+            //    'headers' => ['Authorization', 'Content-Type'], // Cabeçalhos permitidos
+            //    'credentials' => true, // Permitir credenciais (cookies)
+            //    'exposeHeaders' => [], // Cabeçalhos expostos
+            //    'maxAge' => 3600, // Tempo de vida da preflight request (em segundos)
+            //]))
 
             ->add(new AuthenticationMiddleware($this))
             ->add(new AuthorizationMiddleware($this))
