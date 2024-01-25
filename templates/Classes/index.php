@@ -22,7 +22,7 @@
 					<tr>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->count_students ?> </td>
-						<td>  <?php foreach($reg->teachers as $teacher) echo $teacher->name . ' <br> ' ?> </td>
+						<td> <?php foreach($reg->teachers as $teacher) echo $teacher->name . ' <br> ' ?> </td>
 						<td> <?= $reg->core->name ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>

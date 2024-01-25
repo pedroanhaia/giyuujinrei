@@ -14,18 +14,14 @@ class AssessmentController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Assessment.id' => 'DESC'],
-			'contain' => [
+		$assessment = $this->Assessment->find()
+			->contain([
 				'Students' => ['fields' => ['name']],
 				'Teachers' => ['fields' => ['name']],
 				'Schedules' => ['fields' => ['name', 'date']],
 				'Indexes' => ['fields' => ['name']],
-			],
-		];
-
-		$assessment = $this->paginate($this->Assessment);
+			])
+		->toArray();
 
 		$this->set('title', 'Lista de avaliações');
 		$this->set(compact('assessment'));
@@ -36,10 +32,12 @@ class AssessmentController extends AppController {
 			->contain([
 				'Students' => ['fields' => ['name']],
 				'Teachers' => ['fields' => ['name']],
+				'Schedules' => ['fields' => ['name', 'date']],
+				'Indexes' => ['fields' => ['name']],
 			])
 		->first();
 
-		$this->set('title', 'z de avaliações');
+		$this->set('title', 'Visualizar avaliação');
 		$this->set(compact('assessment'));
 	}
 

@@ -1,83 +1,85 @@
 <?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Student $student
- */
+
+use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Student'), ['action' => 'edit', $student->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Student'), ['action' => 'delete', $student->id], ['confirm' => __('Are you sure you want to delete # {0}?', $student->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Students'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Student'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
-        </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="students view content">
-            <h3><?= h($student->name) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Name') ?></th>
-                    <td><?= h($student->name) ?></td>
-                </tr>
-                <div class="row">
-                    <?= $this->Html->image($student->urlpicture,['style' => 'width: 25%; height: auto;'])?>
-                </div>
-                <tr>
-                    <th><?= __('Urlpicture') ?></th>
-                    <td><?= h($student->urlpicture) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Phone') ?></th>
-                    <td><?= h($student->phone) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Class') ?></th>
-                    <td><?= h($student->class) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Email') ?></th>
-                    <td><?= h($student->email) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($student->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Idcore') ?></th>
-                    <td><?= $this->Number->format($student->idcore) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Idresponsible') ?></th>
-                    <td><?= $this->Number->format($student->idresponsible) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Age') ?></th>
-                    <td><?= $student->age === null ? '' : $this->Number->format($student->age) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Role') ?></th>
-                    <td><?= $student->role === null ? '' : $this->Number->format($student->role) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Iduser') ?></th>
-                    <td><?= $student->iduser === null ? '' : $this->Number->format($student->iduser) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Idgrank') ?></th>
-                    <td><?= $student->idgrank === null ? '' : $this->Number->format($student->idgrank) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Created') ?></th>
-                    <td><?= h($student->created) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Modified') ?></th>
-                    <td><?= h($student->modified) ?></td>
-                </tr>
-            </table>
-        </div>
-    </div>
+<div class="col-md-12 content">
+	<div class="row">
+		<div class="col-12">
+			<?= $this->Form->postLink(__('Excluir estudante'), ['action' => 'delete', $student->id], ['confirm' => __('Você confirma a exclusão deste item?', $student->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Alterar estudante'), ['action' => 'edit', $student->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $this->Html->link(__('Lista de estudantes'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
+			<h3> <?= $title ?> </h3>
+		</div>
+	</div>
+	<div class="card">
+		<div class="column-responsive column-80">
+			<div class="students view content">
+				<h3><?= h($student->name) ?></h3>
+				<table>
+					<tr>
+						<th><?= __('#') ?></th>
+						<td><?= $this->Number->format($student->id) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Nome') ?></th>
+						<td><?= h($student->name) ?></td>
+					</tr>
+					<div class="row">
+						<?= $this->Html->image($student->urlpicture, ['style' => 'width: 25%; height: auto;'])?>
+					</div>
+					<tr>
+						<th><?= __('Esporte') ?></th>
+						<td><?= $student->sport->name ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Dojô') ?></th>
+						<td><?= $student->core->name ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Turma') ?></th>
+						<td><?= h($student->class->name) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Graduação') ?></th>
+						<td><?= $student->rank->name ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Responsável') ?></th>
+						<td><?= $student->responsible->name ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Idade') ?></th>
+						<td>
+							<?php
+								$today = new DateTime(); 
+								$birthday = new DateTime($student->birthday);
+								$diff = $today->diff($birthday);
+								echo $diff->y . " anos"; 
+							?>
+						</td>
+					</tr>
+					<tr>
+						<th><?= __('Fone') ?></th>
+						<td><?= h($student->phone) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('E-mail') ?></th>
+						<td><?= h($student->email) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Usuário') ?></th>
+						<td><?= $student->iduser === null ? '' : $this->Number->format($student->iduser) ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Criado em:') ?></th>
+						<td><?= date_format($student->created, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+					<tr>
+						<th><?= __('Modificado em:') ?></th>
+						<td><?= date_format($student->modified, 'd/m/Y - H:i:s') ?></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

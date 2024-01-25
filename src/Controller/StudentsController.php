@@ -35,9 +35,15 @@ class StudentsController extends AppController {
 	}
 
 	public function view($id = null) {
-		$student = $this->Students->get($id, [
-			'contain' => [],
-		]);
+		$student = $this->Students->findById($id)
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Responsible' => ['fields' => ['name']],
+				'Ranks' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+			])
+		->first();
 
 		$this->set(compact('student'));
 		$this->set('title', 'Visualizar estudante');
@@ -101,29 +107,25 @@ class StudentsController extends AppController {
 
 			$oldCore = $student->idcore;
 			$oldClass = $student->idclass;
-            $oldImage = $student->urlpicture;
+			$oldImage = $student->urlpicture;
 
-            if (!empty($this->request->getData()['urlpicture']) ) {
-                $file = $this->request->getUploadedFile('urlpicture');
-                if ($this->request->getUploadedFile('urlpicture')->getError() === UPLOAD_ERR_OK && $file != null)
-                {
+			if (!empty($this->request->getData()['urlpicture']) ) {
+				$file = $this->request->getUploadedFile('urlpicture');
+				if ($this->request->getUploadedFile('urlpicture')->getError() === UPLOAD_ERR_OK && $file != null) {
+					$uploadPath = WWW_ROOT . 'img' . DS . 'uploads' . DS;
+					$filename = Text::uuid() . '-' . $file->getClientFilename();
 
+					// Salvar a imagem no servidor
+					$file->moveTo($uploadPath . $filename);
 
-                    $uploadPath = WWW_ROOT . 'img' . DS . 'uploads' . DS;
-                    $filename = Text::uuid() . '-' . $file->getClientFilename();
+					// Atualizar o caminho da imagem no banco de dados
+					$student->urlpicture = 'uploads/'  . $filename; // Coluna 'image2'
+				} else {
+					$student->urlpicture = $oldImage; // Coluna 'image2'
+				}
+			}
 
-                    // Salvar a imagem no servidor
-                    $file->moveTo($uploadPath . $filename);
-
-                    // Atualizar o caminho da imagem no banco de dados
-                    $student->urlpicture = 'uploads/'  . $filename; // Coluna 'image2'
-                } else {
-                    $student->urlpicture = $oldImage; // Coluna 'image2'
-                }
-            }
-
-            if ($student->urlpicture == "" || $student->urlpicture == null) $student->urlpicture = $oldImage;
-            // if ($card->image2 == "" || $card->image2 == null) $card->image2 = $image2;
+			if ($student->urlpicture == "" || $student->urlpicture == null) $student->urlpicture = $oldImage;
 
 			if ($this->Students->save($student)) {
 				// Atualiza contagem na tabela Classes e Cores

@@ -10,21 +10,14 @@ class TeachersController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Teachers.id' => 'DESC'],
-		];
-
-		$teachers = $this->paginate($this->Teachers);
+		$teachers = $this->Teachers->find('all')->toArray();
 
 		$this->set(compact('teachers'));
 		$this->set('title', 'Lista de professores');
 	}
 
 	public function view($id = null) {
-		$teacher = $this->Teachers->get($id, [
-			'contain' => [],
-		]);
+		$teacher = $this->Teachers->findById($id)->first();
 
 		$this->set(compact('teacher'));
 		$this->set('title', 'Visualizar professor');

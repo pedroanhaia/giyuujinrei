@@ -9,15 +9,28 @@
     // Configurações do fuso horário
     date_default_timezone_set('America/Sao_Paulo');
 
-
 	// Roles 
-		define('C_RoleTudo', 99);
-		define('C_RoleNada', 0);
+		define('C_RoleTudo', 		99);
+		define('C_RoleProfessor', 	98);
+		define('C_RoleResponsável',	97);
+		define('C_RoleEstudante',	96);
+		define('C_RoleNada', 		0);
 
 		define('C_RolesOptions', [
-			C_RoleTudo => 'Tudo',
-			C_RoleNada => 'Nada',
+			C_RoleTudo => 'Admin',
+			C_RoleProfessor => 'Professor',
+			C_RoleResponsável => 'Responsável',
+			C_RoleEstudante => 'Estudante',
+			C_RoleNada => 'Outro',
 		]);
+
+		function UsersRoles($role) {
+			if($role == C_RoleTudo) return 'Admin';
+			if($role == C_RoleProfessor) return 'Professor';
+			if($role == C_RoleResponsável) return 'Responsável';
+			if($role == C_RoleEstudante) return 'Estudante';
+			if($role == C_RoleNada) return 'Outro';
+		}
 
 	// Meses e Anos
 		define('C_MesesOpt', [

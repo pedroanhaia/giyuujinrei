@@ -5,21 +5,14 @@ namespace App\Controller;
 
 class ResponsibleController extends AppController {
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Responsible.id' => 'DESC'],
-		];
-
-		$responsibles = $this->paginate($this->Responsible);
+		$responsibles = $this->Responsible->find('all')->toArray();
 		
 		$this->set(compact('responsibles'));
 		$this->set('title', 'Lista de responsáveis');
 	}
 
 	public function view($id = null) {
-		$responsible = $this->Responsible->get($id, [
-			'contain' => [],
-		]);
+		$responsibles = $this->Responsible->findyId($id)->first();
 
 		$this->set(compact('responsible'));
 		$this->set('title', 'Visualizar responsável');

@@ -12,9 +12,7 @@ class CoresController extends AppController {
 	}
 
 	public function view($id = null) {
-		$core = $this->Cores->get($id, [
-			'contain' => [],
-		]);
+		$core = $this->Cores->get($id);
 
 		$this->set('title', 'Visualizar dojô');
 		$this->set(compact('core'));

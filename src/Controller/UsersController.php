@@ -19,22 +19,18 @@ class UsersController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Teachers.id' => 'DESC'],
-			'contain' => ['Cores' => ['fields' => ['name']]],
-		];
-
-		$users = $this->paginate($this->Users);
+		$users = $this->Users->find()
+			->contain(['Cores' => ['fields' => ['name']]])
+		->toArray();
 
 		$this->set(compact('users'));
 		$this->set('title', 'Lista de usuários');
 	}
 
 	public function view($id = null) {
-		$user = $this->Users->get($id, [
-			'contain' => [],
-		]);
+		$user = $this->Users->find()
+			->contain(['Cores' => ['fields' => ['name']]])
+		->first();
 
 		$this->set(compact('user'));
 		$this->set('title', 'Visualizar usuário');
@@ -93,6 +89,30 @@ class UsersController extends AppController {
 		$this->set('title', 'Salvar usuário');
 	}
 
+	public function alterarsenha($id = null) {
+		$user = $this->Users->get($id);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			if($this->request->getData('password2') != $this->request->getData('password1')) {
+				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
+				return $this->redirect(['action' => 'add']);
+			}
+
+			$user = $this->Users->patchEntity($user, $this->request->getData());
+			$user->password = $this->request->getData('password1');
+			
+			if ($this->Users->save($user)) {
+				$this->Flash->success(__('A senha foi atualizada com sucesso.'));
+				return $this->redirect(['action' => 'edit', $id]);
+			}
+
+			$this->Flash->error(__('Não foi possível alterar a senha, tente novamente.'));
+		}
+
+		$this->set(compact('user'));
+		$this->set('title', 'Alterar senha');
+	}
+
 	public function delete($id = null) {
 		$user = $this->Users->get($id);
 
@@ -111,8 +131,7 @@ class UsersController extends AppController {
 		$result = $this->Authentication->getResult();
 		// regardless of POST or GET, redirect if user is logged in
 		if ($result && $result->isValid()) {
-			$this->Flash->set(__('/img/Logo5-3D.gif'),['element'=>'success_with_gif']);
-
+			$_SESSION['bLogin'] = true;
 			$redirect = $this->request->getQuery('redirect', [
 				'controller' => 'Users',
 				'action' => 'index',

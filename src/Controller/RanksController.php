@@ -10,26 +10,21 @@ class RanksController extends AppController {
 	}
 
 	public function index() {
-		$this->paginate = [
-			'limit' => 25,
-			'order' => ['Ranks.id' => 'DESC'],
-			'contain' => [
-				'Sports' => ['fields' => ['name']],
-			],
-		];
-
-		$ranks = $this->paginate($this->Ranks);
+		$ranks = $this->Ranks->find('all')
+			->contain(['Sports' => ['fields' => ['name']]])
+		->toArray();
 
 		$this->set(compact('ranks'));
 		$this->set('title', 'Lista de graduações');
 	}
 
 	public function view($id = null) {
-		$rank = $this->Ranks->get($id, [
-			'contain' => ['Sports' => ['fields' => ['name']]],
-		]);
+		$rank = $this->Ranks->findById($id)
+			->contain(['Sports' => ['fields' => ['name']]])
+		->first();
 
 		$this->set(compact('rank'));
+		$this->set('title', 'Visualizar graduação');
 	}
 
 	public function add() {

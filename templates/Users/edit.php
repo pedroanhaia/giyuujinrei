@@ -20,18 +20,6 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Senha </label>
-						<?= $this->Form->password('password1', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a senha']) ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Confirmar senha </label>
-						<?= $this->Form->password('password2', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Confirme a senha']) ?>
-					</div>
-				</div>
-				<div class="row">
 					<div class="col-lg-4 col-md-6 col-xs-12">
 						<label class="control-label text-muted"> Role </label>
 						<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
@@ -40,6 +28,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar usuário', ['class' => 'btn btn-success btn-lg']) ?>
+						<?php if($iduserLogado == $user->id || $role == C_RoleTudo) echo $this->Html->link(__('Alterar senha'), ['action' => 'alterarsenha'], ['class' => 'btn btn-lg btn-warning text-white']) ?>
 					</div>
 				</div>
 			<?= $this->Form->end(); ?>
