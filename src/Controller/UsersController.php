@@ -129,8 +129,7 @@ class UsersController extends AppController {
 		$result = $this->Authentication->getResult();
 		// regardless of POST or GET, redirect if user is logged in
 		if ($result && $result->isValid()) {
-			$this->Flash->set(__('/img/Logo5-3D.gif'),['element'=>'success_with_gif']);
-
+			$_SESSION['bLogin'] = true;
 			$redirect = $this->request->getQuery('redirect', [
 				'controller' => 'Users',
 				'action' => 'index',

@@ -130,6 +130,7 @@
 	<main class="main">
 		<div class="container">
 			<?= $this->Flash->render() ?>
+			<?= $this->element('preload'); ?>
 			<?= $this->fetch('content') ?>
 		</div>
 	</main>
