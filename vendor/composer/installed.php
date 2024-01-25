@@ -3,7 +3,7 @@
         'name' => 'cakephp/app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1ef78a52ac95670173db99637df587ebf2d514ab',
+        'reference' => '551f7f885ea0eae4f882969e9b3b0afbafba1c00',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'cakephp/app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1ef78a52ac95670173db99637df587ebf2d514ab',
+            'reference' => '551f7f885ea0eae4f882969e9b3b0afbafba1c00',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -411,6 +411,15 @@
             'replaced' => array(
                 0 => '~2.0',
             ),
+        ),
+        'ozee31/cakephp-cors' => array(
+            'pretty_version' => 'v2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => 'fc45012d85972b8b2a4e9af7aef57fef033d16f9',
+            'type' => 'cakephp-plugin',
+            'install_path' => __DIR__ . '/../ozee31/cakephp-cors',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'phar-io/manifest' => array(
             'pretty_version' => '2.0.3',
