@@ -5,8 +5,8 @@ use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 <div class="col-md-12 content">
 	<div class="row">
 		<div class="col-12">
-			<?= $this->Form->postLink(__('Excluir estudante'), ['action' => 'delete', $student->id], ['confirm' => __('Você confirma a exclusão deste item?', $student->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
-			<?= $this->Html->link(__('Alterar estudante'), ['action' => 'edit', $student->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $role >= C_RoleTudo ? $this->Form->postLink(__('Excluir estudante'), ['action' => 'delete', $student->id], ['confirm' => __('Você confirma a exclusão deste item?', $student->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) : '' ?>
+			<?= $role >= C_RoleTudo ? $this->Html->link(__('Alterar estudante'), ['action' => 'edit', $student->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) : '' ?>
 			<?= $this->Html->link(__('Lista de estudantes'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
 			<h3> <?= $title ?> </h3>
 		</div>
@@ -25,7 +25,7 @@ use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 						<td><?= h($student->name) ?></td>
 					</tr>
 					<div class="row">
-						<?= $this->Html->image($student->urlpicture, ['style' => 'width: 25%; height: auto;'])?>
+						<?= $this->Html->image($student->urlpicture, ['style' => 'max-height: 133px; max-width: 100px;'])?>
 					</div>
 					<tr>
 						<th><?= __('Esporte') ?></th>
@@ -68,7 +68,7 @@ use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
 					</tr>
 					<tr>
 						<th><?= __('Usuário') ?></th>
-						<td><?= $student->iduser === null ? '' : $this->Number->format($student->iduser) ?></td>
+						<td> <?= $student->user ? $this->Html->link(__($student->user->name), ['controller' => 'Users', 'action' => 'view', $student->iduser], ['target' => '_blank', 'class' => 'link']) : '' ?> </td>
 					</tr>
 					<tr>
 						<th><?= __('Criado em:') ?></th>

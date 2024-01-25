@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Utility\Text;
@@ -17,9 +16,24 @@ class StudentsController extends AppController {
 		$this->loadModel('Users');
 		$this->loadModel('Sports');
 		$this->loadModel('Classes');
+		$this->loadModel('Teachers');
+		$this->loadModel('Classesteachers');
 	}
 
 	public function index() {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			$where = ['Students.idclass IN' => $classesTeacher];
+		} else {
+			$where = [];
+		}
+
 		$students = $this->Students->find('all')
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -35,6 +49,10 @@ class StudentsController extends AppController {
 	}
 
 	public function view($id = null) {
+		$bPermissao = true;
+		
+		if($this->userObj->role < C_RoleProfessor) $bPermissao = false;
+
 		$student = $this->Students->findById($id)
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -42,8 +60,21 @@ class StudentsController extends AppController {
 				'Responsible' => ['fields' => ['name']],
 				'Ranks' => ['fields' => ['name']],
 				'Classes' => ['fields' => ['name']],
+				'Users' => ['fields' => ['name', 'id']]
 			])
 		->first();
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			
+			if(!in_array($student->idclass, $classesTeacher)) $bPermissao = false;
+		}
+
+		if($bPermissao == false) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
 
 		$this->set(compact('student'));
 		$this->set('title', 'Visualizar estudante');
@@ -69,7 +100,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);
@@ -126,7 +157,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);

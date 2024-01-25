@@ -4,38 +4,47 @@
 	<div class="card" >
 		<div class="card-body">
 			<?= $this->Form->create($student, ['class' => 'form-material  mt-2', "enctype" => "multipart/form-data"]) ?>
-                <div class="row">
-                    <?= $this->Html->image($student->urlpicture,['style' => 'width: 25%; height: auto;'])?>
-                </div>
-                <div class="row">
-                    <?=  $this->Form->control('urlpicture', ['label' => 'Imagem','type' => 'file']) ?>
-                </div>
-                <div class="row">
-					<div class="col-lg-4 col-md-12 col-sm-12">
-						<label class="control-label text-muted"> Nome </label>
-						<?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o nome do estudante']) ?>
-					</div>
-					<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Responsável </label>
-						<?= $this->Form->control('idresponsible', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $responsibles, 'title' => 'Selecione o responsável']) ?>
-					</div>
-				</div>
 				<div class="row">
-					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Fone </label>
-						<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o fone']) ?>
+					<div class="col-lg-8 col-sm-12">
+						<div class="row">
+							<div class="col-lg-8 col-md-12 col-sm-12">
+								<label class="control-label text-muted"> Nome </label>
+								<?= $this->Form->control('name', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o nome do estudante']) ?>
+							</div>
+							<div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+								<label class="control-label text-muted"> Responsável </label>
+								<?= $this->Form->control('idresponsible', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $responsibles, 'title' => 'Selecione o responsável']) ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+								<label class="control-label text-muted"> Fone </label>
+								<?= $this->Form->control('phone', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o fone']) ?>
+							</div>
+							<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+								<label class="control-label text-muted"> Data de nascimento </label>
+								<?= $this->Form->date('birthday', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a data de nascimento']) ?>
+							</div>
+							<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+								<label class="control-label text-muted"> E-mail </label>
+								<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o e-mail']) ?>
+							</div>
+							<div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+								<label class="control-label text-muted"> Usuário </label>
+								<?= $this->Form->control('iduser', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'options' => $users, 'title' => 'Selecione o usuário']) ?>
+							</div>
+						</div>
 					</div>
-					<div class="col-lg-2 col-md-4 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Data de nascimento </label>
-						<?= $this->Form->date('birthday', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a data de nascimento']) ?>
-					</div>
-					<div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> E-mail </label>
-						<?= $this->Form->control('email', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o e-mail']) ?>
-					</div>
-					<div class="col-lg-2 col-md-6 col-sm-12 col-xs-12">
-						<label class="control-label text-muted"> Usuário </label>
-						<?= $this->Form->control('iduser', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'options' => $users, 'title' => 'Selecione o usuário']) ?>
+					<div class="col-lg-4 col-sm-12">
+						<div class="row">
+							<div class="col-12 text-center">
+								<?= $this->Html->image($student->urlpicture, ['style' => 'max-height: 133px; max-width: 100px;'])?>
+							</div>
+							<div class="col-12 text-center">
+								<label class="control-label text-muted"> Imagem </label>
+								<?= $this->Form->control('urlpicture', ['label' => false, 'type' => 'file', 'class' => 'input-file']) ?>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="row">

@@ -18,6 +18,7 @@ class SchedulesTable extends Table {
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
+		$this->belongsTo('Users', ['foreignKey' => 'iduser']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {

@@ -6,7 +6,7 @@
 <head>
 	<?= $this->Html->charset() ?>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title> Giyuujinrei: Dojo online </title>
+	<title> <?= $title ?> </title>
 	<?= $this->Html->meta('icon', 'img/brandelli.png')?>
 
 	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
@@ -69,42 +69,53 @@
                     <li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/relatorios', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-torii-gate icon"></i> ' . __('Dojos'), '/cores', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-torii-gate icon"></i> ' . __('Dojos'), '/cores', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
 					</li>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa fa-user-graduate icon"></i> ' . __('Graduações'), '/ranks', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa fa-user-graduate icon"></i> ' . __('Graduações'), '/ranks', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
-					</li>
-					<!-- <li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-layer-group icon"></i>' . __('Áreas'), '/ratings', ['escape' => false, 'class' => '']);?>
-					</li> -->
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-calendar-day icon"></i>' . __('Agendamentos'), '/schedules', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-person-skiing icon"></i> ' . __('Esportes'), '/sports', ['escape' => false, 'class' => '']);?>
-					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-clipboard-user icon"></i>' . __('Usuários'), '/users', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-person-skiing icon"></i> ' . __('Esportes'), '/sports', ['escape' => false, 'class' => '']);?>
+						</li>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-clipboard-user icon"></i>' . __('Usuários'), '/users', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } else { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-clipboard-user icon"></i>' . __('Usuário'), "/users/edit/$iduserLogado", ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 				</ul>
 			</div>
 			<div class="bottom-content">

@@ -2,8 +2,8 @@
 <div class="content">
 	<div class="row">
 		<div class="col-12">
-			<?= $this->Html->link(__('Novo índice'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) ?>
-			<?= $this->Html->link(__('Áreas'), ['controller' => 'Ratings', 'action' => 'index'], ['class' => 'btn btn-lg btn-info text-white m-r-5 float-right']) ?>
+			<?= $role >= C_RoleTudo ? $this->Html->link(__('Novo índice'), ['action' => 'add'], ['class' => 'btn btn-lg btn-success float-right']) : '' ?>
+			<?= $this->Html->link(__('Áreas'), ['controller' => 'Ratings', 'action' => 'index'], ['class' => 'btn btn-lg btn-queequaseinfo text-white m-r-5 float-right']) ?>
 			<h3> Índices </h3>
 		</div>
 	</div>
@@ -27,8 +27,8 @@
 						<td> <?= $reg->age_max ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
-							<?= $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
-							<?= $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
+							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>
+							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>
 						</td>
 
 					</tr>

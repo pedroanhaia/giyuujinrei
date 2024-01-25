@@ -16,7 +16,7 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
 						<label class="control-label text-muted"> Tipo </label>
-						<?= $this->Form->control('type', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o tipo']) ?>
+						<?= $this->Form->control('type', ['class' => 'form-control selectpicker', 'label' => false, 'options' => C_CoreTypeOptions, 'required' => true, 'title' => 'Selecione o tipo']) ?>
 					</div>
 					<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
 						<label class="control-label text-muted"> Fone </label>

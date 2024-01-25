@@ -7,11 +7,25 @@ class ClassesController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 		$this->loadModel('Teachers');
+		$this->loadModel('Classesteachers');
 		$this->loadModel('Cores');
 		$this->loadModel('Sports');
 	}
 
 	public function index() {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			$where = ['Classes.id IN' => $classesTeacher];
+		} else {
+			$where = [];
+		}
+
 		$classes = $this->Classes->find('all')
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -19,6 +33,7 @@ class ClassesController extends AppController {
 				'Teachers' => ['fields' => ['name']],
 			])
 			->order('Classes.name ASC')
+			->where($where)
 		->toArray();
 
 		$this->set('title', 'Lista de turmas');
@@ -26,6 +41,22 @@ class ClassesController extends AppController {
 	}
  
 	public function view($id = null) {
+		$bPermissao = true;
+		
+		if($this->userObj->role < C_RoleProfessor) $bPermissao = false;
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			
+			if(!in_array($id, $classesTeacher)) $bPermissao = false;
+		}
+
+		if($bPermissao == false) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$class = $this->Classes->findById($id)
 			->contain([
 				'Cores' => ['fields' => ['name']],

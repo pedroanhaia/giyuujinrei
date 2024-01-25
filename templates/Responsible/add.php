@@ -29,7 +29,7 @@
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Usuário </label>
-						<?= $this->Form->control('iduser', ['class' => 'form-control', 'label' => false]) ?>
+						<?= $this->Form->control('iduser', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'options' => $users, 'title' => 'Selecione o usuário']) ?>
 					</div>
 				</div>
 				<div class="row">

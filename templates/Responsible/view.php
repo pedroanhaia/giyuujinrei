@@ -1,8 +1,8 @@
 <div class="col-md-12 content">
 	<div class="row">
 		<div class="col-12">
-			<?= $this->Form->postLink(__('Excluir responsável'), ['action' => 'delete', $responsible->id], ['confirm' => __('Você confirma a exclusão deste item?', $responsible->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
-			<?= $this->Html->link(__('Alterar responsável'), ['action' => 'edit', $responsible->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $role >= C_RoleTudo ? $this->Form->postLink(__('Excluir responsável'), ['action' => 'delete', $responsible->id], ['confirm' => __('Você confirma a exclusão deste item?', $responsible->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) : '' ?>
+			<?= $role >= C_RoleTudo ? $this->Html->link(__('Alterar responsável'), ['action' => 'edit', $responsible->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) : '' ?>
 			<?= $this->Html->link(__('Lista de responsáveis'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
 			<h3> <?= $title ?> </h3>
 		</div>
@@ -37,8 +37,8 @@
 						<td><?= h($responsible->email) ?></td>
 					</tr>
 					<tr>
-						<th><?= __('Iduser') ?></th>
-						<td><?= $responsible->iduser === null ? '' : $this->Number->format($responsible->iduser) ?></td>
+						<th><?= __('Usuário') ?></th>
+						<td> <?= $responsible->user ? $this->Html->link(__($responsible->user->name), ['controller' => 'Users', 'action' => 'view', $responsible->iduser], ['target' => '_blank', 'class' => 'link']) : '' ?> </td>
 					</tr>
 					<tr>
 						<th><?= __('Criado em:') ?></th>

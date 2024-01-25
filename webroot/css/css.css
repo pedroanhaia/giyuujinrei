@@ -62,27 +62,6 @@
     padding: 10px;
 }
 
-.ganha {
-    background-color: #32ac5a;
-}
-
-.perdida {
-    background-color: #e64b4b;
-}
-
-.totalizador {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.totalizador strong {
-    font-size: 20px;
-}
-
-.charts-legend {
-	font-weight: 600;
-}
-
 .col-btn {
 	z-index: 99;
 }
@@ -133,6 +112,14 @@ div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.d
 
 .m-r-5 {
 	margin-right: 5px;
+}
+
+.input-file {
+	font-size: 10px;
+}
+
+.actions {
+	text-align: right;
 }
 
 /* Colors */

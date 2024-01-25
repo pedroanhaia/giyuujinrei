@@ -28,7 +28,13 @@ class RanksController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$rank = $this->Ranks->newEmptyEntity();
+
 		if ($this->request->is('post')) {
 			$rank = $this->Ranks->patchEntity($rank, $this->request->getData());
 
@@ -48,9 +54,12 @@ class RanksController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$rank = $this->Ranks->get($id, [
-			'contain' => [],
-		]);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		$rank = $this->Ranks->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$rank = $this->Ranks->patchEntity($rank, $this->request->getData());
@@ -71,7 +80,13 @@ class RanksController extends AppController {
 	}
 
 	public function delete($id = null) {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$rank = $this->Ranks->get($id);
+		
 		if ($this->Ranks->delete($rank)) {
 			$this->Flash->success(__('The rank has been deleted.'));
 		} else {

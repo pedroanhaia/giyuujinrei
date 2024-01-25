@@ -28,6 +28,11 @@ class IndexesController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$index = $this->Indexes->newEmptyEntity();
 
 		if ($this->request->is('post')) {
@@ -49,6 +54,11 @@ class IndexesController extends AppController {
 	}
 
 	public function edit($id = null) {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$index = $this->Indexes->get($id, [
 			'contain' => [],
 		]);
@@ -72,7 +82,11 @@ class IndexesController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$index = $this->Indexes->get($id);
 
 		if ($this->Indexes->delete($index)) {

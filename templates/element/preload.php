@@ -36,7 +36,7 @@
 					unset($_SESSION['bLogin']);
 				} else {
 					$img = '/webroot/img/Logo 3d transparente.gif';
-					$imgTimeout = 1000;
+					$imgTimeout = 700;
 				}
 			?>
 			<img src="<?= $this->Url->build($img, ['fullBase' => true]) ?>" alt="Logo" class="centered-gif">
