@@ -95,7 +95,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Token check will be skipped when callback returns `true`.
         $csrf->skipCheckCallback(function ($request) {
             // Skip token check for API URLs.
-            if ($request->is('post') === $request->is('json')) {
+            if ($request->is(['post', 'json'])) {
                 return true;
             }
         });

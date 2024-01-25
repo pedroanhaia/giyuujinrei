@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 /**
  * Users Controller
  *
@@ -11,8 +12,9 @@ namespace App\Controller;
  */
 class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\EventInterface $event) {
+		$this->Authentication->addUnauthenticatedActions(['login','loginapi']);
 		parent::beforeFilter($event);
-		$this->Authentication->addUnauthenticatedActions(['login']);
+
 		$this->loadModel('Cores');
 	}
 
@@ -75,7 +77,7 @@ class UsersController extends AppController {
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());
 			$user->password = $this->request->getData('password1');
-			
+
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('O usuário foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
@@ -142,4 +144,57 @@ class UsersController extends AppController {
 			return $this->jsonResponse(['Msg' => 'Alterado com sucesso'], 200);
 		}
 	}
+    public function loginapi()
+    {
+        $data = $this->request->getParsedBody();
+        $response = $this->response->withType('application/json')->withStringBody(json_encode([$data]));
+
+        $palavrapasse = $this->request->getData('sPasse');
+        if ($palavrapasse == "adatec")
+        {
+            $email = $this->request->getData('sEmail');
+            $senha = $this->request->getData('sSenha');
+            $user = $this->Users->find()->where(['email' => $email])->first();
+
+            if ($user != null)
+            {
+                if ($senha != null)
+                {
+                    if ((new DefaultPasswordHasher())->check($senha, $user->password)) {
+                        // Autenticação bem-sucedida
+
+                        $response = $response->withStringBody('My Body');
+                        $data = [
+                            'msgreturn' => 'sucesso',
+                            'user' => $user
+                        ];
+                        $response = $this->response->withType('application/json')
+                            ->withStringBody(json_encode([$data]));
+                    }
+                    else
+                    {
+                        $response = $response->withType('application/json')
+                                                ->withStatus(401)
+                                                ->withStringBody(json_encode(['id_erro' => '401','msg_erro' => 'senha ou e-mail incorreto.']));
+                    }
+                }
+                else
+                {
+                    $response = $response->withType('application/json')
+                                            ->withStatus(401)
+                                            ->withStringBody(json_encode(['id_erro' => '401','msg_erro' => 'senha do usuário incorreta.']));
+                }
+            }
+            else
+            {
+                $response = $response->withType('application/json')
+                                            ->withStatus(401)
+                                            ->withStringBody(json_encode(['id_erro' => '401','msg_erro' => 'usuário não encontrado, verifique e-mail ou cadastre uma conta.']));
+                //return $response;
+            }
+        }
+
+        // Retorna a resposta JSON
+        return $response;
+    }
 }
