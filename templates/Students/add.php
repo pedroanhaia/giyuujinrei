@@ -53,7 +53,7 @@
                 <div class="row">
                     <?=  $this->Form->control('urlpicture', ['label' => 'Imagem','type' => 'file']) ?>
                 </div>
-                <div class="row">
+				<div class="row mt-3">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar estudante', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

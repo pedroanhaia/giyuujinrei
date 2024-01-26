@@ -27,7 +27,7 @@
 						<?= $this->Form->control('idschedule', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $schedules, 'title' => 'Selecione o agendamento']) ?>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-3">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar avaliação', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

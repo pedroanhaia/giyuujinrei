@@ -100,4 +100,17 @@
 			if($type == C_TeacherTypeEsporte) return 'Esporte';
 			if($type == C_TeacherTypeEnsinoRegular) return 'Ensino Regular';
 		}
+	// Schedules 
+		define('C_ScheduleRoleAula',		1);
+		define('C_ScheduleRoleAvaliacao', 	2);
+
+		define('C_ScheduleRoles', [
+			C_ScheduleRoleAula => 'Aula',
+			C_ScheduleRoleAvaliacao => 'Avaliação',
+		]);
+
+		function ScheduleRoles($role) {
+			if($role == C_ScheduleRoleAula) return 'Aula';
+			if($role == C_ScheduleRoleAvaliacao) return 'Avaliação';
+		}
 	// 

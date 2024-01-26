@@ -118,7 +118,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleEstudante])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);
@@ -134,11 +134,11 @@ class StudentsController extends AppController {
 		$student = $this->Students->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
-			$student = $this->Students->patchEntity($student, $this->request->getData());
-
 			$oldCore = $student->idcore;
 			$oldClass = $student->idclass;
 			$oldImage = $student->urlpicture;
+
+			$student = $this->Students->patchEntity($student, $this->request->getData());
 
 			if (!empty($this->request->getData()['urlpicture']) ) {
 				$file = $this->request->getUploadedFile('urlpicture');
@@ -162,8 +162,8 @@ class StudentsController extends AppController {
 				// Atualiza contagem na tabela Classes e Cores
 				$this->Classes->updateCountStudents($student->idclass);
 				$this->Cores->updateCountStudents($student->idcore);
-				if($oldClass != $student->idclass) $this->Classes->updateCountStudents($student->oldClass);
-				if($oldCore != $student->idcore) $this->Cores->updateCountStudents($student->oldCore);
+				if($oldClass != $student->idclass) $this->Classes->updateCountStudents($oldClass);
+				if($oldCore != $student->idcore) $this->Cores->updateCountStudents($oldCore);
 
 				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
@@ -175,7 +175,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleEstudante])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);

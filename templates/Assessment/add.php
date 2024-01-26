@@ -17,22 +17,24 @@
 						<label class="control-label text-muted"> Índice </label>
 						<?= $this->Form->control('idindex', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione o índice']) ?>
 					</div>
+				</div>
+				<div class="row">
+					<?php if($role == C_RoleTudo) { ?>
+						<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+							<label class="control-label text-muted"> Professor </label>
+							<?= $this->Form->control('idteacher', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $teachers, 'title' => 'Selecione o professor']) ?>
+						</div>
+					<?php } ?>
+					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+						<label class="control-label text-muted"> Agendamento </label>
+						<?= $this->Form->control('idschedule', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $schedules, 'title' => 'Selecione o agendamento']) ?>
+					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Valor </label>
 						<?= $this->Form->control('value', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o valor']) ?>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-						<label class="control-label text-muted"> Professor </label>
-						<?= $this->Form->control('idteacher', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $teachers, 'title' => 'Selecione o professor']) ?>
-					</div>
-					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-						<label class="control-label text-muted"> Agendamento </label>
-						<?= $this->Form->control('idschedule', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $schedules, 'title' => 'Selecione o agendamento']) ?>
-					</div>
-				</div>
-				<div class="row">
+				<div class="row mt-3">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar avaliação', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

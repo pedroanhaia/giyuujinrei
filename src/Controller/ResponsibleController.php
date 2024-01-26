@@ -39,7 +39,7 @@ class ResponsibleController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o responsável, tente novamente.'));
 		}
 		
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleResponsável])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleResponsável])->order(['name ASC'])->toArray();
 
 		$this->set('users', $users);
 		$this->set(compact('responsible'));
@@ -65,7 +65,7 @@ class ResponsibleController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o responsável, tente novamente.'));
 		}
 		
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['type' => C_RoleResponsável])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleResponsável])->order(['name ASC'])->toArray();
 
 		$this->set('users', $users);
 		$this->set(compact('responsible'));

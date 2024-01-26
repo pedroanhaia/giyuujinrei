@@ -65,7 +65,7 @@
 						<?= $this->Form->control('idclass', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione oa turma']) ?>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-3">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar estudante', ['class' => 'btn btn-success btn-lg']) ?>
 					</div>

@@ -7,6 +7,7 @@ class AssessmentController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 		$this->loadModel('Teachers');
+		$this->loadModel('Classesteachers');
 		$this->loadModel('Students');
 		$this->loadModel('Schedules');
 		$this->loadModel('Indexes');
@@ -42,6 +43,11 @@ class AssessmentController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$assessment = $this->Assessment->newEmptyEntity();
 
 		if ($this->request->is('post')) {
@@ -55,8 +61,18 @@ class AssessmentController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar a avaliação, tente novamente.'));
 		}
 
-		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$assessment->idteacher = $teacherUser->id;
+
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where([['Students.idclass IN' => $classesTeacher]])->order(['name ASC'])->toArray();
+		} else {
+			$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+			$students = $this->Students->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+			$this->set('teachers', $teachers);
+		}
+
 		$ratings = $this->Ratings->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$schedules = $this->Schedules->find('list', [
 				'keyField' => 'id',
@@ -68,13 +84,17 @@ class AssessmentController extends AppController {
 
 		$this->set('ratings', $ratings);
 		$this->set('students', $students);
-		$this->set('teachers', $teachers);
 		$this->set('schedules', $schedules);
 		$this->set(compact('assessment'));
 		$this->set('title', 'Cadastrar avaliação');
 	}
 
 	public function edit($id = null) {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$assessment = $this->Assessment->get($id, ['contain' => []]);
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
@@ -108,7 +128,11 @@ class AssessmentController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$assessment = $this->Assessment->get($id);
 		if ($this->Assessment->delete($assessment)) {
 			$this->Flash->success(__('A avaliação foi excluída com sucesso.'));
