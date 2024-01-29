@@ -21,71 +21,75 @@ class AttendancesController extends AppController {
 			return $this->redirect(['action' => 'index']);
 		}
 
+		$where = ['Schedules.role' => C_ScheduleRoleAula];
+
 		if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			$where = ['Classes.id IN' => $classesTeacher];
-		} else {
-			$where = [];
-		}
+			$where['Classes.id IN'] = [$classesTeacher];
+		} 
 
 		$schedules = $this->Schedules->find()
-			->contain(['Cores' => ['fields' => ['name']]])
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+			])
+			->where($where)
 		->toArray();
-
+	
 		$this->set('title', 'Lista de turmas');
-		$this->set(compact('classes'));
+		$this->set(compact('schedules'));
 	}
  
 	public function view($id = null) {
-		$bPermissao = true;
-		
-		if($this->userObj->role < C_RoleProfessor) $bPermissao = false;
-
-		if($this->userObj->role == C_RoleProfessor) {
-			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
-			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			
-			if(!in_array($id, $classesTeacher)) $bPermissao = false;
-		}
-
-		if($bPermissao == false) {
-			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
-			return $this->redirect(['action' => 'index']);
-		}
-
-		$class = $this->Classes->findById($id)
+		$schedule = $this->Schedules->findById($id)
 			->contain([
 				'Cores' => ['fields' => ['name']],
-				'Sports' => ['fields' => ['name']],
-				'Teachers' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+				'Attendances' => ['fields' => ['idstudent', 'idschedule', 'present']],
+				'Attendances.Students' => ['fields' => ['name']],
 			])
+			->where($id)
 		->first();
 
-		$this->set('title', 'Visualizar turma');
-		$this->set(compact('class'));
+		$this->set(compact('schedule'));
+		$this->set('title', 'Vsualizar lista de presença');
 	}
 
 	public function edit($id = null) {
-		$class = $this->Classes->get($id, ['contain' => ['Teachers']]);
-		
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			$class = $this->Classes->patchEntity($class, $this->request->getData());
+		$schedule = $this->Schedules->findById($id)
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+				'Attendances' => ['fields' => ['idstudent', 'idschedule', 'present']],
+				'Attendances.Students' => ['fields' => ['name']],
+			])
+			->where($id)
+		->first();
 
-			if ($this->Classes->save($class)) {
-				$this->Flash->success(__('A turma foi salva com sucesso.'));
-				return $this->redirect(['action' => 'index']);
+		if ($this->request->is(['patch', 'post', 'put'])) {
+			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
+
+			$data = $this->request->getData();
+
+			$bError = false;
+			foreach($data['attendance'] as $key => $reg) {
+				$attendance = $this->Attendances->find()->where(['idstudent' => $key, 'idschedule' => $schedule->id])->first();
+				$attendance->present = $reg;
+
+				if(!$this->Attendances->save($attendance)) $bError = true;
 			}
 
-			$this->Flash->error(__('Não foi possível salvar a turma, tente novamente.'));
+			if(!$bError) {
+				$this->Flash->success(__('A lista de presença foi salva com sucesso.'));
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error(__('Ocorreu um erro ao salvar a lista de presença, tente novamente.'));
+			}
 		}
 
-		$teachers = $this->Teachers->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-
-		$this->set(compact('class', 'teachers', 'cores', 'sports'));
-		$this->set('title', 'Alterar turma');
+		$this->set(compact('schedule'));
+		$this->set('title', 'Alterar lista de presença');
 	}
 
 	public function delete($id = null) {
@@ -97,23 +101,6 @@ class AttendancesController extends AppController {
 		}
 
 		return $this->redirect(['action' => 'index']);
-	}
-
-	public function classesopt() {
-		if($this->request->is('ajax')) {
-			$data = $this->request->getData();
-
-			$where = [];
-			if(!empty($data['idsport'])) $where['idsport'] = $data['idsport'];
-			if(!empty($data['idcore'])) $where['idcore'] = $data['idcore'];
-
-			$classes = $this->Classes->find()
-				->where($where)
-				->select(['id', 'name'])
-			->toArray();
-			
-			return $this->jsonResponse($classes, 200);
-		}
 	}
 
 	public function add() {
@@ -140,6 +127,7 @@ class AttendancesController extends AppController {
 			$schedule->date = $data['date'];
 			$schedule->name = 'Aula - ' . formatarData($data['date']);
 			$schedule->idcore = $class->idcore;
+			$schedule->idclass = $data['idclass'];
 			$this->Schedules->save($schedule);
 
 			$bError = false;
@@ -155,13 +143,12 @@ class AttendancesController extends AppController {
 			}
 
 			if(!$bError) {
-				$this->Flash->success(__('A lista de presenças foi salva com sucesso.'));
+				$this->Flash->success(__('A lista de presença foi salva com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			} else {
-				$this->Flash->error(__('Ocorreu um erro ao salvar a lista de presenças, tente novamente.'));
+				$this->Flash->error(__('Ocorreu um erro ao salvar a lista de presença, tente novamente.'));
 			}
 		}
-
 
 		$classes = $this->Classes->find('list', ['keyField' => 'id', 'valueField' => 'name'])
 			->order('Classes.name ASC')

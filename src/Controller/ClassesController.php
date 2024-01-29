@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Routing\Router;
 
 class ClassesController extends AppController {
 	public function initialize(): void {
@@ -153,8 +154,12 @@ class ClassesController extends AppController {
 			$students = $this->Students->find('all')
 				->contain(['Ranks' => ['fields' => ['name']]])
 				->where(['idclass' => $idclass])
-				->select(['Students.id', 'Students.urlpicture', 'Students.name'])
+				->select(['Students.id', 'Students.urlpicture', 'Students.name', 'Students.birthday'])
 			->toArray();
+
+			foreach($students as $reg) {
+				$reg->urlpicture = Router::url('/img/'.$reg->urlpicture, true);
+			}
 
 			return $this->jsonResponse($students, 200);
 		}

@@ -1,4 +1,11 @@
 /*  */
+.row {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    width: 100%;
+}
+
 .form-label, .control-label {
 	font-size: 1.3rem;
 	font-weight: 400;

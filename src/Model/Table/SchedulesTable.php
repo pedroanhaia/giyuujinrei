@@ -18,7 +18,8 @@ class SchedulesTable extends Table {
 		$this->addBehavior('Timestamp');
 
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
-		$this->belongsTo('Users', ['foreignKey' => 'iduser']);
+		$this->belongsTo('Classes', ['foreignKey' => 'idclass']);
+		$this->hasMany('Attendances', ['foreignKey' => 'idschedule']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {
@@ -29,6 +30,10 @@ class SchedulesTable extends Table {
 		$validator
 			->integer('idcore')
 			->allowEmptyString('idcore');
+
+		$validator
+			->integer('idclass')
+			->allowEmptyString('idclass');
 
 		$validator
 			->integer('role')

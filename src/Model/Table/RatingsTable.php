@@ -17,6 +17,7 @@ class RatingsTable extends Table {
 		$this->setPrimaryKey('id');
 		$this->addBehavior('Timestamp');
 		
+		$this->hasMany('Indexes', ['foreignKey' => 'idrating']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {

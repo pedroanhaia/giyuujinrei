@@ -16,8 +16,8 @@ class AttendancesTable extends Table {
 		$this->setDisplayField('name');
 		$this->setPrimaryKey('id');
 
-		$this->hasMany('Students', ['foreignKey' => 'id']);
-		$this->belongsTo('Schedules', ['foreignKey' => 'idstudent']);
+		$this->belongsTo('Students', ['foreignKey' => 'idstudent']);
+		$this->belongsTo('Schedules', ['foreignKey' => 'idschedule']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {

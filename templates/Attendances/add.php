@@ -10,7 +10,7 @@
 				<div class="row">
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Selecione a turma: </label>
-						<?= $this->Form->control('idclass', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $classes, 'title' => 'Selecione o estudante']) ?>
+						<?= $this->Form->control('idclass', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => $classes, 'title' => 'Selecione a turma']) ?>
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Data: </label>

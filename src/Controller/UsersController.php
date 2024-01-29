@@ -193,8 +193,8 @@ class UsersController extends AppController {
 			return $this->jsonResponse(['Msg' => 'Alterado com sucesso'], 200);
 		}
 	}
-    public function loginapi()
-    {
+
+    public function loginapi() {
         $data = $this->request->getParsedBody();
         $response = $this->response->withType('application/json')->withStringBody(json_encode([$data]));
 
