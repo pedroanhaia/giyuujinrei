@@ -22,7 +22,11 @@
 					</tr>
 					<tr>
 						<th><?= __('Dojô') ?></th>
-						<td><?= $schedule->idcore === null ? '' : $this->Number->format($schedule->idcore) ?></td>
+						<td><?= $schedule->core->name ?></td>
+					<tr>
+					<tr>
+						<th><?= __('Turma') ?></th>
+						<td><?= $schedule->class->name ?></td>
 					<tr>
 						<th><?= __('Data') ?></th>
 						<td><?= date_format($schedule->date, 'd/m/Y - H:i:s') ?></td>

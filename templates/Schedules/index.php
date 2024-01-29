@@ -12,6 +12,7 @@
 					<th> Data </th>
 					<th> Nome </th>
 					<th> Dojô </th>
+					<th> Turma </th>
 					<th class="actions"> Ações </th>
 				</tr>
 			</thead>
@@ -21,6 +22,7 @@
 						<td data-order='<?= date_format($reg->date, 'YmdHis') ?>'> <?= date_format($reg->date, 'd/m/Y - H:i:s') ?> </td>
 						<td> <?= $reg->name ?> </td>
 						<td> <?= $reg->core->name ?> </td>
+						<td> <?= $reg->class->name ?> </td>
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
 							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>

@@ -20,6 +20,7 @@ class SchedulesTable extends Table {
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
 		$this->belongsTo('Classes', ['foreignKey' => 'idclass']);
 		$this->hasMany('Attendances', ['foreignKey' => 'idschedule']);
+		$this->hasMany('Assessment', ['foreignKey' => 'idschedule']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {

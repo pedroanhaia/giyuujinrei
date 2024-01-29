@@ -101,9 +101,6 @@
 							<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>
 						</li>
 					<?php } ?>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-calendar-day icon"></i>' . __('Agendamentos'), '/schedules', ['escape' => false, 'class' => '']);?>
-					</li>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
 							<?= $this->Html->link('<i class="fa-solid fa-person-skiing icon"></i> ' . __('Esportes'), '/sports', ['escape' => false, 'class' => '']);?>
