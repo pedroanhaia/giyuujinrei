@@ -58,7 +58,7 @@ class AssessmentTable extends Table {
 		return $validator;
 	}
 
-	public function destaquesMes($mes, $ano) {
+	public function destaquesMes($mes, $ano, $idcore = null, $idclass = null) {
 		$primeiroDia = new \DateTime("$ano-$mes-01");
 		$ultimoDia = new \DateTime($primeiroDia->format('Y-m-t'));
 
@@ -67,7 +67,8 @@ class AssessmentTable extends Table {
 			'DATE(Schedules.date) <=' => $ultimoDia->format('Y-m-d'),
 			'Students.inactive' => 0,
 		];
-		// if(!empty($platformsIn)) $where['Games.idplatform IN'] = $platformsIn;
+		if(!empty($idcore)) $where['Students.idcore'] = $idcore;
+		if(!empty($idclass)) $where['Students.idclass'] = $idclass;
 
 		// Avaliações
 			$assessment = $this->find('all')

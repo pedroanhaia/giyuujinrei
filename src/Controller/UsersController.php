@@ -121,7 +121,7 @@ class UsersController extends AppController {
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			if($this->request->getData('password2') != $this->request->getData('password1')) {
 				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
-				return $this->redirect(['action' => 'add']);
+				return $this->redirect(['action' => 'alterarsenha', $id]);
 			}
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());

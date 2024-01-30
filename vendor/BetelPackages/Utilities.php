@@ -60,3 +60,13 @@
 
 		return $dataFormatada;  // Saída: '25/01/2022'
 	}
+
+	function DestaquesNome($nomeStr) {
+		// Divide a string em um array de palavras
+		$palavras = explode(' ', $nomeStr);
+
+		// Pega as duas primeiras palavras
+		$duas_primeiras_palavras = implode(' ', array_slice($palavras, 0, 2));
+
+		return $duas_primeiras_palavras;
+	}

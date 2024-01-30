@@ -103,7 +103,7 @@
 	background-color: #b1b1b0; /* cor ouro */
 	opacity: 50%;
 	font-size: 3rem;
-	padding: 8px;
+	padding: 0;
 	text-align: center;
 	color: #000000;
 	display: flex;
@@ -113,14 +113,6 @@
 }
 
 .col-nome {
-	padding: 1px;
-	font-size: 2rem;
-	text-align: center;
-	color: #202020;
-}
-
-.col-nome {
-	padding: 1px;
 	font-size: 2rem;
 	text-align: center;
 	color: #202020;
@@ -162,18 +154,94 @@
 }
 
 .quadradinho {
-	width: 20px;
+	width: 23px;
 	height: 20px;
-	border: 1px solid black;
+	border-top: 0.5px solid black;
+	border-bottom: 0.5px solid black;
 	margin: 0; /* Espaço entre os quadradinhos */
 	background-color: #ccc; /* Cor padrão dos quadradinhos */
+}
+
+.quadradinho:first-child {
+	border-left: 0.5px solid black;
+}
+
+.quadradinho:last-child {
+	border-right: 0.5px solid black;
 }
 
 .col-foto {
 	height: 100%;
 	text-align: center;
+	padding: 0;
 }
 
 .destaques-img {
 	max-height: 98%;
+}
+
+@media (max-width: 767px) {
+	.card-title-ano {
+		font-size: 3.7rem;
+	}
+
+	.quadradinho {
+		width: 20px;
+	}
+}
+
+@media (max-width: 670px) {
+	.card-title-ano {
+		font-size: 3rem;
+	}
+}
+
+@media (max-width: 575px) {
+	.card-title-ano {
+		font-size: 2.5rem;
+	}
+
+	.card-title-destaques {
+		font-size: 3.5rem;
+	}
+
+	.col-pontos {
+		font-size: 1.1rem;
+	}
+}
+
+@media (max-width: 480px) {
+	.card-title-destaques {
+		font-size: 3rem;
+	}
+
+	.card-title-ano {
+		font-size: 2rem;
+		height: 60px;
+	}
+
+	.card-title-ano-triangulo {
+		left: -22px;
+		border-width: 30px 22.5px 30px 0; /* Ajuste conforme necessário */
+	}
+
+	.col-nome {
+		padding-right: 20px;
+		font-size: 1.7rem;
+	}
+
+	.col-score {
+		font-size: 2.5rem;
+	}
+}
+
+@media (max-width: 400px) {
+	.card-title-ano {
+		font-size: 1.7rem;
+	}
+
+	.col-nome {
+		padding-right: 20px;
+		font-size: 1.7rem;
+	}
 }

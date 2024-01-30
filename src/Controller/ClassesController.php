@@ -164,4 +164,20 @@ class ClassesController extends AppController {
 			return $this->jsonResponse($students, 200);
 		}
 	}
+
+	public function coresclasses($idcore) {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if ($this->request->is(['ajax'])) {
+			$classes = $this->Classes->find('all')
+				->where(['idcore' => $idcore])
+				->select(['Classes.id', 'Classes.name'])
+			->toArray();
+
+			return $this->jsonResponse($classes, 200);
+		}
+	}
 }

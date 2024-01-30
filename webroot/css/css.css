@@ -1,9 +1,9 @@
 /*  */
 .row {
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding: 0;
+	width: 100%;
 }
 
 .form-label, .control-label {
@@ -17,7 +17,45 @@
 }
 
 .container {
-	max-width: 90% !important;
+	margin: 0 !important;
+	margin-left: auto !important;
+	margin-right: 0% !important;
+	width: 100% !important;
+	padding-left: 1.5rem !important;
+	padding-right: 1.5rem !important;
+}
+
+@media (min-width: 1201px) {
+    .container {
+		padding-left: 0rem !important;
+		padding-right: 2.5rem !important;
+	}
+}
+
+@media (max-width: 1200px) {
+    .container {
+		padding-left: 1rem !important;
+		padding-right: 1.5rem !important;
+	}
+}
+
+@media (max-width: 767px) {
+    .container {
+		padding-left: 1.8rem !important;
+		padding-right: 1rem !important;
+	}
+}
+
+@media (max-width: 575px) {
+    .container {
+		padding-left: 2rem !important;
+		padding-right: 0.7rem !important;
+	}
+}
+
+
+.container {
+	max-width: 95% !important;
 }
 
 .col-paginator {
@@ -54,19 +92,19 @@
 }
 
 .dataTables_wrapper {
-    max-width: 98%;
-    overflow: visible;
+	max-width: 98%;
+	overflow: visible;
 }
 
 .aposta-box {
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 18px;
-    padding: 10px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	color: white;
+	font-size: 18px;
+	padding: 10px;
 }
 
 .col-btn {
@@ -108,7 +146,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 	margin: 0;
 	height: 10px;
 	border: 0;
-    border-bottom: 1px solid black;
+	border-bottom: 1px solid black;
 	border-radius: 0;
 }
 
@@ -243,4 +281,19 @@ div.dataTables_wrapper div.dataTables_filter label, div.dataTables_wrapper div.d
 	.label-pink {
 		background-color: #f022b2 !important;
 		color: white !important;
+	}
+/* Col-xs */
+	@media (max-width: 575px) {
+		.col-xs-1 { width: 8.33333%; }
+        .col-xs-2 { width: 16.66667%; }
+        .col-xs-3 { width: 25%; }
+        .col-xs-4 { width: 33.33333%; }
+        .col-xs-5 { width: 41.66667%; }
+        .col-xs-6 { width: 50%; }
+        .col-xs-7 { width: 58.33333%; }
+        .col-xs-8 { width: 66.66667%; }
+        .col-xs-9 { width: 75%; }
+        .col-xs-10 { width: 83.33333%; }
+        .col-xs-11 { width: 91.66667%; }
+        .col-xs-12 { width: 100%; }
 	}

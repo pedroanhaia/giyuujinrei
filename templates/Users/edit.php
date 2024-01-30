@@ -32,7 +32,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar usuário', ['class' => 'btn btn-success btn-lg']) ?>
-						<?php if($iduserLogado == $user->id || $role == C_RoleTudo) echo $this->Html->link(__('Alterar senha'), ['action' => 'alterarsenha'], ['class' => 'btn btn-lg btn-warning text-white']) ?>
+						<?php if($iduserLogado == $user->id || $role == C_RoleTudo) echo $this->Html->link(__('Alterar senha'), ['action' => 'alterarsenha', $user->id], ['class' => 'btn btn-lg btn-warning text-white']) ?>
 					</div>
 				</div>
 			<?= $this->Form->end(); ?>
