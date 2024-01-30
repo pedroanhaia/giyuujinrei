@@ -29,9 +29,9 @@ class StudentsController extends AppController {
 		if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			$where = ['Students.idclass IN' => $classesTeacher];
+			$where = ['Students.idclass IN' => $classesTeacher, 'inactive' => 0];
 		} else {
-			$where = [];
+			$where['inactive'] = 0;
 		}
 
 		$students = $this->Students->find('all')
@@ -42,9 +42,23 @@ class StudentsController extends AppController {
 				'Ranks' => ['fields' => ['name']],
 				'Classes' => ['fields' => ['name']],
 			])
+			->where($where)
 		->toArray();
 
-		$this->set(compact('students'));
+		$where['inactive'] = 1;
+
+		$inactiveStudents = $this->Students->find('all')
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Responsible' => ['fields' => ['name']],
+				'Ranks' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+			])
+			->where($where)
+		->toArray();
+
+		$this->set(compact('students', 'inactiveStudents'));
 		$this->set('title', 'Lista de estudantes');
 	}
 

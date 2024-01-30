@@ -79,9 +79,9 @@
 						$('#studentTable tbody').append(row);
 					});
 				},
-				error: function(error) {
-					console.error('Erro ao obter opções:', error);
-				}
+				error: function(error) { console.error('Erro ao obter opções:', error);},
+				beforeSend() { preLoadGira(1, 'Carregando lista de estudantes...') },
+				complete() { preLoadGira(0); }
 			});
 		})
 	// Adiciona funcionalidade ao checkbox para atribuir valores 1 ou 0
@@ -91,7 +91,8 @@
 			$(this).next('input[type="hidden"]').val(value); // Atualiza o input hidden
 		});
 	// Selecionar todos 
-		$('#selectAll').on('click', function () {
+		$('#selectAll').on('click', function (e) {
+			e.preventDefault();
 			// Marca ou desmarca todos os checkboxes com base no estado do botão "Selecionar Todos"
 			var isChecked = $(this).text() === 'Selecionar Todos';
 

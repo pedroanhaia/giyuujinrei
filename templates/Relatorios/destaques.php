@@ -35,16 +35,14 @@
 		<?= $this->Form->end(); ?>
 	</div>
 	<div class="row row-title">
-		<div class="col-2">
-			<div class="card-title-">
-				<img src="caminho_para_seu_logo.png" alt="Logo">
-			</div>
+		<div class="col-1 col-foto">
+			<?= $this->Html->image('brandelli.png', ['class' => 'destaques-img'])?>
 		</div>
 		<div class="col-8">
 			<p class="card-title-destaques"> DESTAQUES </p>
 			<p class="card-title-mes"> <?= $strMes ?> </p>
 		</div>
-		<div class="col-2">
+		<div class="col-3">
 			<div class="card-title-ano">
 				<div class="card-title-ano-triangulo"></div>
 				<p> <?= $ano ?> </p>
@@ -61,12 +59,12 @@
 				<?= $key + 1 ?>
 			</div>
 			<div class="col-1 col-foto">
-				<img src="caminho_para_seu_logo.png" alt="Foto">
+				<?= $this->Html->image($reg['Foto'], ['class' => 'destaques-img'])?>
 			</div>
 			<div class="col-8 col-nome">
 				<?= $reg['Nome'] ?>
-				<div class="barra-porcentagem" data-porcentagem="30"></div>
-				<span class="col-nome-pct"> 30% </span>
+				<div class="barra-porcentagem" data-porcentagem="<?= $reg['PresencaPct'] ?>"></div>
+				<span class="col-nome-pct"> <?= $reg['PresencaPct'] ?>% </span>
 			</div>
 			<div class="col-2 col-score">
 				<div class="triangulo"></div>
@@ -77,22 +75,18 @@
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const barrasPorcentagem = document.querySelectorAll(".barra-porcentagem");
-
-  barrasPorcentagem.forEach(barraPorcentagem => {
-    const porcentagem = parseInt(barraPorcentagem.getAttribute("data-porcentagem"));
-
-    for (let i = 0; i < 50; i++) {
-      const quadradinho = document.createElement("div");
-      quadradinho.classList.add("quadradinho");
-
-      if (i < porcentagem / 2) {
-        quadradinho.style.backgroundColor = "#00ff00"; /* Verde para quadradinhos correspondentes à porcentagem */
-      }
-
-      barraPorcentagem.appendChild(quadradinho);
-    }
-  });
-});
+	document.addEventListener("DOMContentLoaded", function() {
+		const barrasPorcentagem = document.querySelectorAll(".barra-porcentagem");
+		barrasPorcentagem.forEach(barraPorcentagem => {
+			const porcentagem = parseInt(barraPorcentagem.getAttribute("data-porcentagem"));
+			for (let i = 0; i < 50; i++) {
+				const quadradinho = document.createElement("div");
+				quadradinho.classList.add("quadradinho");
+				if (i < porcentagem / 2) {
+					quadradinho.style.backgroundColor = "#00ff00"; /* Verde para quadradinhos correspondentes à porcentagem */
+				}
+				barraPorcentagem.appendChild(quadradinho);
+			}
+		});
+	});
 </script>

@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
  * @property int|null $role
  * @property int|null $iduser
  * @property int|null $idgrank
+ * @property int|null $entity
  */
 class Student extends Entity
 {
@@ -49,5 +50,6 @@ class Student extends Entity
         'role' => true,
         'iduser' => true,
         'idgrank' => true,
+        'entity' => true,
     ];
 }

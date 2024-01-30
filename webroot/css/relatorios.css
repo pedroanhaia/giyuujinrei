@@ -168,3 +168,12 @@
 	margin: 0; /* Espaço entre os quadradinhos */
 	background-color: #ccc; /* Cor padrão dos quadradinhos */
 }
+
+.col-foto {
+	height: 100%;
+	text-align: center;
+}
+
+.destaques-img {
+	max-height: 98%;
+}

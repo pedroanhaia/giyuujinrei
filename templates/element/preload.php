@@ -23,7 +23,7 @@
 	.centered-gif {
 		max-width: 50%;
 		max-height: 50%;
-		margin-left: 25%;
+		margin-left: 28%;
 	}
 
 	#overlayMsg {

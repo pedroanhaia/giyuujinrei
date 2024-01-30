@@ -24,7 +24,6 @@
 	<?= $this->Html->script("reqajaxforserver") ?>
 
 	<!-- Selectpicker -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -67,7 +66,7 @@
 			<div class="menu">
 				<ul class="menu-links">
                     <li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/relatorios', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/dashboard', ['escape' => false, 'class' => '']);?>
 					</li>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
@@ -75,18 +74,20 @@
 						</li>
 					<?php } ?>
 					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleTudo) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
 							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
 						</li>
 					<?php } ?>
 					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
+						<?= $this->Html->link('<i class="fa-solid fa-people-roof icon"></i>' . __('Estudantes'), '/students', ['escape' => false, 'class' => '']);?>
 					</li>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
@@ -95,6 +96,9 @@
 					<?php } ?>
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
+					</li>
+					<li class="nav-link">
+						<?= $this->Html->link('<i class="fa-solid fa-list-check icon"></i> ' . __('Presenças'), '/attendances', ['escape' => false, 'class' => '']);?>
 					</li>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">

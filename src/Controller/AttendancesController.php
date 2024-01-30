@@ -26,7 +26,7 @@ class AttendancesController extends AppController {
 		if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			$where['Classes.id IN'] = [$classesTeacher];
+			$where['Classes.id IN'] = $classesTeacher;
 		} 
 
 		$schedules = $this->Schedules->find()
@@ -159,4 +159,3 @@ class AttendancesController extends AppController {
 		$this->set(compact('classes'));
 	}
 }
-

@@ -24,11 +24,12 @@ class UsersController extends AppController {
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
 
-		$users = $this->Users->find()
-			->contain(['Cores' => ['fields' => ['name']]])
-		->toArray();
+		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante])->contain(['Cores' => ['fields' => ['name']]])->toArray();
 
-		$this->set(compact('users'));
+		$this->set(compact('admins', 'teachers', 'responsibles', 'studentes'));
 		$this->set('title', 'Lista de usuários');
 	}
 
@@ -106,7 +107,7 @@ class UsersController extends AppController {
 
 		$this->set('cores', $cores);
 		$this->set(compact('user'));
-		$this->set('title', 'Salvar usuário');
+		$this->set('title', 'Alterar usuário');
 	}
 
 	public function alterarsenha($id = null) {

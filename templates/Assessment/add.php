@@ -77,9 +77,7 @@
 							});
 							$('#idschedule').selectpicker('refresh');
 						},
-						error: function(data) {
-							alert(data.responseJSON)
-						},
+						error: function(data) {alert(data.responseJSON) },
 						beforeSend() { preLoadGira(1, 'Carregando lista de estudantes...') },
 						complete() { preLoadGira(0); }
 					});

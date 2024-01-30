@@ -52,8 +52,6 @@
 	}
 
 	function formatarData($dataString) {
-		$dataString = '2022-01-25';
-
 		// Criar um objeto DateTime a partir da string
 		$dataObj = new DateTime($dataString);
 
