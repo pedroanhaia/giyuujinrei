@@ -45,7 +45,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title"> Avaliação </h4>
-				<?= $this->Html->link('<i class="fa fa-edit"></i>', ["#"], ['rel' => 'tooltip', 'title' => 'Alterar', 'class' => 'btn btn-warning btn-edit text-white btn-xs', 'escape' => false]); ?>
+				<?= $role >= C_RoleProfessor ? $this->Html->link('<i class="fa fa-edit"></i>', ["#"], ['rel' => 'tooltip', 'title' => 'Alterar', 'class' => 'btn btn-warning btn-edit text-white btn-xs', 'escape' => false]) : '' ?>
 			</div>
 			<div class="modal-body">
 			</div>

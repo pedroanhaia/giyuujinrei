@@ -21,7 +21,7 @@ class StudentsController extends AppController {
 	}
 
 	public function index() {
-		if($this->userObj->role < C_RoleProfessor) {
+		if($this->userObj->role < C_RoleResponsável) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['action' => 'index']);
 		}
@@ -30,6 +30,9 @@ class StudentsController extends AppController {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
 			$where = ['Students.idclass IN' => $classesTeacher, 'inactive' => 0];
+		} else if($this->userObj->role == C_RoleResponsável) {
+			$responsibleUser = $this->Responsible->findByIduser($this->userObj->id)->first();
+			$where = ['Students.idresponsible' => $responsibleUser->id, 'inactive' => 0];
 		} else {
 			$where['inactive'] = 0;
 		}

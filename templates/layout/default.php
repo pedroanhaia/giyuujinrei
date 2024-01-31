@@ -65,17 +65,21 @@
 		<div class="menu-bar">
 			<div class="menu">
 				<ul class="menu-links">
-                    <li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/dashboard', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleProfessor) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-ranking-star icon"></i> ' . __('Dashboard'), '/dashboard', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
 							<?= $this->Html->link('<i class="fa-solid fa-torii-gate icon"></i> ' . __('Dojos'), '/cores', ['escape' => false, 'class' => '']);?>
 						</li>
 					<?php } ?>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleProfessor) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Turmas'), '/classes', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
 							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
@@ -97,9 +101,11 @@
 					<li class="nav-link">
 						<?= $this->Html->link('<i class="fa-solid fa-star icon"></i> ' . __('Avaliações'), '/assessment', ['escape' => false, 'class' => '']);?>
 					</li>
-					<li class="nav-link">
-						<?= $this->Html->link('<i class="fa-solid fa-list-check icon"></i> ' . __('Presenças'), '/attendances', ['escape' => false, 'class' => '']);?>
-					</li>
+					<?php if($role >= C_RoleProfessor) { ?>
+						<li class="nav-link">
+							<?= $this->Html->link('<i class="fa-solid fa-list-check icon"></i> ' . __('Presenças'), '/attendances', ['escape' => false, 'class' => '']);?>
+						</li>
+					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
 							<?= $this->Html->link('<i class="fa-solid fa-server icon"></i>' . __('Índices'), '/Indexes', ['escape' => false, 'class' => '']);?>

@@ -38,9 +38,9 @@ class SchedulesController extends AppController {
 		$schedule = $this->Schedules->newEmptyEntity();
 		if ($this->request->is('post')) {
 			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
+			$schedule->role = C_ScheduleRoleAvaliacao;
 
 			if ($this->Schedules->save($schedule)) {
-				$schedule->role = C_ScheduleRoleAvaliacao;
 				$this->Flash->success(__('O agendamento foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
 			}
@@ -114,7 +114,7 @@ class SchedulesController extends AppController {
 			$schedulesOpt = [];
 
 			foreach($schedules as $reg) {
-				$schedulesOpt[$reg->id] = $reg->name . date_format($reg->date, 'd/m/Y');
+				$schedulesOpt[$reg->id] = $reg->name . ' - ' . date_format($reg->date, 'd/m/Y');
 			}
 
 			if(empty($schedulesOpt)) return $this->jsonResponse('Não há agendamentos disponíveis para a avaliação deste estudante, verifique os agendamentos.', 400);

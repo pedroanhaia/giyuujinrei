@@ -13,30 +13,53 @@ class AssessmentController extends AppController {
 		$this->loadModel('Schedules');
 		$this->loadModel('Indexes');
 		$this->loadModel('Ratings');
+		$this->loadModel('Responsible');
 	}
 
 	public function index() {
-		if($this->userObj->role < C_RoleProfessor) {
+		if($this->userObj->role < C_RoleResponsável) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['action' => 'index']);
 		}
 
 		$where = ['Schedules.role' => C_ScheduleRoleAvaliacao];
 
-		if($this->userObj->role == C_RoleProfessor) {
+		if($this->userObj->role >= C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
 			$where['Classes.id IN'] = $classesTeacher;
+
+			$schedules = $this->Schedules->find()
+				->contain([
+					'Cores' => ['fields' => ['name']],
+					'Classes' => ['fields' => ['name']],
+					'Assessment' => ['fields' => ['id', 'idstudent', 'idschedule']],
+					'Assessment.Students' => ['fields' => ['id', 'idresponsible', 'name']],
+				])
+				->where($where)
+			->toArray();
+
+		} else if($this->userObj->role == C_RoleResponsável) {
+			$responsibleUser = $this->Responsible->findByIduser($this->userObj->id)->first();
+			$where = ['Assessment.Students.idresponsible' => $responsibleUser->id, 'inactive' => 0];
+
+			$assessment = $this->Assessment->find()
+				->contain([
+					'Schedules',
+					'Schedules.Cores' => ['fields' => ['name']],
+					'Schedules.Classes' => ['fields' => ['name']],
+					'Students' => ['fields' => ['id', 'idresponsible', 'inactive']]
+				])
+				->where(['Students.idresponsible' => $responsibleUser->id, 'Students.inactive' => 0])
+			->toArray();
+
+			$shcedules = [];
+
+			foreach($assessment as $reg) {
+				$schedules[$reg->schedule->id] = $reg->schedule;
+			}
 		} 
 
-		$schedules = $this->Schedules->find()
-			->contain([
-				'Cores' => ['fields' => ['name']],
-				'Classes' => ['fields' => ['name']],
-			])
-			->where($where)
-		->toArray();
-	
 		$this->set('title', 'Lista de avaliações');
 		$this->set(compact('schedules'));
 	}

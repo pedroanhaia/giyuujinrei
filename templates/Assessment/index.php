@@ -10,7 +10,7 @@
 		<table class="table table-hover table-row-clickable" id="table">
 			<thead class="text-primary">
 				<tr>
-					<th> Aula </th>
+					<th> Avaliação </th>
 					<th> Dojô </th>
 					<th> Turma </th>
 					<th class="actions"> Ações </th>

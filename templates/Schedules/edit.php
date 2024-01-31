@@ -38,6 +38,8 @@
 		$('#idcore').change(function(e) {
 			loadClasses();
 		})
+		
+		loadClasses();
 
 		function loadClasses() {
 			var idcore = $('#idcore').val();
