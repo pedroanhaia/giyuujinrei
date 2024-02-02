@@ -10,11 +10,10 @@ class IndexesController extends AppController {
 	}
 
 	public function index() {
-		$indexes = $this->Indexes->find()
-			->contain(['Ratings' => ['fields' => ['name']]])
-		->toArray();
+		$indexes = $this->Indexes->findByInactive(0)->contain(['Ratings' => ['fields' => ['name']]])->toArray();
+		$inactiveIndexes = $this->Indexes->findByInactive(1)->contain(['Ratings' => ['fields' => ['name']]])->toArray();
 
-		$this->set(compact('indexes'));
+		$this->set(compact('indexes', 'inactiveIndexes'));
 		$this->set('title', 'Lista de índices');
 	}
 

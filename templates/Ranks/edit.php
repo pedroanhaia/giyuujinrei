@@ -24,17 +24,23 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-3 col-md-12">
+				<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Obs. 1 </label>
-						<?= $this->Form->control('obs1', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira a obs']) ?>
+						<?= $this->Form->control('obs1', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a obs']) ?>
 					</div>
 					<div class="col-lg-3 col-md-12">
 						<label class="control-label text-muted"> Obs. 2 </label>
-						<?= $this->Form->control('obs2', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira a obs']) ?>
+						<?= $this->Form->control('obs2', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a obs']) ?>
 					</div>
 					<div class="col-lg-6 col-md-12">
 						<label class="control-label text-muted"> Url Imagem </label>
 						<?= $this->Form->control('urlimage', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira a url']) ?>
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-12">
+						<label class="control-label text-muted"> Status </label>
+						<?=  $this->Form->input('inactive', ['label' => ['class' => 'control-label'], 'type' => 'radio', 'options' => [0 => 'Ativo', 1 => 'Inativo']]); ?>
 					</div>
 				</div>
 				<div class="row">

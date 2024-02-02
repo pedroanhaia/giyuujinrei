@@ -5,9 +5,10 @@ namespace App\Controller;
 
 class ResponsibleController extends AppController {
 	public function index() {
-		$responsibles = $this->Responsible->find('all')->toArray();
+		$responsibles = $this->Responsible->find('all')->where(['inactive' => 0])->toArray();
+		$inactiveResponsibles = $this->Responsible->find('all')->where(['inactive' => 1])->toArray();
 		
-		$this->set(compact('responsibles'));
+		$this->set(compact('responsibles', 'inactiveResponsibles'));
 		$this->set('title', 'Lista de responsáveis');
 	}
 

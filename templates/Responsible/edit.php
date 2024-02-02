@@ -32,6 +32,12 @@
 						<?= $this->Form->control('iduser', ['class' => 'form-control form-control selectpicker', 'data-live-search', 'label' => false, 'options' => $users, 'title' => 'Selecione o usuário']) ?>
 					</div>
 				</div>
+				<div class="row mt-2">
+					<div class="col-12">
+						<label class="control-label text-muted"> Status </label>
+						<?=  $this->Form->input('inactive', ['label' => ['class' => 'control-label'], 'type' => 'radio', 'options' => [0 => 'Ativo', 1 => 'Inativo']]); ?>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar respnsável', ['class' => 'btn btn-success btn-lg']) ?>

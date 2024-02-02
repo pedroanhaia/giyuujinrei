@@ -5,10 +5,11 @@ namespace App\Controller;
 
 class CoresController extends AppController {
 	public function index() {
-		$cores = $this->Cores->find('all')->toArray();
+		$cores = $this->Cores->find('all')->where(['inactive' => 0])->toArray();
+		$inactiveCores = $this->Cores->find('all')->where(['inactive' => 1])->toArray();
 
 		$this->set('title', 'Lista de dojôs');
-		$this->set(compact('cores'));
+		$this->set(compact('cores', 'inactiveCores'));
 	}
 
 	public function view($id = null) {

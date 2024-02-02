@@ -34,5 +34,6 @@ class Sport extends Entity
         'role' => true,
         'created' => true,
         'modified' => true,
+        'inactive' => true,
     ];
 }

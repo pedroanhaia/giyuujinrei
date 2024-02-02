@@ -51,5 +51,6 @@ class Student extends Entity
         'iduser' => true,
         'idgrank' => true,
         'entity' => true,
+        'inactive' => true,
     ];
 }

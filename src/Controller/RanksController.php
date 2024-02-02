@@ -10,11 +10,10 @@ class RanksController extends AppController {
 	}
 
 	public function index() {
-		$ranks = $this->Ranks->find('all')
-			->contain(['Sports' => ['fields' => ['name']]])
-		->toArray();
+		$ranks = $this->Ranks->findByInactive(0)->contain(['Sports' => ['fields' => ['name']]])->toArray();
+		$inactiveRanks = $this->Ranks->findByInactive(1)->contain(['Sports' => ['fields' => ['name']]])->toArray();
 
-		$this->set(compact('ranks'));
+		$this->set(compact('ranks', 'inactiveRanks'));
 		$this->set('title', 'Lista de graduações');
 	}
 

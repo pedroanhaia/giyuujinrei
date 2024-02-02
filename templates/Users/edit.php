@@ -28,6 +28,12 @@
 							<?= $this->Form->control('role', ['class' => 'form-control', 'label' => false, 'required' => true, 'options' => C_RolesOptions]) ?>
 						</div>
 					</div>
+					<div class="row mt-2">
+						<div class="col-12">
+							<label class="control-label text-muted"> Status </label>
+							<?=  $this->Form->input('inactive', ['label' => ['class' => 'control-label'], 'type' => 'radio', 'options' => [0 => 'Ativo', 1 => 'Inativo']]); ?>
+						</div>
+					</div>
 				<?php } ?>
 				<div class="row">
 					<div class="col-md-12">

@@ -40,5 +40,6 @@ class Responsible extends Entity
         'modified' => true,
         'role' => true,
         'iduser' => true,
+        'inactive' => true,
     ];
 }

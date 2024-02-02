@@ -44,5 +44,6 @@ class Core extends Entity
         'created' => true,
         'modified' => true,
         'role' => true,
+        'inactive' => true,
     ];
 }

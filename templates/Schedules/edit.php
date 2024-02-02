@@ -24,6 +24,12 @@
 						<?= $this->Form->control('idclass', ['class' => 'form-control selectpicker', 'data-live-search', 'label' => false, 'required' => true, 'options' => [null], 'title' => 'Selecione a turma']) ?>
 					</div>
 				</div>
+				<div class="row mt-2">
+					<div class="col-12">
+						<label class="control-label text-muted"> Status </label>
+						<?=  $this->Form->input('inactive', ['label' => ['class' => 'control-label'], 'type' => 'radio', 'options' => [0 => 'Ativo', 1 => 'Inativo']]); ?>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar agendamento', ['class' => 'btn btn-success btn-lg']) ?>

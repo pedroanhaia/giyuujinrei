@@ -29,12 +29,12 @@ class StudentsController extends AppController {
 		if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			$where = ['Students.idclass IN' => $classesTeacher, 'inactive' => 0];
+			$where = ['Students.idclass IN' => $classesTeacher, 'Students.inactive' => 0];
 		} else if($this->userObj->role == C_RoleResponsável) {
 			$responsibleUser = $this->Responsible->findByIduser($this->userObj->id)->first();
-			$where = ['Students.idresponsible' => $responsibleUser->id, 'inactive' => 0];
+			$where = ['Students.idresponsible' => $responsibleUser->id, 'Students.inactive' => 0];
 		} else {
-			$where['inactive'] = 0;
+			$where['Students.inactive'] = 0;
 		}
 
 		$students = $this->Students->find('all')
@@ -48,7 +48,7 @@ class StudentsController extends AppController {
 			->where($where)
 		->toArray();
 
-		$where['inactive'] = 1;
+		$where['Students.inactive'] = 1;
 
 		$inactiveStudents = $this->Students->find('all')
 			->contain([

@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 class RatingsController extends AppController {
-
 	public function index() {
-		$ratings = $this->Ratings->find()->toArray();
+		$ratings = $this->Ratings->findByInactive(0)->toArray();
+		$inactiveRatings = $this->Ratings->findByInactive(1)->toArray();
 
-		$this->set(compact('ratings'));
+		$this->set(compact('ratings', 'inactiveRatings'));
 		$this->set('title', 'Lista de áreas');
 	}
 

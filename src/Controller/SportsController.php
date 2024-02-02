@@ -10,9 +10,10 @@ class SportsController extends AppController {
 	}
 
 	public function index() {
-		$sports = $this->Sports->find()->toArray();
+		$sports = $this->Sports->findByInactive(0)->toArray();
+		$inactiveSports = $this->Sports->findByInactive(1)->toArray();
 
-		$this->set(compact('sports'));
+		$this->set(compact('sports', 'inactiveSports'));
 		$this->set('title', 'Lista de esportes');
 	}
 

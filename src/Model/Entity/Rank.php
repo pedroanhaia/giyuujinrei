@@ -42,5 +42,6 @@ class Rank extends Entity
         'modified' => true,
         'role' => true,
         'urlimage' => true,
+        'inactive' => true,
     ];
 }

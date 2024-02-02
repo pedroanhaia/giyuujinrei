@@ -36,5 +36,6 @@ class Schedule extends Entity
         'modified' => true,
         'role' => true,
         'name' => true,
+        'inactive' => true,
     ];
 }

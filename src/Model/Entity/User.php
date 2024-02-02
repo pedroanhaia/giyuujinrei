@@ -37,6 +37,7 @@ class User extends Entity
         'name' => true,
         'idcore' => true,
         'darkmode' => true,
+        'inactive' => true,
     ];
 
     /**

@@ -31,6 +31,12 @@
 						<?= $this->Form->control('type', ['class' => 'form-control selectpicker', 'label' => false, 'options' => C_TeacherTypeOptions, 'required' => true, 'title' => 'Selecione o tipo']) ?>
 					</div>
 				</div>
+				<div class="row mt-2">
+					<div class="col-12">
+						<label class="control-label text-muted"> Status </label>
+						<?=  $this->Form->input('inactive', ['label' => ['class' => 'control-label'], 'type' => 'radio', 'options' => [0 => 'Ativo', 1 => 'Inativo']]); ?>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<?= $this->Form->button('Salvar professor', ['class' => 'btn btn-success btn-lg']) ?>

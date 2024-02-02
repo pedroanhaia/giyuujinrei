@@ -21,13 +21,15 @@ class ClassesController extends AppController {
 			return $this->redirect(['action' => 'index']);
 		}
 
+		$where = ['Classes.inactive' => 0];
+		$whereInactive = ['Classes.inactive' => 1];
+
 		if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
-			$where = ['Classes.id IN' => $classesTeacher];
-		} else {
-			$where = [];
-		}
+			$where['Classes.id IN'] = [$classesTeacher];
+			$whereInactive['Classes.id IN'] = [$classesTeacher];
+		} 
 
 		$classes = $this->Classes->find('all')
 			->contain([
@@ -38,9 +40,19 @@ class ClassesController extends AppController {
 			->order('Classes.name ASC')
 			->where($where)
 		->toArray();
+		
+		$inactiveClasses = $this->Classes->find('all')
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Teachers' => ['fields' => ['name']],
+			])
+			->order('Classes.name ASC')
+			->where($whereInactive)
+		->toArray();
 
 		$this->set('title', 'Lista de turmas');
-		$this->set(compact('classes'));
+		$this->set(compact('classes', 'inactiveClasses'));
 	}
  
 	public function view($id = null) {

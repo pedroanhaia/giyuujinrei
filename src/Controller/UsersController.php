@@ -24,12 +24,13 @@ class UsersController extends AppController {
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
 
-		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$inactive = $this->Users->find()->where(['Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
 
-		$this->set(compact('admins', 'teachers', 'responsibles', 'studentes'));
+		$this->set(compact('admins', 'teachers', 'responsibles', 'studentes', 'inactive'));
 		$this->set('title', 'Lista de usuários');
 	}
 
