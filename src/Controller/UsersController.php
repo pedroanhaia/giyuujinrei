@@ -24,10 +24,10 @@ class UsersController extends AppController {
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
 
-		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
-		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante, 'Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
 		$inactive = $this->Users->find()->where(['Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
 
 		$this->set(compact('admins', 'teachers', 'responsibles', 'studentes', 'inactive'));
@@ -88,13 +88,7 @@ class UsersController extends AppController {
 		$user = $this->Users->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
-			if($this->request->getData('password2') != $this->request->getData('password1')) {
-				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
-				return $this->redirect(['action' => 'add']);
-			}
-
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			$user->password = $this->request->getData('password1');
 
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('O usuário foi salvo com sucesso.'));

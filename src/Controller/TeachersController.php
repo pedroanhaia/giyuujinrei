@@ -10,9 +10,10 @@ class TeachersController extends AppController {
 	}
 
 	public function index() {
-		$teachers = $this->Teachers->find('all')->toArray();
+		$teachers = $this->Teachers->findByInactive(0)->toArray();
+		$inactiveTeachers = $this->Teachers->findByInactive(1)->toArray();
 
-		$this->set(compact('teachers'));
+		$this->set(compact('teachers', 'inactiveTeachers'));
 		$this->set('title', 'Lista de professores');
 	}
 

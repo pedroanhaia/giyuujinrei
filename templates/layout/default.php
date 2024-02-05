@@ -82,12 +82,12 @@
 					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
-							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
+							<?= $this->Html->link('<i class="fa-solid fa-chalkboard-user icon"></i>' . __('Professores'), '/teachers', ['escape' => false, 'class' => '']);?>
 						</li>
 					<?php } ?>
 					<?php if($role >= C_RoleTudo) { ?>
 						<li class="nav-link">
-							<?= $this->Html->link('<i class="fa-solid fa-users icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
+							<?= $this->Html->link('<i class="fa-solid fa-user icon"></i> ' . __('Responsáveis'), '/responsible', ['escape' => false, 'class' => '']);?>
 						</li>
 					<?php } ?>
 					<li class="nav-link">

@@ -37,7 +37,7 @@ class AttendancesController extends AppController {
 			->where($where)
 		->toArray();
 	
-		$this->set('title', 'Lista de turmas');
+		$this->set('title', 'Lista de presenças');
 		$this->set(compact('schedules'));
 	}
  

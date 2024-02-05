@@ -79,6 +79,10 @@ class StudentsTable extends Table {
 			->allowEmptyString('idgrank');
 
 		$validator
+			->integer('inactive')
+			->allowEmptyString('inactive');
+
+		$validator
 			->integer('entity');
 
 		return $validator;
