@@ -78,7 +78,16 @@
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#table-inativos, #table-ativos');
-		table.DataTable(window.datatableOptions);
+		var dataTableAtivos = $('#table-ativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableInativos = $('#table-inativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var targetTab = $(e.target).attr('href');
+			if (targetTab === '#ativos') {
+				dataTableAtivos.columns.adjust().draw();
+			} else if (targetTab === '#inativos') {
+				dataTableInativos.columns.adjust().draw();
+			}
+		});
 	});
 </script>

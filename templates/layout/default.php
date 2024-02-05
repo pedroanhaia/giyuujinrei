@@ -14,7 +14,8 @@
 	<?= $this->Html->css(['css.css']) ?>
 
 	<?= $this->Html->script(['https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js', "https://code.jquery.com/jquery-3.7.1.min.js"]) ?>
-	<?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+	<?=  $this->Html->css(['normalize.min', 'milligram.min',  'cake']) ?>
+	<?= '' //$this->Html->css(['normalize.min', 'cake']) ?>
 
 	<!-- CSS -->
 	<?= $this->Html->css("/dist/css/pages/tab-page") ?>

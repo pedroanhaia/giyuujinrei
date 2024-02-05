@@ -34,7 +34,7 @@
 							<tr>
 								<td> <?= $reg->name ?> </td>
 								<td> <?= $reg->city ?> </td>
-								<td> <?= $reg->count_students ?> </td>
+								<td> <?= $reg->count_students ? $reg->count_students : 0 ?> </td>
 								<td> <?= CoresTypes($reg->type) ?> </td>
 								<td> <?= $reg->contact ?> </td>
 								<td> <?= $reg->positioncontact ?> </td>
@@ -71,7 +71,7 @@
 							<tr>
 								<td> <?= $reg->name ?> </td>
 								<td> <?= $reg->city ?> </td>
-								<td> <?= $reg->count_students ?> </td>
+								<td> <?= $reg->count_students ? $reg->count_students : 0 ?> </td>
 								<td> <?= CoresTypes($reg->type) ?> </td>
 								<td> <?= $reg->contact ?> </td>
 								<td> <?= $reg->positioncontact ?> </td>
@@ -91,11 +91,16 @@
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#table-inativos, #table-ativos');
-		table.DataTable({
-			"pageLength": 10,
-			"language": datatableOptionsLanguage,
-			"order" : [0, "asc"],
+		var dataTableAtivos = $('#table-ativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableInativos = $('#table-inativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var targetTab = $(e.target).attr('href');
+			if (targetTab === '#ativos') {
+				dataTableAtivos.columns.adjust().draw();
+			} else if (targetTab === '#inativos') {
+				dataTableInativos.columns.adjust().draw();
+			}
 		});
 	});
 </script>

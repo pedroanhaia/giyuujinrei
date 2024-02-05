@@ -21,16 +21,16 @@
 					</div>
 				</div>
 				<div class="div-content">
-					<table id="studentTable">
-						<thead>
-							<tr>
-								<th width='80%'> Estudante </th>
-								<th> Presença <button class='btn btn-queequaseinfo' id="selectAll"> Selecionar Todos </button> </th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+					<div class="row row-title">
+						<div class="col-9">
+							Estudante
+						</div>
+						<div class="col-3">
+							<button class='btn btn-queequaseinfo' id="selectAll"> <i class="fa-regular fa-square-check"></i> </button>
+						</div>
+					</div>
+					<div id="studentsList">
+					</div>
 				</div>
 			<?= $this->Form->end(); ?>
 		</div>
@@ -49,15 +49,14 @@
 					var students = data;
 
 					// Limpar a tabela ao trocar 
-					$('#studentTable tbody').empty();
-					$('#selectAll').text('Selecionar Todos');
+					$('#studentsList').empty();
+					$('#selectAll').html('<i class="fa-regular fa-square-check"></i>');
 
 					// Adiciona cada estudante à lista
 					$.each(students, function (index, student) {
-						var row = $('<tr>');
-						var nameCell = $('<td>').text(student.name).addClass('tdPresenca');
-						var checkboxCell = $('<td>');
-						var checkbox = $('<input type="checkbox">').attr('id', 'student' + student.id).attr('name', 'student' + student.id);
+						var row = $('<div>').addClass('row');
+						var nameCell = $('<div>').text(student.name).addClass('col-9');
+						var checkboxCell = $('<div>').addClass('col-3');
 
 						var checkbox = $('<input type="checkbox">').attr({
 							'id': 'student' + student.id,
@@ -76,7 +75,7 @@
 						row.append(nameCell);
 						row.append(checkboxCell);
 
-						$('#studentTable tbody').append(row);
+						$('#studentsList').append(row);
 					});
 				},
 				error: function(error) { console.error('Erro ao obter opções:', error);},
@@ -93,15 +92,15 @@
 	// Selecionar todos 
 		$('#selectAll').on('click', function (e) {
 			e.preventDefault();
-			// Marca ou desmarca todos os checkboxes com base no estado do botão "Selecionar Todos"
-			var isChecked = $(this).text() === 'Selecionar Todos';
+			// Marca ou desmarca todos os checkboxes com base no estado do botão "Todos"
+			var isChecked = $(this).html() === '<i class="fa-regular fa-square-check"></i>';
 
 			$('input[type="checkbox"]').prop('checked', isChecked).each(function () {
 			var value = isChecked ? 1 : 0;
 			$(this).val(value);
 			$(this).next('input[type="hidden"]').val(value); // Atualiza os inputs hidden
 			});
-			$(this).text(isChecked ? 'Desmarcar Todos' : 'Selecionar Todos');
+			$(this).html(isChecked ? '<i class="fa-regular fa-square"></i>' : '<i class="fa-regular fa-square-check"></i>');
 		});
-	// 
+	//
 </script>

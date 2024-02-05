@@ -93,14 +93,25 @@ class AttendancesController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$class = $this->Classes->get($id);
-		if ($this->Classes->delete($class)) {
-			$this->Flash->success(__('A turma foi excluída com sucesso.'));
+		if($this->usersObj->role <= C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
 		} else {
-			$this->Flash->error(__('Não foi possível excluir a turma, tente novamente.'));
+			$schedule = $this->Schedules->findById($id)
+				->contain(['Attendances' => ['fields' => ['idstudent', 'idschedule', 'present']]])
+				->where($id)
+			->first();
+	
+			foreach($schedule->attendances as $attendance) $this->Attendances->delete($attendance);
+			
+			if ($this->Schedules->delete($schedule)) {
+				$this->Flash->success(__('A lista de presença foi excluída com sucesso.'));
+			} else {
+				$this->Flash->error(__('Não foi possível excluir a lista de presença, tente novamente.'));
+			}
+	
+			return $this->redirect(['action' => 'index']);
 		}
-
-		return $this->redirect(['action' => 'index']);
 	}
 
 	public function add() {

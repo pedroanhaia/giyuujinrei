@@ -9,7 +9,7 @@
 		<li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#admins" role="tab" aria-selected="true"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Admins </span></a> </li>
 		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#teachers" role="tab" aria-selected="false"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Professores </span></a> </li>
 		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#responsibles" role="tab" aria-selected="false"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Responsáveis </span></a> </li>
-		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#studentes" role="tab" aria-selected="false"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Estudantes </span></a> </li>
+		<!-- <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#studentes" role="tab" aria-selected="false"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Estudantes </span></a> </li> -->
 		<li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#inactives" role="tab" aria-selected="false"><span class="hidden-sm-up"> </span> <span class="hidden-xs-down"> Inativos </span></a> </li>
 	</ul>
 	<div class="tab-content">
@@ -164,7 +164,25 @@
 </div>
 <script>
 	$(document).ready(function() {
-		var table = $('#table-admins, #table-teachers, #table-responsibles, #table-students, #table-inactives');
-		table.DataTable(window.datatableOptions);
+		var dataTableAdmins = $('#table-admins').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableTeachers = $('#table-teachers').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableResponsibles = $('#table-responsibles').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableStudents = $('#table-students').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+		var dataTableInativos = $('#table-inativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var targetTab = $(e.target).attr('href');
+			if (targetTab === '#admins') {
+				dataTableAdmins.columns.adjust().draw();
+			} else if (targetTab === '#teachers') {
+				dataTableTeachers.columns.adjust().draw();
+			} else if (targetTab === '#responsibles') {
+				dataTableResponsibles.columns.adjust().draw();
+			} else if (targetTab === '#students') {
+				dataTableStudents.columns.adjust().draw();
+			} else if (targetTab === '#inativos') {
+				dataTableInativos.columns.adjust().draw();
+			} 
+		});
 	});
 </script>

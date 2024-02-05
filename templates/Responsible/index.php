@@ -77,12 +77,40 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function() {
-		var table = $('#table-inativos, #table-ativos');
-		table.DataTable({
-			"pageLength": 10,
-			"language": datatableOptionsLanguage,
-			"order" : [0, "asc"],
-		});
+	var datatableOptionsLanguage = {
+		"sProcessing":    "Procesando...",
+		"sLengthMenu":    "Mostrar _MENU_ registros",
+		"sZeroRecords":   "Nenhum registro encontrado",
+		"sEmptyTable":    "Nenhum dado disponível",
+		"sInfo":          "Mostrando registros de _START_ até _END_ de um total de _TOTAL_ registros",
+		"sInfoEmpty":     "Mostrando registros de 0 a 0 de um total de 0 registros",
+		"sInfoFiltered":  "(filtrado de um total de _MAX_ registros)",
+		"sInfoPostFix":   "",
+		"sSearch":        "Buscar:",
+		"sUrl":           "",
+		"sInfoThousands":  ",",
+		"sLoadingRecords": "Carregando...",
+		"oPaginate": {
+			"sFirst":    "<<",
+			"sLast":    ">>",
+			"sNext":    ">",
+			"sPrevious": "<"
+		},
+		"oAria": {
+			"sSortAscending":  ": Ordem Ascendente",
+			"sSortDescending": ": Ordem descendente"
+		},
+	}
+
+	var dataTableAtivos = $('#table-ativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+	var dataTableInativos = $('#table-inativos').DataTable({"pageLength": 10, "language": datatableOptionsLanguage, "order" : [0, "asc"]});
+
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		var targetTab = $(e.target).attr('href');
+		if (targetTab === '#ativos') {
+			dataTableAtivos.columns.adjust().draw();
+		} else if (targetTab === '#inativos') {
+			dataTableInativos.columns.adjust().draw();
+		}
 	});
 </script>

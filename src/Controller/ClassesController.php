@@ -165,7 +165,7 @@ class ClassesController extends AppController {
 		if ($this->request->is(['ajax'])) {
 			$students = $this->Students->find('all')
 				->contain(['Ranks' => ['fields' => ['name']]])
-				->where(['idclass' => $idclass, 'inactive' => 0])
+				->where(['idclass' => $idclass, 'Students.inactive' => 0])
 				->select(['Students.id', 'Students.urlpicture', 'Students.name', 'Students.birthday'])
 			->toArray();
 
