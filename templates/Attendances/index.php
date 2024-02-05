@@ -24,7 +24,7 @@
 						<td class="actions">
 							<?= $this->Html->link('<i class="fa fa-eye"></i>', ["action" => "view", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Visualizar', 'class' => 'btn btn-info text-white btn-xs', 'id' => $reg->id, 'escape' => false]); ?>
 							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-edit"></i>', ["action" => "edit", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-warning text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>
-							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>
+							<?= $role >= C_RoleTudo ? $this->Html->link('<i class="fa fa-trash"></i>', ["action" => "delete", $reg->id, '0'], ['rel' => 'tooltip', 'title' => 'Excluir', 'class' => 'btn btn-danger btn-delete text-white btn-xs', 'id' => $reg->id, 'escape' => false]) : '' ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -32,13 +32,26 @@
 		</table>
 	</div>
 </div>
+<div id="dialog-confirm" title="Confirmação de Exclusão" style="display:none;">
+    <p>Tem certeza que deseja excluir?</p>
+</div>
 <script>
 	$(document).ready(function() {
 		var table = $('#table');
 		table.DataTable({
 			"pageLength": 10,
 			"language": datatableOptionsLanguage,
-			"order" : [0, "asc"],
+			"order" : [0, "desc"],
 		});
+
+		$(".btn-delete").on("click", function(e) {
+			e.preventDefault();
+			var href = $(this).attr('href');
+            var resposta = confirm("Tem certeza que deseja excluir?");
+            
+            if (resposta) {
+				window.location = href;
+            }
+        });
 	});
 </script>

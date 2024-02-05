@@ -14,7 +14,7 @@
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 						<label class="control-label text-muted"> Data: </label>
-						<?= $this->Form->date('date', ['class' => 'form-control', 'label' => false, 'default' => date('d/m/Y'), 'required' => true, 'placeholder' => 'Informe a data da aula']) ?>
+						<?= $this->Form->date('date', ['class' => 'form-control', 'label' => false, 'value' => date('m/d/Y'), 'required' => true, 'placeholder' => 'Informe a data da aula']) ?>
 					</div>
 					<div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
 						<?= $this->Form->button('Salvar presenças', ['class' => 'btn btn-success btn-lg mt-5']) ?>
@@ -23,7 +23,7 @@
 				<div class="div-content">
 					<div class="row row-title">
 						<div class="col-9">
-							Estudante
+							<label for="Estudante" class="attendance-label"> Estudante </label>
 						</div>
 						<div class="col-3">
 							<button class='btn btn-queequaseinfo' id="selectAll"> <i class="fa-regular fa-square-check"></i> </button>
@@ -54,7 +54,7 @@
 
 					// Adiciona cada estudante à lista
 					$.each(students, function (index, student) {
-						var row = $('<div>').addClass('row');
+						var row = $('<div>').addClass('row').addClass('row-student');
 						var nameCell = $('<div>').text(student.name).addClass('col-9');
 						var checkboxCell = $('<div>').addClass('col-3');
 
@@ -84,7 +84,7 @@
 			});
 		})
 	// Adiciona funcionalidade ao checkbox para atribuir valores 1 ou 0
-		$('#studentTable').on('change', 'input[type="checkbox"]', function () {
+		$('#studentsList').on('change', 'input[type="checkbox"]', function () {
 			var value = this.checked ? 1 : 0;
 			$(this).val(value);
 			$(this).next('input[type="hidden"]').val(value); // Atualiza o input hidden

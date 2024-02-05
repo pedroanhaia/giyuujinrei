@@ -18,20 +18,26 @@
 			</div>
 			<div class="div-content">
 				<table id="studentTable">
-					<thead>
-						<tr>
-							<th width='80%'> Estudante </th>
-							<th> Presença </th>
-						</tr>
-					</thead>
-					<tbody>
+					<div class="row row-title">
+						<div class="col-9">
+							<label for="Estudante" class="attendance-label"> Estudante </label>
+						</div>
+						<div class="col-3">
+							<button class='btn btn-queequaseinfo' id="selectAll"> <i class="fa-regular fa-square-check"></i> </button>
+						</div>
+					</div>
+					<div id="studentsList">
 						<?php foreach($schedule->attendances as $reg) { ?>
-							<tr>
-								<td class="tdPresenca"> <?= $reg->student->name ?> </td>
-								<td><input disabled type="checkbox" id="student<?= $reg->id ?>" name="attendance[<?= $reg->idstudent ?>]" value="<?= $reg->present ?>" <?= $reg->present ? 'checked' : '' ?>><input type="hidden" name="attendance[<?= $reg->idstudent ?>]" value="<?= $reg->present ?>"></td>
-							</tr>
+							<div class="row row-student">
+								<div class="col-9">
+									<?= $reg->student->name ?>
+								</div>
+								<div class="col-3">
+									<input disabled type="checkbox" id="student<?= $reg->id ?>" name="attendance[<?= $reg->idstudent ?>]" <?= $reg->present ? 'checked' : '' ?>>
+								</div>
+							</div>
 						<?php } ?>
-					</tbody>
+					</div>
 				</table>
 			</div>
 		</div>

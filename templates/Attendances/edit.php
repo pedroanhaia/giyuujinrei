@@ -22,20 +22,26 @@
 				</div>
 				<div class="div-content">
 					<table id="studentTable">
-						<thead>
-							<tr>
-								<th width='80%'> Estudante </th>
-								<th> Presença <button class='btn btn-queequaseinfo' id="selectAll"> Selecionar Todos </button> </th>
-							</tr>
-						</thead>
-						<tbody>
+						<div class="row row-title">
+							<div class="col-9">
+								<label for="Estudante" class="attendance-label"> Estudante </label>
+							</div>
+							<div class="col-3">
+								<button class='btn btn-queequaseinfo' id="selectAll"> <i class="fa-regular fa-square-check"></i> </button>
+							</div>
+						</div>
+						<div id="studentsList">
 							<?php foreach($schedule->attendances as $reg) { ?>
-								<tr>
-									<td class="tdPresenca"> <?= $reg->student->name ?> </td>
-									<td><input type="checkbox" id="student<?= $reg->id ?>" name="attendance[<?= $reg->idstudent ?>]" value="<?= $reg->present ?>" <?= $reg->present ? 'checked' : '' ?>><input type="hidden" name="attendance[<?= $reg->idstudent ?>]" value="<?= $reg->present ?>"></td>
-								</tr>
+								<div class="row row-student">
+									<div class="col-9">
+										<?= $reg->student->name ?>
+									</div>
+									<div class="col-3">
+										<input type="checkbox" id="student<?= $reg->id ?>" name="attendance[<?= $reg->idstudent ?>]" value="1" <?= $reg->present ? 'checked' : '' ?>><input type="hidden" name="attendance[<?= $reg->idstudent ?>]" value="0">
+									</div>
+								</div>
 							<?php } ?>
-						</tbody>
+						</div>
 					</table>
 				</div>
 			<?= $this->Form->end(); ?>
@@ -43,23 +49,24 @@
 	</div>
 </div>
 <script>
-	// Adiciona funcionalidade ao checkbox para atribuir valores 1 ou 0
-		$('#studentTable').on('change', 'input[type="checkbox"]', function () {
+	// Adiciona funcionalidade ao checkbox para atribuir valores 1 ou 0 
+		$('#studentsList').on('change', 'input[type="checkbox"]', function () {
 			var value = this.checked ? 1 : 0;
 			$(this).val(value);
 			$(this).next('input[type="hidden"]').val(value); // Atualiza o input hidden
 		});
 	// Selecionar todos 
-		$('#selectAll').on('click', function () {
-			// Marca ou desmarca todos os checkboxes com base no estado do botão "Selecionar Todos"
-			var isChecked = $(this).text() === 'Selecionar Todos';
+		$('#selectAll').on('click', function (e) {
+			e.preventDefault();
+			// Marca ou desmarca todos os checkboxes com base no estado do botão "Todos"
+			var isChecked = $(this).html() === '<i class="fa-regular fa-square-check"></i>';
 
 			$('input[type="checkbox"]').prop('checked', isChecked).each(function () {
-			var value = isChecked ? 1 : 0;
-			$(this).val(value);
-			$(this).next('input[type="hidden"]').val(value); // Atualiza os inputs hidden
+				var value = isChecked ? 1 : 0;
+				$(this).val(value);
+				$(this).next('input[type="hidden"]').val(value); // Atualiza os inputs hidden
 			});
-			$(this).text(isChecked ? 'Desmarcar Todos' : 'Selecionar Todos');
+			$(this).html(isChecked ? '<i class="fa-regular fa-square"></i>' : '<i class="fa-regular fa-square-check"></i>');
 		});
-	// 
+	//
 </script>

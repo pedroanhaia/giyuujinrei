@@ -14,5 +14,15 @@ input:disabled {
 }
 
 .row-title {
-	border-bottom: 1px solid rgb(63, 63, 63);
+	border-bottom: 0.7px solid rgb(63, 63, 63);
+}
+
+.row-student {
+	border-bottom: 0.5px solid rgb(167, 167, 167);
+}
+
+.attendance-label {
+	font-weight: 600;
+	font-size: 18px;
+	margin-bottom: 0;
 }

@@ -69,10 +69,9 @@ class AttendancesController extends AppController {
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
-
 			$data = $this->request->getData();
-
 			$bError = false;
+
 			foreach($data['attendance'] as $key => $reg) {
 				$attendance = $this->Attendances->find()->where(['idstudent' => $key, 'idschedule' => $schedule->id])->first();
 				$attendance->present = $reg;
@@ -93,12 +92,12 @@ class AttendancesController extends AppController {
 	}
 
 	public function delete($id = null) {
-		if($this->usersObj->role <= C_RoleTudo) {
+		if($this->userObj->role < C_RoleTudo) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['action' => 'index']);
 		} else {
 			$schedule = $this->Schedules->findById($id)
-				->contain(['Attendances' => ['fields' => ['idstudent', 'idschedule', 'present']]])
+				->contain(['Attendances'])
 				->where($id)
 			->first();
 	

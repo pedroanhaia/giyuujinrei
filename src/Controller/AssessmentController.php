@@ -24,7 +24,17 @@ class AssessmentController extends AppController {
 
 		$where = ['Schedules.role' => C_ScheduleRoleAvaliacao];
 
-		if($this->userObj->role >= C_RoleProfessor) {
+		if($this->userObj->role == C_RoleTudo) {
+			$schedules = $this->Schedules->find()
+				->contain([
+					'Cores' => ['fields' => ['name']],
+					'Classes' => ['fields' => ['name']],
+					'Assessment' => ['fields' => ['id', 'idstudent', 'idschedule']],
+					'Assessment.Students' => ['fields' => ['id', 'idresponsible', 'name']],
+				])
+				->where($where)
+			->toArray();
+		} else if($this->userObj->role == C_RoleProfessor) {
 			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
 			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
 			$where['Classes.id IN'] = $classesTeacher;
@@ -38,7 +48,6 @@ class AssessmentController extends AppController {
 				])
 				->where($where)
 			->toArray();
-
 		} else if($this->userObj->role == C_RoleResponsável) {
 			$responsibleUser = $this->Responsible->findByIduser($this->userObj->id)->first();
 			$where = ['Assessment.Students.idresponsible' => $responsibleUser->id, 'inactive' => 0];
