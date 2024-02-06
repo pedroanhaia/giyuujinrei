@@ -10,7 +10,7 @@
 					</div>
 					<div class="col-xl-2 col-lg-3 col-md-4 col-sm-4 col-xs-12">
 						<label class="control-label text-muted"> RG </label>
-						<?= $this->Form->control('rg', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira a cor']) ?>
+						<?= $this->Form->control('rg', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o rg']) ?>
 					</div>
 					
 				</div>
