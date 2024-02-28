@@ -35,7 +35,7 @@ class UsersController extends AppController {
 	}
 
 	public function view($id = null) {
-		if($this->userObj->role < C_RoleTudo) {
+		if($this->userObj->role < C_RoleTudo && isset($this->userObj)) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
@@ -110,7 +110,7 @@ class UsersController extends AppController {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
-		
+
 		$user = $this->Users->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
