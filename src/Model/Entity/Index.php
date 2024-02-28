@@ -36,5 +36,6 @@ class Index extends Entity
         'idrating' => true,
         'created' => true,
         'modified' => true,
+        'inactive' => true,
     ];
 }

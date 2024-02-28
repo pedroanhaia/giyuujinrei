@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 use Cake\Utility\Text;
@@ -17,9 +16,27 @@ class StudentsController extends AppController {
 		$this->loadModel('Users');
 		$this->loadModel('Sports');
 		$this->loadModel('Classes');
+		$this->loadModel('Teachers');
+		$this->loadModel('Classesteachers');
 	}
 
 	public function index() {
+		if($this->userObj->role < C_RoleResponsável) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			$where = ['Students.idclass IN' => $classesTeacher, 'Students.inactive' => 0];
+		} else if($this->userObj->role == C_RoleResponsável) {
+			$responsibleUser = $this->Responsible->findByIduser($this->userObj->id)->first();
+			$where = ['Students.idresponsible' => $responsibleUser->id, 'Students.inactive' => 0];
+		} else {
+			$where['Students.inactive'] = 0;
+		}
+
 		$students = $this->Students->find('all')
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -28,14 +45,12 @@ class StudentsController extends AppController {
 				'Ranks' => ['fields' => ['name']],
 				'Classes' => ['fields' => ['name']],
 			])
+			->where($where)
 		->toArray();
 
-		$this->set(compact('students'));
-		$this->set('title', 'Lista de estudantes');
-	}
+		$where['Students.inactive'] = 1;
 
-	public function view($id = null) {
-		$student = $this->Students->findById($id)
+		$inactiveStudents = $this->Students->find('all')
 			->contain([
 				'Cores' => ['fields' => ['name']],
 				'Sports' => ['fields' => ['name']],
@@ -43,7 +58,40 @@ class StudentsController extends AppController {
 				'Ranks' => ['fields' => ['name']],
 				'Classes' => ['fields' => ['name']],
 			])
+			->where($where)
+		->toArray();
+
+		$this->set(compact('students', 'inactiveStudents'));
+		$this->set('title', 'Lista de estudantes');
+	}
+
+	public function view($id = null) {
+		$bPermissao = true;
+		
+		if($this->userObj->role < C_RoleProfessor) $bPermissao = false;
+
+		$student = $this->Students->findById($id)
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Responsible' => ['fields' => ['name']],
+				'Ranks' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']],
+				'Users' => ['fields' => ['name', 'id']]
+			])
 		->first();
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			
+			if(!in_array($student->idclass, $classesTeacher)) $bPermissao = false;
+		}
+
+		if($bPermissao == false) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
 
 		$this->set(compact('student'));
 		$this->set('title', 'Visualizar estudante');
@@ -87,7 +135,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);
@@ -103,11 +151,11 @@ class StudentsController extends AppController {
 		$student = $this->Students->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
-			$student = $this->Students->patchEntity($student, $this->request->getData());
-
 			$oldCore = $student->idcore;
 			$oldClass = $student->idclass;
 			$oldImage = $student->urlpicture;
+
+			$student = $this->Students->patchEntity($student, $this->request->getData());
 
 			if (!empty($this->request->getData()['urlpicture']) ) {
 				$file = $this->request->getUploadedFile('urlpicture');
@@ -131,8 +179,8 @@ class StudentsController extends AppController {
 				// Atualiza contagem na tabela Classes e Cores
 				$this->Classes->updateCountStudents($student->idclass);
 				$this->Cores->updateCountStudents($student->idcore);
-				if($oldClass != $student->idclass) $this->Classes->updateCountStudents($student->oldClass);
-				if($oldCore != $student->idcore) $this->Cores->updateCountStudents($student->oldCore);
+				if($oldClass != $student->idclass) $this->Classes->updateCountStudents($oldClass);
+				if($oldCore != $student->idcore) $this->Cores->updateCountStudents($oldCore);
 
 				$this->Flash->success(__('O estudante foi salvo com sucesso.'));
 				return $this->redirect(['action' => 'index']);
@@ -144,7 +192,7 @@ class StudentsController extends AppController {
 		$responsibles = $this->Responsible->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$cores = $this->Cores->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 		$ranks = $this->Ranks->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role' => C_RoleEstudante])->order(['name ASC'])->toArray();
 		$sports = $this->Sports->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
 
 		$this->set('sports', $sports);

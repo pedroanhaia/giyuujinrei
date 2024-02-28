@@ -34,11 +34,11 @@
 					</tr>
 					<tr>
 						<th><?= __('Tipo') ?></th>
-						<td><?= $teacher->type === null ? '' : $this->Number->format($teacher->type) ?></td>
+						<td><?= $teacher->type === null ? '' : TeachersTypes($teacher->type) ?></td>
 					</tr>
 					<tr>
 						<th><?= __('Usuário') ?></th>
-						<td><?= $teacher->iduser === null ? '' : $this->Number->format($teacher->iduser) ?></td>
+						<td> <?= $teacher->user ? $this->Html->link(__($teacher->user->name), ['controller' => 'Users', 'action' => 'view', $teacher->iduser], ['target' => '_blank', 'class' => 'link']) : '' ?> </td>
 					</tr>
 					<tr>
 						<th><?= __('Criado em:') ?></th>

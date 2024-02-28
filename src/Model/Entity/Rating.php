@@ -34,5 +34,6 @@ class Rating extends Entity
         'created' => true,
         'modified' => true,
         'role' => true,
+        'inactive' => true,
     ];
 }

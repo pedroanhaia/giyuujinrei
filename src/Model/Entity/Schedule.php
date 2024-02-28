@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property \Cake\I18n\FrozenTime|null $date
  * @property int|null $idcore
+ * @property int|null $idclass
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property int|null $role
@@ -30,9 +31,11 @@ class Schedule extends Entity
     protected $_accessible = [
         'date' => true,
         'idcore' => true,
+        'idclass' => true,
         'created' => true,
         'modified' => true,
         'role' => true,
         'name' => true,
+        'inactive' => true,
     ];
 }

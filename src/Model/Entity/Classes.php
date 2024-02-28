@@ -28,5 +28,6 @@ class Core extends Entity {
         'idcore' => true,
         'idsport' => true,
         'count_students' => true,
+        'inactive' => true,
     ];
 }

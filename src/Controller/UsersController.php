@@ -19,16 +19,28 @@ class UsersController extends AppController {
 	}
 
 	public function index() {
-		$users = $this->Users->find()
-			->contain(['Cores' => ['fields' => ['name']]])
-		->toArray();
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
 
-		$this->set(compact('users'));
+		$admins = $this->Users->find()->where(['Users.role' => C_RoleTudo, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$teachers = $this->Users->find()->where(['Users.role' => C_RoleProfessor, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$responsibles = $this->Users->find()->where(['Users.role' => C_RoleResponsável, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$studentes = $this->Users->find()->where(['Users.role' => C_RoleEstudante, 'Users.inactive' => 0])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+		$inactive = $this->Users->find()->where(['Users.inactive' => 1])->contain(['Cores' => ['fields' => ['name']]])->toArray();
+
+		$this->set(compact('admins', 'teachers', 'responsibles', 'studentes', 'inactive'));
 		$this->set('title', 'Lista de usuários');
 	}
 
 	public function view($id = null) {
-		$user = $this->Users->find()
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
+
+		$user = $this->Users->findById($id)
 			->contain(['Cores' => ['fields' => ['name']]])
 		->first();
 
@@ -37,7 +49,13 @@ class UsersController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
+
 		$user = $this->Users->newEmptyEntity();
+
 		if ($this->request->is('post')) {
 			if($this->request->getData('password') != $this->request->getData('password1')) {
 				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
@@ -62,17 +80,15 @@ class UsersController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$user = $this->Users->get($id, [
-			'contain' => [],
-		]);
-		if ($this->request->is(['patch', 'post', 'put'])) {
-			if($this->request->getData('password2') != $this->request->getData('password1')) {
-				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
-				return $this->redirect(['action' => 'add']);
-			}
+		if($this->userObj->role < C_RoleTudo && $id != $this->userObj->id) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
 
+		$user = $this->Users->get($id);
+
+		if ($this->request->is(['patch', 'post', 'put'])) {
 			$user = $this->Users->patchEntity($user, $this->request->getData());
-			$user->password = $this->request->getData('password1');
 
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('O usuário foi salvo com sucesso.'));
@@ -86,16 +102,21 @@ class UsersController extends AppController {
 
 		$this->set('cores', $cores);
 		$this->set(compact('user'));
-		$this->set('title', 'Salvar usuário');
+		$this->set('title', 'Alterar usuário');
 	}
 
 	public function alterarsenha($id = null) {
+		if($this->userObj->role < C_RoleTudo && $id != $this->userObj->id) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
+		
 		$user = $this->Users->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			if($this->request->getData('password2') != $this->request->getData('password1')) {
 				$this->Flash->error(__('As senhas informadas não conferem, tente novamente.'));
-				return $this->redirect(['action' => 'add']);
+				return $this->redirect(['action' => 'alterarsenha', $id]);
 			}
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());
@@ -114,6 +135,11 @@ class UsersController extends AppController {
 	}
 
 	public function delete($id = null) {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
+		}
+
 		$user = $this->Users->get($id);
 
 		if ($this->Users->delete($user)) {
@@ -163,8 +189,8 @@ class UsersController extends AppController {
 			return $this->jsonResponse(['Msg' => 'Alterado com sucesso'], 200);
 		}
 	}
-    public function loginapi()
-    {
+
+    public function loginapi() {
         $data = $this->request->getParsedBody();
         $response = $this->response->withType('application/json')->withStringBody(json_encode([$data]));
 

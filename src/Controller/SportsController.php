@@ -10,9 +10,10 @@ class SportsController extends AppController {
 	}
 
 	public function index() {
-		$sports = $this->Sports->find()->toArray();
+		$sports = $this->Sports->findByInactive(0)->toArray();
+		$inactiveSports = $this->Sports->findByInactive(1)->toArray();
 
-		$this->set(compact('sports'));
+		$this->set(compact('sports', 'inactiveSports'));
 		$this->set('title', 'Lista de esportes');
 	}
 
@@ -24,7 +25,13 @@ class SportsController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$sport = $this->Sports->newEmptyEntity();
+
 		if ($this->request->is('post')) {
 			$sport = $this->Sports->patchEntity($sport, $this->request->getData());
 
@@ -41,9 +48,12 @@ class SportsController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$sport = $this->Sports->get($id, [
-			'contain' => [],
-		]);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		$sport = $this->Sports->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$sport = $this->Sports->patchEntity($sport, $this->request->getData());
@@ -61,7 +71,11 @@ class SportsController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+		
 		$sport = $this->Sports->get($id);
 
 		if ($this->Sports->delete($sport)) {

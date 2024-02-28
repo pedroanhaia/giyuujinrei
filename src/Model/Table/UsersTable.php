@@ -44,6 +44,10 @@ class UsersTable extends Table {
 			->integer('idcore')
 			->allowEmptyString('idcore');
 
+		$validator
+			->integer('inactive')
+			->allowEmptyString('inactive');
+
 		return $validator;
 	}
 

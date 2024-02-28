@@ -1,8 +1,8 @@
 <div class="col-md-12 content">
 	<div class="row">
 		<div class="col-12">
-			<?= $this->Form->postLink(__('Excluir graduação'), ['action' => 'delete', $rank->id], ['confirm' => __('Você confirma a exclusão deste item?', $rank->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
-			<?= $this->Html->link(__('Alterar graduação'), ['action' => 'edit', $rank->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $role >= C_RoleTudo ? $this->Form->postLink(__('Excluir graduação'), ['action' => 'delete', $rank->id], ['confirm' => __('Você confirma a exclusão deste item?', $rank->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) : '' ?>
+			<?= $role >= C_RoleTudo ? $this->Html->link(__('Alterar graduação'), ['action' => 'edit', $rank->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) : '' ?>
 			<?= $this->Html->link(__('Lista de graduações'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
 			<h3> <?= $title ?> </h3>
 		</div>

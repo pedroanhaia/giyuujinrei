@@ -10,20 +10,28 @@ class TeachersController extends AppController {
 	}
 
 	public function index() {
-		$teachers = $this->Teachers->find('all')->toArray();
+		$teachers = $this->Teachers->findByInactive(0)->toArray();
+		$inactiveTeachers = $this->Teachers->findByInactive(1)->toArray();
 
-		$this->set(compact('teachers'));
+		$this->set(compact('teachers', 'inactiveTeachers'));
 		$this->set('title', 'Lista de professores');
 	}
 
 	public function view($id = null) {
-		$teacher = $this->Teachers->findById($id)->first();
+		$teacher = $this->Teachers->findById($id)
+			->contain(['Users' => ['fields' => ['name', 'id']]])
+		->first();
 
 		$this->set(compact('teacher'));
 		$this->set('title', 'Visualizar professor');
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$teacher = $this->Teachers->newEmptyEntity();
 
 		if ($this->request->is('post')) {
@@ -37,7 +45,7 @@ class TeachersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o professor, tente novamente.'));
 		}
 
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role >=' => C_RoleProfessor])->order(['name ASC'])->toArray();
 
 		$this->set('users', $users);
 		$this->set(compact('teacher'));
@@ -45,9 +53,13 @@ class TeachersController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$teacher = $this->Teachers->get($id, [
-			'contain' => [],
-		]);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		$teacher = $this->Teachers->get($id);
+		
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$teacher = $this->Teachers->patchEntity($teacher, $this->request->getData());
 			
@@ -59,7 +71,7 @@ class TeachersController extends AppController {
 			$this->Flash->error(__('Não foi possível salvar o professor, tente novamente.'));
 		}
 
-		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->order(['name ASC'])->toArray();
+		$users = $this->Users->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['role >=' => C_RoleProfessor])->order(['name ASC'])->toArray();
 
 		$this->set('users', $users);
 		$this->set(compact('teacher'));
@@ -67,7 +79,11 @@ class TeachersController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$teacher = $this->Teachers->get($id);
 
 		if ($this->Teachers->delete($teacher)) {

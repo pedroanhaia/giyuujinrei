@@ -7,7 +7,7 @@
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, 0.7); /* Cor de fundo opaca */
-		display: flex;
+		display: block;
 		justify-content: center;
 		align-items: center;
 		display: none; /* Inicialmente oculto */
@@ -23,29 +23,33 @@
 	.centered-gif {
 		max-width: 50%;
 		max-height: 50%;
+		margin-left: 28%;
+	}
+
+	#overlayMsg {
+		color: white;
+		text-align: center;
 	}
 </style>
 <html lang="en">
 	<body>
-		<div class="overlay">
+		<div class="overlay" id='overlayLogin'>
 			<?php 
-				if(isset($_SESSION['bLogin'])) {
-					$arrLogos = ['/webroot/img/Logo 4 - Tinta.gif', "/webroot/img/Logo 5 - 3D (Site's edition).gif"];
-					$img = $arrLogos[rand(0, 1)];
-					$imgTimeout = 2800;
-					unset($_SESSION['bLogin']);
-				} else {
-					$img = '/webroot/img/Logo 3d transparente.gif';
-					$imgTimeout = 1000;
-				}
+				$arrLogos = ['/webroot/img/Logo 4 - Tinta.gif', "/webroot/img/Logo 5 - 3D (Site's edition).gif"];
+				$img = $arrLogos[rand(0, 1)];
+				unset($_SESSION['bLogin']);
 			?>
 			<img src="<?= $this->Url->build($img, ['fullBase' => true]) ?>" alt="Logo" class="centered-gif">
+		</div>
+		<div class="overlay" id='overlayGira'>
+			<img src="<?= $this->Url->build('/webroot/img/Logo 3d transparente.gif', ['fullBase' => true]) ?>" alt="Logo" class="centered-gif">
+			<h3 id='overlayMsg'></h3>
 		</div>
 	</body>
 </html>
 <script>
-	document.addEventListener('DOMContentLoaded', function() {
-		var overlay = document.querySelector('.overlay');
+	function preLoad() {
+		var overlay = document.querySelector('#overlayLogin');
 
 		// Mostra a overlay quando a página é carregada
 		overlay.style.display = 'flex';
@@ -61,7 +65,29 @@
 			// Define um segundo temporizador para ocultar a overlay após o fade-out
 			setTimeout(function() {
 				overlay.style.display = 'none';
-			}, <?= $imgTimeout ?>);
-		}, <?= $imgTimeout ?>);
-	});
+			}, 2800);
+		}, 2800);
+	}
+
+	function preLoadGira(acao, msg) {
+		var overlay = document.querySelector('#overlayGira');
+
+		if(acao == 1) {
+			$('#overlayMsg').text(msg);
+			// Mostra a overlay quando a página é carregada
+			overlay.style.display = 'block';
+	
+			// Adiciona a classe 'show' para iniciar o fade-in
+			overlay.classList.add('show');
+		} else {
+			overlay.classList.remove('show');
+			overlay.style.display = 'none';
+		}
+	}
+
+	<?php if(isset($_SESSION['bLogin'])) { ?>
+		document.addEventListener('DOMContentLoaded', function() {
+			preLoad();
+		});
+	<?php } ?>
 </script>

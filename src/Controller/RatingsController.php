@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 class RatingsController extends AppController {
-
 	public function index() {
-		$ratings = $this->Ratings->find()->toArray();
+		$ratings = $this->Ratings->findByInactive(0)->toArray();
+		$inactiveRatings = $this->Ratings->findByInactive(1)->toArray();
 
-		$this->set(compact('ratings'));
+		$this->set(compact('ratings', 'inactiveRatings'));
 		$this->set('title', 'Lista de áreas');
 	}
 
@@ -20,7 +20,13 @@ class RatingsController extends AppController {
 	}
 
 	public function add() {
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$rating = $this->Ratings->newEmptyEntity();
+
 		if ($this->request->is('post')) {
 			$rating = $this->Ratings->patchEntity($rating, $this->request->getData());
 			
@@ -37,9 +43,12 @@ class RatingsController extends AppController {
 	}
 
 	public function edit($id = null) {
-		$rating = $this->Ratings->get($id, [
-			'contain' => [],
-		]);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		$rating = $this->Ratings->get($id);
 
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$rating = $this->Ratings->patchEntity($rating, $this->request->getData());
@@ -57,7 +66,11 @@ class RatingsController extends AppController {
 	}
 
 	public function delete($id = null) {
-		$this->request->allowMethod(['post', 'delete']);
+		if($this->userObj->role < C_RoleTudo) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$rating = $this->Ratings->get($id);
 
 		if ($this->Ratings->delete($rating)) {

@@ -23,6 +23,7 @@ class StudentsTable extends Table {
 		$this->belongsTo('Sports', ['foreignKey' => 'idsport']);
 		$this->belongsTo('Classes', ['foreignKey' => 'idclass']);
 		$this->belongsTo('Cores', ['foreignKey' => 'idcore']);
+		$this->belongsTo('Users', ['foreignKey' => 'iduser']);
 	}
 
 	public function validationDefault(Validator $validator): Validator {
@@ -77,6 +78,12 @@ class StudentsTable extends Table {
 			->integer('idgrank')
 			->allowEmptyString('idgrank');
 
+		$validator
+			->integer('inactive')
+			->allowEmptyString('inactive');
+
+		$validator
+			->integer('entity');
 
 		return $validator;
 	}

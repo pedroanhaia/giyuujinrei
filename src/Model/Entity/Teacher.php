@@ -40,5 +40,6 @@ class Teacher extends Entity
         'modified' => true,
         'role' => true,
         'iduser' => true,
+        'inactive' => true,
     ];
 }

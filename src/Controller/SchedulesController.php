@@ -11,7 +11,11 @@ class SchedulesController extends AppController {
 
 	public function index() {
 		$schedules = $this->Schedules->find()
-			->contain(['Cores' => ['fields' => ['name']]])
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']]
+			])
+			->where(['Schedules.role' => C_ScheduleRoleAvaliacao])
 		->toArray();
 
 		$this->set(compact('schedules'));
@@ -20,7 +24,10 @@ class SchedulesController extends AppController {
 
 	public function view($id = null) {
 		$schedule = $this->Schedules->findById($id)
-			->contain(['Cores' => ['fields' => ['name']]])
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Classes' => ['fields' => ['name']]
+			])
 		->first();
 
 		$this->set(compact('schedule'));
@@ -31,6 +38,7 @@ class SchedulesController extends AppController {
 		$schedule = $this->Schedules->newEmptyEntity();
 		if ($this->request->is('post')) {
 			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
+			$schedule->role = C_ScheduleRoleAvaliacao;
 
 			if ($this->Schedules->save($schedule)) {
 				$this->Flash->success(__('O agendamento foi salvo com sucesso.'));
@@ -53,6 +61,7 @@ class SchedulesController extends AppController {
 		]);
 		if ($this->request->is(['patch', 'post', 'put'])) {
 			$schedule = $this->Schedules->patchEntity($schedule, $this->request->getData());
+			$schedule->role = C_ScheduleRoleAvaliacao;
 			
 			if ($this->Schedules->save($schedule)) {
 				$this->Flash->success(__('O agendamento foi salvo com sucesso.'));
@@ -80,5 +89,37 @@ class SchedulesController extends AppController {
 		}
 
 		return $this->redirect(['action' => 'index']);
+	}
+
+	public function schedulesopt() {
+		if($this->request->is('ajax')) {
+			$data = $this->request->getData();
+
+			$schedules = $this->Schedules->find()
+				->where([
+					'role' => C_ScheduleRoleAvaliacao, 
+					'idclass' => $data['idclass'],
+				])
+				->contain(['Assessment'])
+				->select(['id', 'name', 'date'])
+			->toArray();
+
+			foreach($schedules as $key => $reg) {
+				foreach($reg->assessment as $avaliacao) {
+					if($avaliacao->idstudent == $data['idstudent']) unset($schedules[$key]);
+					continue;
+				}
+			}
+
+			$schedulesOpt = [];
+
+			foreach($schedules as $reg) {
+				$schedulesOpt[$reg->id] = $reg->name . ' - ' . date_format($reg->date, 'd/m/Y');
+			}
+
+			if(empty($schedulesOpt)) return $this->jsonResponse('Não há agendamentos disponíveis para a avaliação deste estudante, verifique os agendamentos.', 400);
+
+			return $this->jsonResponse($schedulesOpt, 200);
+		}
 	}
 }

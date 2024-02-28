@@ -1,8 +1,8 @@
 <div class="col-md-12 content">
 	<div class="row">
 		<div class="col-12">
-			<?= $this->Form->postLink(__('Excluir dojô'), ['action' => 'delete', $core->id], ['confirm' => __('Você confirma a exclusão deste item?', $core->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) ?>
-			<?= $this->Html->link(__('Alterar dojô'), ['action' => 'edit', $core->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) ?>
+			<?= $role >= C_RoleTudo ? $this->Form->postLink(__('Excluir dojô'), ['action' => 'delete', $core->id], ['confirm' => __('Você confirma a exclusão deste item?', $core->id), 'class' => 'btn btn-danger text-white float-right m-r-5']) : '' ?>
+			<?= $role >= C_RoleTudo ? $this->Html->link(__('Alterar dojô'), ['action' => 'edit', $core->id], ['class' => 'btn btn-warning text-white float-right m-r-5']) : '' ?>
 			<?= $this->Html->link(__('Lista de dojôs'), ['action' => 'index'], ['class' => 'btn btn-info text-white float-right m-r-5']) ?>
 			<h3> <?= $title ?> </h3>
 		</div>
@@ -46,7 +46,7 @@
 					</tr>
 					<tr>
 						<th><?= __('Tipo') ?></th>
-						<td><?= $core->type === null ? '' : $this->Number->format($core->type) ?></td>
+						<td><?= $core->type === null ? '' : CoresTypes($core->type) ?></td>
 					</tr>
 					<tr>
 						<th><?= __('Criado em:') ?></th>

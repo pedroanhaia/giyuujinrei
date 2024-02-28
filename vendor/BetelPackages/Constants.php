@@ -32,7 +32,7 @@
 			if($role == C_RoleNada) return 'Outro';
 		}
 
-	// Meses e Anos
+	// Meses e Anos 
 		define('C_MesesOpt', [
 			1 => 'Janeiro',
 			2 => 'Fevereiro',
@@ -68,4 +68,49 @@
 		foreach ($anos as $ano) $anosOpt[$ano] = $ano;
 
 		define('C_AnosOpt', $anosOpt);
+	// Cores types 
+		define('C_CoreTypeEscola', 		1);
+		define('C_CoreTypeAssociacao', 	2);
+		define('C_CoreTypePublico',		3);
+		define('C_CoreTypePrivado',	4);
+
+		define('C_CoreTypeOptions', [
+			C_CoreTypeEscola => 'Escola',
+			C_CoreTypeAssociacao => 'Associação',
+			C_CoreTypePublico => 'Público',
+			C_CoreTypePrivado => 'Privado',
+		]);
+
+		function CoresTypes($type) {
+			if($type == C_CoreTypeEscola) return 'Escola';
+			if($type == C_CoreTypeAssociacao) return 'Associação';
+			if($type == C_CoreTypePublico) return 'Público';
+			if($type == C_CoreTypePrivado) return 'Privado';
+		}
+	// Teachers types 
+		define('C_TeacherTypeEsporte', 			1);
+		define('C_TeacherTypeEnsinoRegular', 	2);
+
+		define('C_TeacherTypeOptions', [
+			C_TeacherTypeEsporte => 'Esporte',
+			C_TeacherTypeEnsinoRegular => 'Ensino Regular',
+		]);
+
+		function TeachersTypes($type) {
+			if($type == C_TeacherTypeEsporte) return 'Esporte';
+			if($type == C_TeacherTypeEnsinoRegular) return 'Ensino Regular';
+		}
+	// Schedules 
+		define('C_ScheduleRoleAula',		1);
+		define('C_ScheduleRoleAvaliacao', 	2);
+
+		define('C_ScheduleRoles', [
+			C_ScheduleRoleAula => 'Aula',
+			C_ScheduleRoleAvaliacao => 'Avaliação',
+		]);
+
+		function ScheduleRoles($role) {
+			if($role == C_ScheduleRoleAula) return 'Aula';
+			if($role == C_ScheduleRoleAvaliacao) return 'Avaliação';
+		}
 	// 

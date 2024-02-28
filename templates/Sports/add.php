@@ -10,7 +10,7 @@
 					</div>
 					<div class="col-lg-4 col-md-12 col-sm-12">
 						<label class="control-label text-muted"> idforeign </label>
-						<?= $this->Form->control('idforeign', ['class' => 'form-control', 'label' => false, 'required' => true, 'placeholder' => 'Insira o idforeign']) ?>
+						<?= $this->Form->control('idforeign', ['class' => 'form-control', 'label' => false, 'placeholder' => 'Insira o idforeign']) ?>
 					</div>
 				</div>
 				<div class="row">

@@ -1,29 +1,6 @@
 <?php
 	require_once (ROOT . DS . 'vendor' . DS  . 'BetelPackages' . DS . 'Constants.php');
 
-	function ResultadoBet($resultado) {
-		if($resultado == C_BetsResultadoAcerto) return 'Acertou';
-		else if($resultado == C_BetsResultadoErro) return 'Errou';
-		else return 'Pendente';
-	}
-
-	function RolesOptions($role) {
-		if($role == C_RoleTudo) return 'Tudo';
-		else if($role == C_RoleNada) return 'Nada';
-		else if($role == C_RoleTelegram) return 'Telegram';
-	}
-
-    function RolesServOptions($role) {
-        if($role ==      C_roleservhistbets     ) return 'Hist. bets';
-		else if($role == C_roleservwebhooktel     ) return 'Webhook Tel.';
-		else if($role == C_roleservreqeve ) return 'Req. evento';
-        else if($role == C_roleservreqligas     ) return 'Req. ligas';
-		else if($role == C_roleservreqsports     ) return 'Req. esportes';
-		else if($role == C_roleservreqevents ) return 'Req. eventos';
-        else if($role == C_roleservreqaccinfo     ) return 'Req. Acc. Inf.';
-		else if($role == C_roleservreqsaldacc     ) return 'Req. Saldo Acc.';
-		else if($role == C_roleservreqplacebet ) return 'Req. Place Bet';
-	}
 	// Opt == 0 -> Janeiro
 	// Opt == 1 -> Jan
 	function mesDesc($mes, $opt = 0) {
@@ -72,4 +49,24 @@
 		$corB = intval(($fimRGB[2] - $inicioRGB[2]) * $percentagem + $inicioRGB[2]);
 
 		return sprintf("#%02x%02x%02x", $corR, $corG, $corB);
+	}
+
+	function formatarData($dataString) {
+		// Criar um objeto DateTime a partir da string
+		$dataObj = new DateTime($dataString);
+
+		// Formatar a data no formato desejado
+		$dataFormatada = $dataObj->format('d/m/Y');
+
+		return $dataFormatada;  // Saída: '25/01/2022'
+	}
+
+	function DestaquesNome($nomeStr) {
+		// Divide a string em um array de palavras
+		$palavras = explode(' ', $nomeStr);
+
+		// Pega as duas primeiras palavras
+		$duas_primeiras_palavras = implode(' ', array_slice($palavras, 0, 2));
+
+		return $duas_primeiras_palavras;
 	}

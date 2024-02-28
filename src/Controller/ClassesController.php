@@ -2,16 +2,35 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Routing\Router;
 
 class ClassesController extends AppController {
 	public function initialize(): void {
 		parent::initialize();
 		$this->loadModel('Teachers');
+		$this->loadModel('Classesteachers');
 		$this->loadModel('Cores');
 		$this->loadModel('Sports');
+		$this->loadModel('Students');
+		$this->loadModel('Schedules');
 	}
 
 	public function index() {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		$where = ['Classes.inactive' => 0];
+		$whereInactive = ['Classes.inactive' => 1];
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			$where['Classes.id IN'] = [$classesTeacher];
+			$whereInactive['Classes.id IN'] = [$classesTeacher];
+		} 
+
 		$classes = $this->Classes->find('all')
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -19,13 +38,40 @@ class ClassesController extends AppController {
 				'Teachers' => ['fields' => ['name']],
 			])
 			->order('Classes.name ASC')
+			->where($where)
+		->toArray();
+		
+		$inactiveClasses = $this->Classes->find('all')
+			->contain([
+				'Cores' => ['fields' => ['name']],
+				'Sports' => ['fields' => ['name']],
+				'Teachers' => ['fields' => ['name']],
+			])
+			->order('Classes.name ASC')
+			->where($whereInactive)
 		->toArray();
 
 		$this->set('title', 'Lista de turmas');
-		$this->set(compact('classes'));
+		$this->set(compact('classes', 'inactiveClasses'));
 	}
  
 	public function view($id = null) {
+		$bPermissao = true;
+		
+		if($this->userObj->role < C_RoleProfessor) $bPermissao = false;
+
+		if($this->userObj->role == C_RoleProfessor) {
+			$teacherUser = $this->Teachers->findByIduser($this->userObj->id)->first();
+			$classesTeacher = $this->Classesteachers->find('list', ['keyField' => 'id', 'valueField' => 'class_id'])->where(['teacher_id' => $teacherUser->id])->toArray();
+			
+			if(!in_array($id, $classesTeacher)) $bPermissao = false;
+		}
+
+		if($bPermissao == false) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
 		$class = $this->Classes->findById($id)
 			->contain([
 				'Cores' => ['fields' => ['name']],
@@ -106,6 +152,43 @@ class ClassesController extends AppController {
 				->select(['id', 'name'])
 			->toArray();
 			
+			return $this->jsonResponse($classes, 200);
+		}
+	}
+
+	public function classstudents($idclass) {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if ($this->request->is(['ajax'])) {
+			$students = $this->Students->find('all')
+				->contain(['Ranks' => ['fields' => ['name']]])
+				->where(['idclass' => $idclass, 'Students.inactive' => 0])
+				->select(['Students.id', 'Students.urlpicture', 'Students.name', 'Students.birthday'])
+			->toArray();
+
+			foreach($students as $reg) {
+				$reg->urlpicture = Router::url('/img/'.$reg->urlpicture, true);
+			}
+
+			return $this->jsonResponse($students, 200);
+		}
+	}
+
+	public function coresclasses($idcore) {
+		if($this->userObj->role < C_RoleProfessor) {
+			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
+			return $this->redirect(['action' => 'index']);
+		}
+
+		if ($this->request->is(['ajax'])) {
+			$classes = $this->Classes->find('all')
+				->where(['idcore' => $idcore])
+				->select(['Classes.id', 'Classes.name'])
+			->toArray();
+
 			return $this->jsonResponse($classes, 200);
 		}
 	}
