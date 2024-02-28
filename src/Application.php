@@ -125,14 +125,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
             ->add(new BodyParserMiddleware())
 
-            //->add(new MiddlewareCorsMiddleware([
-            //    'origin' => ['*'], // Configurar as origens permitidas conforme necessário
-            //    'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Métodos permitidos
-            //    'headers' => ['Authorization', 'Content-Type'], // Cabeçalhos permitidos
-            //    'credentials' => true, // Permitir credenciais (cookies)
-            //    'exposeHeaders' => [], // Cabeçalhos expostos
-            //    'maxAge' => 3600, // Tempo de vida da preflight request (em segundos)
-            //]))
+            ->add(new MiddlewareCorsMiddleware([
+                'origin' => ['*'], // Configurar as origens permitidas conforme necessário
+                'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'], // Métodos permitidos
+                'headers' => ['Authorization', 'Content-Type'], // Cabeçalhos permitidos
+                'credentials' => false, // Permitir credenciais (cookies)
+                'exposeHeaders' => [], // Cabeçalhos expostos
+                'maxAge' => 3600, // Tempo de vida da preflight request (em segundos)
+            ]))
 
             ->add(new AuthenticationMiddleware($this))
             ->add(new AuthorizationMiddleware($this))

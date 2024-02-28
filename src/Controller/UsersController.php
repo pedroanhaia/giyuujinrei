@@ -12,7 +12,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
  */
 class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\EventInterface $event) {
-		$this->Authentication->addUnauthenticatedActions(['login','loginapi']);
+		$this->Authentication->addUnauthenticatedActions(['login','loginapi','add']);
 		parent::beforeFilter($event);
 
 		$this->loadModel('Cores');
@@ -100,7 +100,7 @@ class UsersController extends AppController {
 
 			$user = $this->Users->patchEntity($user, $this->request->getData());
 			$user->password = $this->request->getData('password1');
-			
+
 			if ($this->Users->save($user)) {
 				$this->Flash->success(__('A senha foi atualizada com sucesso.'));
 				return $this->redirect(['action' => 'edit', $id]);
