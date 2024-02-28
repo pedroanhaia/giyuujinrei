@@ -12,7 +12,7 @@ use Authentication\PasswordHasher\DefaultPasswordHasher;
  */
 class UsersController extends AppController {
 	public function beforeFilter(\Cake\Event\EventInterface $event) {
-		$this->Authentication->addUnauthenticatedActions(['login','loginapi','add']);
+		$this->Authentication->addUnauthenticatedActions(['login','loginapi']);
 		parent::beforeFilter($event);
 
 		$this->loadModel('Cores');
