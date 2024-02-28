@@ -35,7 +35,7 @@ class UsersController extends AppController {
 	}
 
 	public function view($id = null) {
-		if($this->userObj->role < C_RoleTudo && isset($this->userObj)) {
+		if($this->userObj->role < C_RoleTudo ) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
@@ -49,7 +49,7 @@ class UsersController extends AppController {
 	}
 
 	public function add() {
-		if($this->userObj->role < C_RoleTudo) {
+		if($this->userObj->role < C_RoleTudo && isset($this->userObj)) {
 			$this->Flash->error(__('Você não possui permissão para realizar esta ação, contate um administrador.'));
 			return $this->redirect(['controller' => 'users', 'action' => 'dashboard']);
 		}
