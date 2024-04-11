@@ -1,53 +1,39 @@
-# CakePHP Application Skeleton
+# Sistema de Avaliação de Alunos - Academia de Lutas
 
-![Build Status](https://github.com/cakephp/app/actions/workflows/ci.yml/badge.svg?branch=master)
-[![Total Downloads](https://img.shields.io/packagist/dt/cakephp/app.svg?style=flat-square)](https://packagist.org/packages/cakephp/app)
-[![PHPStan](https://img.shields.io/badge/PHPStan-level%207-brightgreen.svg?style=flat-square)](https://github.com/phpstan/phpstan)
+## Descrição do Projeto
 
-A skeleton for creating applications with [CakePHP](https://cakephp.org) 4.x.
+Este projeto consiste em um sistema para avaliar os alunos de academias de lutas em várias áreas, como pontualidade, disciplina, técnica, frequência ou higiene, você pode cadastrar quantas áreas forem necessárias. O sistema permite que múltiplos avaliadores atribuam notas aos alunos e fornece uma visão abrangente do desempenho de cada aluno ao longo do tempo.
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+## Funcionalidades
 
-## Installation
+- **Avaliação por Múltiplos Avaliadores:** Os alunos podem ser avaliados por mais de um avaliador, permitindo uma avaliação mais abrangente e precisa.
 
-1. Download [Composer](https://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+- **Avaliação em Diversas Áreas:** O sistema suporta a avaliação dos alunos em várias áreas, tais como pontualidade, disciplina, técnica, frequência, higiene.
 
-If Composer is installed globally, run
+- **Visão Geral do Desempenho:** Os dados de avaliação são consolidados para fornecer uma visão geral do desempenho de cada aluno, facilitando a identificação de áreas de melhoria e reconhecimento de pontos fortes.
 
-```bash
-composer create-project --prefer-dist cakephp/app
-```
+## Como Usar
 
-In case you want to use a custom app dir name (e.g. `/myapp/`):
+1. **Cadastro de Alunos:** Adicione os alunos ao sistema, fornecendo informações básicas, como nome, idade e nível de habilidade.
 
-```bash
-composer create-project --prefer-dist cakephp/app myapp
-```
+2. **Cadastro de Avaliadores:** Registre os avaliadores que serão responsáveis por avaliar os alunos.
 
-You can now either use your machine's webserver to view the default home page, or start
-up the built-in webserver with:
+3. **Avaliação de Alunos:** Os avaliadores podem acessar a plataforma e atribuir notas aos alunos em diferentes áreas de avaliação.
 
-```bash
-bin/cake server -p 8765
-```
+4. **Visualização de Resultados:** Os resultados das avaliações podem ser visualizados pelos administradores e pelos próprios alunos, permitindo uma análise detalhada do desempenho.
 
-Then visit `http://localhost:8765` to see the welcome page.
+## Tecnologias Utilizadas
 
-## Update
+- Linguagem de Programação: [PHP](https://www.php.net/)
+- Framework Web: [CAKEPHP](https://cakephp.org/)
+- Banco de Dados: [MYSQL](https://www.mysql.com/)
+- powered by: [ADA TECNOLOGIA](https://adatecnologia.com/)
+- Financiadora: https://www.instagram.com/lisiane_bringhenti_jiu_jitsu?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==
 
-Since this skeleton is a starting point for your application and various files
-would have been modified as per your needs, there isn't a way to provide
-automated upgrades, so you have to do any updates manually.
+## Contribuindo
 
-## Configuration
+Contribuições são bem-vindas! Se você encontrar algum problema ou tiver alguma sugestão de melhoria, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-Read and edit the environment specific `config/app_local.php` and set up the
-`'Datasources'` and any other configuration relevant for your application.
-Other environment agnostic settings can be changed in `config/app.php`.
+## Licença
 
-## Layout
-
-The app skeleton uses [Milligram](https://milligram.io/) (v1.3) minimalist CSS
-framework by default. You can, however, replace it with any other library or
-custom styles.
+Este projeto está licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT).
